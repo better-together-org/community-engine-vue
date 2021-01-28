@@ -1,5 +1,6 @@
 import BtNavUser from './components/BtNavUser.vue'
 import BtRouter, { BtRoutes } from './router'
+import BtStore, { BtStoreModules, BtStorePlugins } from './store'
 
 import BtUserNewPasswordForm from './components/BtUserNewPasswordForm.vue'
 import BtUserResendConfirmationForm from './components/BtUserResendConfirmationForm.vue'
@@ -32,6 +33,9 @@ export {
   BtNavUser,
   BtRouter,
   BtRoutes,
+  BtStore,
+  BtStoreModules,
+  BtStorePlugins,
   BtUserNewPasswordForm,
   BtUserResendConfirmationForm,
   BtUserResetPasswordForm,
