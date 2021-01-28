@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const routes = [
+const BtRoutes = [
   {
     path: '/',
     name: 'Home',
@@ -73,10 +73,12 @@ const routes = [
   },
 ]
 
-const router = new VueRouter({
+const BtRouter = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes,
+  BtRoutes,
 })
 
-export default router
+export { BtRoutes }
+
+export default BtRouter
