@@ -1,9 +1,17 @@
 import BtNavUser from './components/BtNavUser.vue'
+import BtRouter, { BtRoutes } from './router'
+
+import BtUserNewPasswordForm from './components/BtUserNewPasswordForm.vue'
+import BtUserResendConfirmationForm from './components/BtUserResendConfirmationForm.vue'
+import BtUserResetPasswordForm from './components/BtUserResetPasswordForm.vue'
+import BtUserSignInForm from './components/BtUserSignInForm.vue'
+import BtUserSignUpForm from './components/BtUserSignUpForm.vue'
 
 const NAME = 'CommunityEngineVue'
 
 const install = (Vue) => {
   Vue.component('BtNavUser', BtNavUser)
+  Vue.component('BtUserNewPasswordForm', BtUserNewPasswordForm)
 }
 
 // --- CommunityEngineVue plugin ---
@@ -20,7 +28,16 @@ export {
   CommunityEngineVue,
 }
 
-export { BtNavUser }
+export {
+  BtNavUser,
+  BtRouter,
+  BtRoutes,
+  BtUserNewPasswordForm,
+  BtUserResendConfirmationForm,
+  BtUserResetPasswordForm,
+  BtUserSignInForm,
+  BtUserSignUpForm,
+}
 
 // Default export is the CommunityEngineVue plugin
 export default CommunityEngineVue
