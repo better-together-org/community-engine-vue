@@ -25,7 +25,7 @@
           >
             Home
           </b-nav-item>
-          <NavUser />
+          <BtNavUser />
         </b-navbar-nav>
       </b-collapse>
 
@@ -43,7 +43,7 @@
           >
             Home
           </b-nav-item>
-          <NavUser />
+          <BtNavUser />
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -52,13 +52,13 @@
 
 <script>
 import BtBrandingLogo from './BrandingLogo.vue'
-import NavUser from './NavUser.vue'
+import BtNavUser from './BtNavUser.vue'
 
 export default {
   name: 'BtNav',
   components: {
     BtBrandingLogo,
-    NavUser,
+    BtNavUser,
   },
 }
 </script>
