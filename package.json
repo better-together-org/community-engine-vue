@@ -4,6 +4,14 @@
   "name": "@bettertogether/community-engine-vue",
   "description": "The Better Together Community Engine is a universal community platform",
   "author": "Better Together Community Co-op",
+  "contributors": [
+    {
+      "name": "Rob",
+      "url": "https://github.com/rsmithlal"
+    }
+  ],
+  "repository": "better-together-org/community-engine-vue",
+  "homepage": "https://bebettertogether.ca",
   "license": "LGPL-3.0-or-later",
   "main": "./dist/index.js",
   "scripts": {
