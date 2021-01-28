@@ -33,10 +33,10 @@ export default {
   name: 'NavUser',
   mixins: [toaster],
   computed: {
-    ...mapState('authentication', ['currentUser']),
-    ...mapGetters('authentication', ['isAuthenticated']),
-    ...mapState('people', ['currentPerson']),
-    ...mapGetters('people', ['hasCurrentPerson']),
+    ...mapState('CommunityEngine/Authentication', ['currentUser']),
+    ...mapGetters('CommunityEngine/Authentication', ['isAuthenticated']),
+    ...mapState('CommunityEngine/People', ['currentPerson']),
+    ...mapGetters('CommunityEngine/People', ['hasCurrentPerson']),
     dropdownText() {
       if (this.isAuthenticated) {
         if (this.hasCurrentPerson) return this.currentPerson.name
@@ -47,7 +47,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('authentication', ['signOut']),
+    ...mapActions('CommunityEngine/Authentication', ['signOut']),
     signOutAction() {
       this.signOut().then(() => {
         if (this.$route.path !== '/') {

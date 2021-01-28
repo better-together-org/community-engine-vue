@@ -40,7 +40,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('authentication', ['resetPassword']),
+    ...mapActions('CommunityEngine/Authentication', ['resetPassword']),
     onValidated(isValid) {
       if (isValid) {
         this.resetPassword(this.model).then(() => {

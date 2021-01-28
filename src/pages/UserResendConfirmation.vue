@@ -48,7 +48,7 @@ export default {
     this.confirmAccount()
   },
   methods: {
-    ...mapActions('authentication', ['sendConfirmation']),
+    ...mapActions('CommunityEngine/Authentication', ['sendConfirmation']),
     confirmAccount() {
       if (!this.confirmationToken) return
 

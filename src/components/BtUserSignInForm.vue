@@ -40,8 +40,8 @@ export default {
     },
   },
   methods: {
-    ...mapActions('authentication', ['signIn']),
-    ...mapActions('people', ['getMe']),
+    ...mapActions('CommunityEngine/Authentication', ['signIn']),
+    ...mapActions('CommunityEngine/People', ['getMe']),
     onValidated(isValid) {
       if (isValid) {
         this.signIn(this.model).then(() => {

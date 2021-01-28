@@ -2,18 +2,14 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import SecureLS from 'secure-ls'
-import BtAuthentication from './modules/authentication'
-import BtCommunities from './modules/communities'
-import BtPeople from './modules/people'
+import CommunityEngine from './modules/community-engine'
 
 const ls = new SecureLS({ isCompression: false })
 
 Vue.use(Vuex)
 
 const BtStoreModules = {
-  BtAuthentication,
-  BtCommunities,
-  BtPeople,
+  CommunityEngine,
 }
 
 const BtStorePlugins = [

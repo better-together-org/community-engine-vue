@@ -59,7 +59,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('authentication', ['signUp']),
+    ...mapActions('CommunityEngine/Authentication', ['signUp']),
     onValidated(isValid) {
       if (isValid) {
         this.errors = {}

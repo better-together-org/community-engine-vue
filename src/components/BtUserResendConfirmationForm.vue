@@ -40,7 +40,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('authentication', ['resendConfirmation']),
+    ...mapActions('CommunityEngine/Authentication', ['resendConfirmation']),
     onValidated(isValid) {
       if (isValid) {
         this.resendConfirmation(this.model).then(() => {

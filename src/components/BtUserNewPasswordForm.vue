@@ -40,7 +40,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('authentication', ['newPassword']),
+    ...mapActions('CommunityEngine/Authentication', ['newPassword']),
     onValidated(isValid) {
       if (isValid) {
         this.newPassword(this.model).then(() => {
