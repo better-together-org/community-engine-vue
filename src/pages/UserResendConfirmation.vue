@@ -2,7 +2,7 @@
   <div id="resend-confirmation">
     <section>
       <h2>Resend your confirmation email</h2>
-      <UserResendConfirmationForm :model="user" />
+      <BtUserResendConfirmationForm :model="user" />
       <div>
         <b-link to="/users/sign-in">
           Already confirmed your account? Sign in!
@@ -19,13 +19,13 @@
 
 <script>
 import { mapActions } from 'vuex'
-import UserResendConfirmationForm from '../components/UserResendConfirmationForm.vue'
+import BtUserResendConfirmationForm from '../components/BtUserResendConfirmationForm.vue'
 import toaster from '../mixins/toaster'
 
 export default {
   name: 'UserResendConfirmation',
   components: {
-    UserResendConfirmationForm,
+    BtUserResendConfirmationForm,
   },
   mixins: [toaster],
   props: {

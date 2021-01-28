@@ -1,7 +1,7 @@
 <template>
   <vue-form-generator
-    id="sign-in-form"
-    tag="form"
+    id="resend-confirmation-form"
+    tag="div"
     :schema="schema"
     :model="localModel"
     rows="3"
@@ -13,11 +13,11 @@
 <script>
 import { mapActions } from 'vuex'
 import VueFormGenerator from 'vue-form-generator'
-import UserSignInFormSchema from '../forms/UserSignInFormSchema'
+import BtUserConfirmationFormSchema from '../forms/BtUserConfirmationFormSchema'
 import toaster from '../mixins/toaster'
 
 export default {
-  name: 'UserSigninForm',
+  name: 'BtUserResendConfirmationForm',
   components: {
     'vue-form-generator': VueFormGenerator.component,
   },
@@ -30,7 +30,7 @@ export default {
   },
   data() {
     return {
-      schema: UserSignInFormSchema,
+      schema: BtUserConfirmationFormSchema,
     }
   },
   computed: {
@@ -40,23 +40,31 @@ export default {
     },
   },
   methods: {
-    ...mapActions('authentication', ['signIn']),
-    ...mapActions('people', ['getMe']),
+    ...mapActions('authentication', ['resendConfirmation']),
     onValidated(isValid) {
       if (isValid) {
-        this.signIn(this.model).then(() => {
+        this.resendConfirmation(this.model).then(() => {
           if (this.$route.path !== '/') {
             this.$router.push('/').then(() => {
-              this.$toaster('You are now signed in!', 'success')
-              this.getMe().then((response) => {
-                console.log(response)
-              }).catch((err) => {
-                console.log(err)
-              })
+              this.$toaster(
+                `Please click on the account confirmation link emailed to ${this.model.user.email} to confirm your account.`,
+                'info',
+                {
+                  title: 'Please check your email',
+                  autoHideDelay: 6000,
+                },
+              )
             })
           }
-        }).catch((response) => {
-          console.log(response)
+        }).catch(({ response }) => {
+          const errors = response.data.errors.email.join(', ')
+          this.$toaster(
+            `Email ${errors}`,
+            'danger',
+            {
+              title: 'Confirmation Error',
+            },
+          )
         })
       }
     },
@@ -68,7 +76,7 @@ export default {
 @import 'bootstrap/scss/_functions.scss';
 @import 'bootstrap/scss/_variables.scss';
 
-#sign-in-form {
+#resend-confirmation-form {
   ::v-deep .help-block {
     margin-top: 5px;
 

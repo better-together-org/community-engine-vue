@@ -1,7 +1,7 @@
 <template>
   <vue-form-generator
-    id="new-password-form"
-    tag="div"
+    id="sign-in-form"
+    tag="form"
     :schema="schema"
     :model="localModel"
     rows="3"
@@ -13,11 +13,11 @@
 <script>
 import { mapActions } from 'vuex'
 import VueFormGenerator from 'vue-form-generator'
-import UserNewPasswordFormSchema from '../forms/UserNewPasswordFormSchema'
+import BtUserSignInFormSchema from '../forms/BtUserSignInFormSchema'
 import toaster from '../mixins/toaster'
 
 export default {
-  name: 'UserNewPasswordForm',
+  name: 'UserSigninForm',
   components: {
     'vue-form-generator': VueFormGenerator.component,
   },
@@ -30,7 +30,7 @@ export default {
   },
   data() {
     return {
-      schema: UserNewPasswordFormSchema,
+      schema: BtUserSignInFormSchema,
     }
   },
   computed: {
@@ -40,19 +40,19 @@ export default {
     },
   },
   methods: {
-    ...mapActions('authentication', ['newPassword']),
+    ...mapActions('authentication', ['signIn']),
+    ...mapActions('people', ['getMe']),
     onValidated(isValid) {
       if (isValid) {
-        this.newPassword(this.model).then(() => {
+        this.signIn(this.model).then(() => {
           if (this.$route.path !== '/') {
-            this.$router.push('/users/sign-in').then(() => {
-              this.$toaster(
-                'You can now log in with your new password',
-                'success',
-                {
-                  title: 'Your password has been changed',
-                },
-              )
+            this.$router.push('/').then(() => {
+              this.$toaster('You are now signed in!', 'success')
+              this.getMe().then((response) => {
+                console.log(response)
+              }).catch((err) => {
+                console.log(err)
+              })
             })
           }
         }).catch((response) => {
@@ -68,7 +68,7 @@ export default {
 @import 'bootstrap/scss/_functions.scss';
 @import 'bootstrap/scss/_variables.scss';
 
-#new-password-form {
+#sign-in-form {
   ::v-deep .help-block {
     margin-top: 5px;
 
@@ -76,7 +76,7 @@ export default {
       color: theme-color('danger')
     }
   }
-  ::v-deep .hint {
+  .hint {
     margin-top: 5px;
   }
 }

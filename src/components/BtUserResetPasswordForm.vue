@@ -1,6 +1,6 @@
 <template>
   <vue-form-generator
-    id="resend-confirmation-form"
+    id="reset-password-form"
     tag="div"
     :schema="schema"
     :model="localModel"
@@ -13,11 +13,11 @@
 <script>
 import { mapActions } from 'vuex'
 import VueFormGenerator from 'vue-form-generator'
-import UserConfirmationFormSchema from '../forms/UserConfirmationFormSchema'
+import BtUserResetPasswordFormSchema from '../forms/BtUserResetPasswordFormSchema'
 import toaster from '../mixins/toaster'
 
 export default {
-  name: 'UserResendConfirmationForm',
+  name: 'BtUserResetPasswordForm',
   components: {
     'vue-form-generator': VueFormGenerator.component,
   },
@@ -30,7 +30,7 @@ export default {
   },
   data() {
     return {
-      schema: UserConfirmationFormSchema,
+      schema: BtUserResetPasswordFormSchema,
     }
   },
   computed: {
@@ -40,31 +40,25 @@ export default {
     },
   },
   methods: {
-    ...mapActions('authentication', ['resendConfirmation']),
+    ...mapActions('authentication', ['resetPassword']),
     onValidated(isValid) {
       if (isValid) {
-        this.resendConfirmation(this.model).then(() => {
+        this.resetPassword(this.model).then(() => {
           if (this.$route.path !== '/') {
             this.$router.push('/').then(() => {
               this.$toaster(
-                `Please click on the account confirmation link emailed to ${this.model.user.email} to confirm your account.`,
+                `Please click on the reset password link emailed to ${this.model.email} to set a new password.`,
                 'info',
                 {
                   title: 'Please check your email',
                   autoHideDelay: 6000,
+                  toaster: 'b-toaster-top-center',
                 },
               )
             })
           }
-        }).catch(({ response }) => {
-          const errors = response.data.errors.email.join(', ')
-          this.$toaster(
-            `Email ${errors}`,
-            'danger',
-            {
-              title: 'Confirmation Error',
-            },
-          )
+        }).catch((response) => {
+          console.log(response)
         })
       }
     },
@@ -76,7 +70,7 @@ export default {
 @import 'bootstrap/scss/_functions.scss';
 @import 'bootstrap/scss/_variables.scss';
 
-#resend-confirmation-form {
+#reset-password-form {
   ::v-deep .help-block {
     margin-top: 5px;
 

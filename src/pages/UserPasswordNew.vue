@@ -2,18 +2,18 @@
   <div id="new-password">
     <section>
       <h2>Create a New Password</h2>
-      <UserNewPasswordForm :model="model" />
+      <BtUserNewPasswordForm :model="model" />
     </section>
   </div>
 </template>
 
 <script>
-import UserNewPasswordForm from '../components/UserNewPasswordForm.vue'
+import BtUserNewPasswordForm from '../components/BtUserNewPasswordForm.vue'
 
 export default {
   name: 'UsersNewPassword',
   components: {
-    UserNewPasswordForm,
+    BtUserNewPasswordForm,
   },
   props: {
     resetPasswordToken: {

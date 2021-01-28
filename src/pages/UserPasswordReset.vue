@@ -2,7 +2,7 @@
   <div id="reset-password">
     <section>
       <h2>Reset Your Password</h2>
-      <UserResetPasswordForm :model="user" />
+      <BtUserResetPasswordForm :model="user" />
       <div>
         <b-link to="/users/sign-in">
           Remembered your password? Sign in!
@@ -18,12 +18,12 @@
 </template>
 
 <script>
-import UserResetPasswordForm from '../components/UserResetPasswordForm.vue'
+import BtUserResetPasswordForm from '../components/BtUserResetPasswordForm.vue'
 
 export default {
   name: 'UsersResetPassword',
   components: {
-    UserResetPasswordForm,
+    BtUserResetPasswordForm,
   },
   data() {
     return {

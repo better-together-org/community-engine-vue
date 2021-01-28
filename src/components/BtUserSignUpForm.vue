@@ -30,11 +30,11 @@
 <script>
 import { mapActions } from 'vuex'
 import VueFormGenerator from 'vue-form-generator'
-import UserSignUpFormSchema from '../forms/UserSignUpFormSchema'
+import BtUserSignUpFormSchema from '../forms/BtUserSignUpFormSchema'
 import toaster from '../mixins/toaster'
 
 export default {
-  name: 'UserSignUpForm',
+  name: 'BtUserSignUpForm',
   components: {
     'vue-form-generator': VueFormGenerator.component,
   },
@@ -47,7 +47,7 @@ export default {
   },
   data() {
     return {
-      schema: UserSignUpFormSchema,
+      schema: BtUserSignUpFormSchema,
       errors: {},
     }
   },

@@ -4,13 +4,13 @@ import Vue from 'vue'
 import './plugins/bootstrap-vue'
 import BtApp from './BtApp.vue'
 import './registerServiceWorker'
-import router from './router'
+import BtRouter from './router'
 import store from './store'
 
 Vue.config.productionTip = false
 
 new Vue({
-  router,
+  BtRouter,
   store,
   render: (h) => h(BtApp),
 }).$mount('#app')

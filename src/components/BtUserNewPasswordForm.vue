@@ -1,6 +1,6 @@
 <template>
   <vue-form-generator
-    id="reset-password-form"
+    id="new-password-form"
     tag="div"
     :schema="schema"
     :model="localModel"
@@ -13,11 +13,11 @@
 <script>
 import { mapActions } from 'vuex'
 import VueFormGenerator from 'vue-form-generator'
-import UserResetPasswordFormSchema from '../forms/UserResetPasswordFormSchema'
+import BtUserNewPasswordFormSchema from '../forms/BtUserNewPasswordFormSchema'
 import toaster from '../mixins/toaster'
 
 export default {
-  name: 'UserResetPasswordForm',
+  name: 'BtUserNewPasswordForm',
   components: {
     'vue-form-generator': VueFormGenerator.component,
   },
@@ -30,7 +30,7 @@ export default {
   },
   data() {
     return {
-      schema: UserResetPasswordFormSchema,
+      schema: BtUserNewPasswordFormSchema,
     }
   },
   computed: {
@@ -40,19 +40,17 @@ export default {
     },
   },
   methods: {
-    ...mapActions('authentication', ['resetPassword']),
+    ...mapActions('authentication', ['newPassword']),
     onValidated(isValid) {
       if (isValid) {
-        this.resetPassword(this.model).then(() => {
+        this.newPassword(this.model).then(() => {
           if (this.$route.path !== '/') {
-            this.$router.push('/').then(() => {
+            this.$router.push('/users/sign-in').then(() => {
               this.$toaster(
-                `Please click on the reset password link emailed to ${this.model.email} to set a new password.`,
-                'info',
+                'You can now log in with your new password',
+                'success',
                 {
-                  title: 'Please check your email',
-                  autoHideDelay: 6000,
-                  toaster: 'b-toaster-top-center',
+                  title: 'Your password has been changed',
                 },
               )
             })
@@ -70,7 +68,7 @@ export default {
 @import 'bootstrap/scss/_functions.scss';
 @import 'bootstrap/scss/_variables.scss';
 
-#reset-password-form {
+#new-password-form {
   ::v-deep .help-block {
     margin-top: 5px;
 
@@ -78,7 +76,7 @@ export default {
       color: theme-color('danger')
     }
   }
-  .hint {
+  ::v-deep .hint {
     margin-top: 5px;
   }
 }
