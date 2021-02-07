@@ -19,6 +19,7 @@ const getters = {
   // isAuthenticated() { return state.token !== '' },
   isAuthenticated: (state) => !!state.token,
   authStatus: (state) => state.status,
+  authToken: (state) => state.token,
 }
 
 // actions
