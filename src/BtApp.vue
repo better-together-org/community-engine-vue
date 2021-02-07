@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import BtNav from './components/Nav.vue'
+import BtNav from './components/BtNav.vue'
 import BtMainContent from './components/MainContent.vue'
 
 export default {
