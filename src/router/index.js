@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Home from '../pages/Home.vue'
 
 Vue.use(VueRouter)
 
@@ -7,7 +8,7 @@ const BtRoutes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import(/* webpackChunkName: "about" */ '../pages/Home.vue'),
+    component: Home,
   },
   {
     path: '/users/sign-in',
