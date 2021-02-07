@@ -38,11 +38,9 @@ const actions = {
   //   })
   // },
   getMe({ commit }) {
-    console.log(axios)
     return new Promise((resolve, reject) => {
       axios.get(`${process.env.VUE_APP_BETTER_TOGETHER_API_URI}/bt/api/v1/people/me`)
         .then((response) => {
-          console.log(response)
           commit('SET_CURRENT_PERSON', response.data)
           resolve(response)
         }).catch((response) => {

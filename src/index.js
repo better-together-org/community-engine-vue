@@ -21,8 +21,6 @@ const CommunityEngineVue = /* #__PURE__ */ {
   NAME,
 }
 
-console.log('Loading Community Engine')
-
 export {
   install,
   NAME,

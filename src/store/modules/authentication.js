@@ -44,7 +44,7 @@ const actions = {
     })
   },
   signOut({ commit }) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       BtApiAuth.delete(
         'sign-out',
       )
@@ -95,7 +95,6 @@ const actions = {
   },
   sendConfirmation(_ctx, params) {
     return new Promise((resolve, reject) => {
-      console.log(params)
       BtApiAuth.get(
         'confirmation',
         { params },
