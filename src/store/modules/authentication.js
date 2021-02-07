@@ -45,9 +45,19 @@ const actions = {
   },
   signOut({ commit }) {
     return new Promise((resolve) => {
-      commit('AUTH_LOGOUT')
-      delete axios.defaults.headers.common.Authorization
-      commit('CommunityEngine/People/CLEAR_CURRENT_PERSON', null, { root: true })
+      BtApiAuth.delete(
+        'sign-out',
+      )
+        .then(({ data }) => {
+          resolve(data)
+        }).catch((response) => {
+          commit('AUTH_ERROR', response)
+          reject(response)
+        }).then(() => {
+          commit('AUTH_LOGOUT')
+          delete axios.defaults.headers.common.Authorization
+          commit('CommunityEngine/People/CLEAR_CURRENT_PERSON', null, { root: true })
+        })
       resolve()
     })
   },
