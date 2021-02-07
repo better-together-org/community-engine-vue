@@ -73,10 +73,12 @@ const BtRoutes = [
   },
 ]
 
+const routes = BtRoutes
+
 const BtRouter = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  BtRoutes,
+  routes,
 })
 
 export { BtRoutes }
