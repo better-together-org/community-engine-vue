@@ -14,14 +14,14 @@
 import { mapActions } from 'vuex'
 import VueFormGenerator from 'vue-form-generator'
 import BtUserSignInFormSchema from '../forms/BtUserSignInFormSchema'
-import toaster from '../mixins/toaster'
+import errorHandling from '../mixins/error-handling'
 
 export default {
   name: 'UserSigninForm',
   components: {
     'vue-form-generator': VueFormGenerator.component,
   },
-  mixins: [toaster],
+  mixins: [errorHandling],
   props: {
     model: {
       type: Object,
@@ -50,13 +50,14 @@ export default {
               this.$toaster('You are now signed in!', 'success')
               this.getMe().then((response) => {
                 console.log(response)
-              }).catch((err) => {
-                console.log(err)
+              }).catch(({ response }) => {
+                console.log(response)
+                this.$handleResponseError(response)
               })
             })
           }
-        }).catch((response) => {
-          console.log(response)
+        }).catch(({ response }) => {
+          this.$handleResponseError(response)
         })
       }
     },
