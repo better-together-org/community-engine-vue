@@ -71,6 +71,14 @@ export default {
       color: $default-text-color;
       text-align: right;
     }
+
+    ::v-deep a.dropdown-toggle {
+      > span {
+        max-width: 75px;
+        display: inline-block;
+        overflow: clip;
+      }
+    }
   }
 
   #mobile-collapse {
