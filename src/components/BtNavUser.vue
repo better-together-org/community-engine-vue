@@ -6,6 +6,12 @@
   >
     <b-dropdown-item
       v-if="isAuthenticated"
+      to="/me"
+    >
+      Me
+    </b-dropdown-item>
+    <b-dropdown-item
+      v-if="isAuthenticated"
       @click="signOutAction"
     >
       Sign Out
