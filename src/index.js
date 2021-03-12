@@ -1,9 +1,15 @@
-import BtNavUser from './components/BtNavUser.vue'
+import './plugins'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 import BtRouter, { BtRoutes } from './router'
 import BtStore, { BtStoreModules, BtStorePlugins } from './store'
+
+import BtHeader from './components/BtHeader.vue'
+import BtMainContent from './components/BtMainContent.vue'
+import BtNavBar from './components/BtNavBar.vue'
+import BtNavUser from './components/BtNavUser.vue'
 
 import BtUserNewPasswordForm from './components/BtUserNewPasswordForm.vue'
 import BtUserResendConfirmationForm from './components/BtUserResendConfirmationForm.vue'
@@ -34,6 +40,9 @@ export {
 }
 
 export {
+  BtHeader,
+  BtMainContent,
+  BtNavBar,
   BtNavUser,
   BtRouter,
   BtRoutes,

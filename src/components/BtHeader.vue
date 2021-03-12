@@ -4,7 +4,7 @@
     class="container"
   >
     <b-navbar
-      toggleable="md"
+      toggleable="lg"
       type="dark"
       variant="dark"
     >
@@ -15,50 +15,31 @@
         is-nav
         invisible
       >
-        <b-navbar-nav
-          class="ml-auto"
-          pills
-          align="center"
-        >
-          <b-nav-item
-            to="/"
-          >
-            Home
-          </b-nav-item>
-          <BtNavUser />
-        </b-navbar-nav>
+        <BtNavBar navbar-class="ml-auto justify-content-center" />
       </b-collapse>
 
       <b-collapse
         id="mobile-collapse"
         is-nav
       >
-        <b-navbar-nav
-          class="m-auto d-block d-lg-none"
-          pills
-          align="center"
-        >
-          <b-nav-item
-            to="/"
-          >
-            Home
-          </b-nav-item>
-          <BtNavUser />
-        </b-navbar-nav>
+        <BtNavBar
+          navbar-class="m-auto d-block d-lg-none"
+          navitem-class="center"
+        />
       </b-collapse>
     </b-navbar>
   </header>
 </template>
 
 <script>
-import BtBrandingLogo from './BrandingLogo.vue'
-import BtNavUser from './BtNavUser.vue'
+import BtBrandingLogo from './BtBrandingLogo.vue'
+import BtNavBar from './BtNavBar.vue'
 
 export default {
-  name: 'BtNav',
+  name: 'BtHeader',
   components: {
     BtBrandingLogo,
-    BtNavUser,
+    BtNavBar,
   },
 }
 </script>

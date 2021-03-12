@@ -1,5 +1,6 @@
 import Authentication from './authentication'
 import Communities from './communities'
+import Menus from './menus'
 import People from './people'
 
 export default {
@@ -7,6 +8,7 @@ export default {
   modules: {
     Authentication,
     Communities,
+    Menus,
     People,
   },
 }
