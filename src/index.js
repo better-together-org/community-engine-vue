@@ -1,4 +1,7 @@
 import BtNavUser from './components/BtNavUser.vue'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import BtRouter, { BtRoutes } from './router'
 import BtStore, { BtStoreModules, BtStorePlugins } from './store'
 
@@ -8,9 +11,12 @@ import BtUserResetPasswordForm from './components/BtUserResetPasswordForm.vue'
 import BtUserSignInForm from './components/BtUserSignInForm.vue'
 import BtUserSignUpForm from './components/BtUserSignUpForm.vue'
 
+library.add(faExternalLinkAlt)
+
 const NAME = 'CommunityEngineVue'
 
 const install = (Vue) => {
+  Vue.component('FontAwesomeIcon', FontAwesomeIcon)
   Vue.component('BtNavUser', BtNavUser)
   Vue.component('BtUserNewPasswordForm', BtUserNewPasswordForm)
 }
