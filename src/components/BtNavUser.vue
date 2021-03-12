@@ -28,6 +28,11 @@
     >
       Sign Up
     </b-dropdown-item>
+    <b-dropdown-item
+      to="/"
+    >
+      Better Together
+    </b-dropdown-item>
   </b-nav-item-dropdown>
 </template>
 
