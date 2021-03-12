@@ -4,14 +4,6 @@
     pills
     align="center"
   >
-    <!--
-    <b-nav-item
-      :class="navitemClass"
-      to="/contact"
-      title="Contact our Community"
-    >
-      Contact
-    </b-nav-item> -->
     <BtNavItem
       v-for="menuItem in headerMenuItems"
       :id="menuItem.id"
