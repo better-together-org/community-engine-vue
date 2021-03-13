@@ -17,11 +17,9 @@ export default {
 @import 'bootstrap/scss/_functions.scss';
 @import 'bootstrap/scss/_variables.scss';
 @import 'bootstrap/scss/_mixins.scss';
+@import '../stylesheets/theme.scss';
 
 #main-content {
-  // height: 70vh;
-  // overflow-y: scroll;
-  // padding-top: 2.5vh;
   margin-bottom: 5vh;
 
   h1, h2, h3, h4, h5, h6 {
@@ -34,6 +32,14 @@ export default {
     margin-bottom: 20px;
     padding: 15px;
     background-color: #fff;
+
+    a {
+      color: $accent-color;
+
+      &:hover {
+        color: $accent-color;
+      }
+    }
 
     .heading {
       margin-top: 20px;

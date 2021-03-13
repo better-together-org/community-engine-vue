@@ -32,7 +32,9 @@
       <p class="my-4">
         Fill out your profile details
       </p>
-      <p v-if="currentPersonChanged">changed</p>
+      <p v-if="currentPersonChanged">
+        changed
+      </p>
       <BtProfileForm :model="currentPerson" />
       <div>{{ formErrors }} </div>
     </b-modal>

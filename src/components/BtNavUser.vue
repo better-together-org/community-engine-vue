@@ -1,6 +1,6 @@
 <template>
   <b-nav-item-dropdown
-    id="user-dropdown"
+    class="user-dropdown"
     :text="dropdownText"
     right
   >
@@ -77,36 +77,31 @@ export default {
 <style scoped lang="scss">
   @import '../stylesheets/theme.scss';
 
-  #user-dropdown {
+  .user-dropdown {
     ::v-deep a.dropdown-item {
+      font-weight: bold;
       color: $default-text-color;
       text-align: right;
+
+      &.router-link-exact-active,
+      &:hover {
+        color: $accent-color;
+      }
     }
 
     ::v-deep a.dropdown-toggle {
+      font-weight: bold;
+      color: $default-text-color-bg-dark;
+
+      &.router-link-exact-active,
+      &:hover {
+        color: $accent-color;
+      }
+
       > span {
         max-width: 75px;
         display: inline-block;
         overflow: clip;
-      }
-    }
-  }
-
-  #mobile-collapse {
-    #user-dropdown {
-      ::v-deep .dropdown-menu {
-        background-color: initial;
-
-        a.dropdown-item {
-          color: $default-text-color-bg-dark;
-          text-align: center;
-
-          &:hover,
-          &.router-link-exact-active {
-            color: $accent-color;
-            background-color: initial
-          }
-        }
       }
     }
   }

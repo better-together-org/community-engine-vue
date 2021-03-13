@@ -14,7 +14,7 @@
       :title="menuItem.title"
       :path="menuItem.path"
       :url="menuItem.url"
-      :navItemClass="navitemClass"
+      :navitem-class="navitemClass"
     />
     <BtNavUser v-if="isAuthenticated" />
   </b-navbar-nav>

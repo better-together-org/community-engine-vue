@@ -68,4 +68,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '../stylesheets/theme.scss';
+.nav-item {
+  color: red;
+
+  ::v-deep > a.nav-link {
+    font-weight: bold;
+    color: $default-text-color-bg-dark;
+
+    &.router-link-exact-active,
+    &:hover {
+      color: $accent-color;
+    }
+  }
+}
 </style>

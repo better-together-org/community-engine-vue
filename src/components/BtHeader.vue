@@ -1,37 +1,42 @@
 <template>
   <header
-    id="nav"
-    class="container"
+    id="bt-header"
+    class="container-fluid"
   >
     <b-navbar
       toggleable="lg"
       type="dark"
-      variant="dark"
+      :style="headerStyle()"
     >
-      <BtBrandingLogo />
-      <b-navbar-toggle target="mobile-collapse" />
-      <b-collapse
-        id="right-collapse"
-        is-nav
-        invisible
+      <div
+        id="nav-inner"
+        class="container"
       >
-        <BtNavBar navbar-class="ml-auto justify-content-center" />
-      </b-collapse>
+        <BtBrandingLogo />
+        <b-navbar-toggle target="mobile-collapse" />
+        <b-collapse
+          id="right-collapse"
+          is-nav
+          invisible
+        >
+          <BtNavBar navbar-class="ml-auto justify-content-center" />
+        </b-collapse>
 
-      <b-collapse
-        id="mobile-collapse"
-        is-nav
-      >
-        <BtNavBar
-          navbar-class="m-auto d-block d-lg-none"
-          navitem-class="center"
-        />
-      </b-collapse>
+        <b-collapse
+          id="mobile-collapse"
+          is-nav
+        >
+          <BtNavBar
+            navbar-class="m-auto d-block d-lg-none center"
+          />
+        </b-collapse>
+      </div>
     </b-navbar>
   </header>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import BtBrandingLogo from './BtBrandingLogo.vue'
 import BtNavBar from './BtNavBar.vue'
 
@@ -41,6 +46,23 @@ export default {
     BtBrandingLogo,
     BtNavBar,
   },
+  methods: {
+    headerStyle() {
+      const styles = {
+        backgroundColor: this.customization.backgroundColor,
+      }
+
+      if (this.customization.coverImageUrl !== '' && this.customization.coverImageUrl !== undefined) {
+        styles.backgroundImage = `url(${this.customization.coverImageUrl})`
+        styles.backgroundPositionY = this.customization.coverImagePositionY
+      }
+
+      return styles
+    },
+  },
+  computed: {
+    ...mapGetters('CommunityEngine/Communities', ['customization']),
+  },
 }
 </script>
 
@@ -49,21 +71,47 @@ export default {
 @import 'bootstrap/scss/_functions.scss';
 @import 'bootstrap/scss/_variables.scss';
 @import 'bootstrap/scss/_mixins.scss';
+@import '../stylesheets/theme.scss';
 
-#nav {
-  .navbar {
+#bt-header {
+  min-height: 15vh;
+
+  nav {
     z-index: 1000;
-  }
+    background-repeat: no-repeat;
+    background-size: cover;
 
-  #mobile-collapse.show {
-    li {
-      text-align: center;
+    ::v-deep #nav-inner {
+      position: relative;
     }
   }
 
-  @include media-breakpoint-up(md) {
-    #mobile-collapse {
-      display: none !important;
+  #right-collapse {
+    bottom: 0;
+    position: absolute;
+    right: 0;
+  }
+
+  #mobile-collapse.show {
+    ::v-deep .user-dropdown {
+      a.dropdown-toggle {
+        > span {
+          max-width: initial;
+        }
+      }
+      a.dropdown-item {
+        text-align: center;
+        color: $default-text-color-bg-dark;
+
+        &.router-link-exact-active,
+        &:hover {
+          background-color: initial;
+          color: $accent-color;
+        }
+      }
+      ul.dropdown-menu {
+        background-color: initial;
+      }
     }
   }
 

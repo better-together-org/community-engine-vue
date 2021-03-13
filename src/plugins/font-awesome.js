@@ -5,4 +5,4 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faExternalLinkAlt)
 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('FontAwesomeIcon', FontAwesomeIcon)
