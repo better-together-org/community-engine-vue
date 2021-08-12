@@ -9,6 +9,7 @@ import BtStore, { BtStoreModules, BtStorePlugins } from './store'
 import BtHeader from './components/BtHeader.vue'
 import BtMainContent from './components/BtMainContent.vue'
 import BtNavBar from './components/BtNavBar.vue'
+import BtNavItem from './components/BtNavItem.vue'
 import BtNavUser from './components/BtNavUser.vue'
 
 import BtUserNewPasswordForm from './components/BtUserNewPasswordForm.vue'
@@ -43,6 +44,7 @@ export {
   BtHeader,
   BtMainContent,
   BtNavBar,
+  BtNavItem,
   BtNavUser,
   BtRouter,
   BtRoutes,
