@@ -16,7 +16,7 @@ const state = {
       coverImageUrl: '',
       coverImagePositionY: 'center',
       imageUrl: '',
-    }
+    },
   },
 }
 

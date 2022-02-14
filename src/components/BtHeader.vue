@@ -5,14 +5,16 @@
   >
     <b-navbar
       toggleable="lg"
-      type="dark"
+      :type="backgroundStyle"
       :style="headerStyle()"
     >
       <div
         id="nav-inner"
         class="container"
       >
-        <BtBrandingLogo />
+        <slot name="branding-logo">
+          <BtBrandingLogo />
+        </slot>
         <b-navbar-toggle target="mobile-collapse" />
         <b-collapse
           id="right-collapse"
@@ -46,6 +48,15 @@ export default {
     BtBrandingLogo,
     BtNavBar,
   },
+  props: {
+    backgroundStyle: {
+      type: String,
+      default: () => 'dark',
+    },
+  },
+  computed: {
+    ...mapGetters('CommunityEngine/Communities', ['customization']),
+  },
   methods: {
     headerStyle() {
       const styles = {
@@ -59,9 +70,6 @@ export default {
 
       return styles
     },
-  },
-  computed: {
-    ...mapGetters('CommunityEngine/Communities', ['customization']),
   },
 }
 </script>
