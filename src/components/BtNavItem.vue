@@ -22,6 +22,10 @@
 export default {
   name: 'BtNavItem',
   props: {
+    activeClass: {
+      type: String,
+      default: null,
+    },
     id: {
       type: Number,
       default: 0,
@@ -63,6 +67,7 @@ export default {
     localHref() { return this.external ? this.url : undefined },
     localTitle() { return this.title !== '' ? this.title : this.label },
     localTo() { return !this.external ? this.path : undefined },
+    localActiveClass() { return !this.activeClass ? this.activeClass : undefined },
   },
 }
 </script>
