@@ -1,16 +1,33 @@
 <template>
-  <b-navbar-brand href="/">
+  <b-navbar-brand :href="rootUrl">
     <img
       class="logo"
-      src="../assets/better-together-logo.png"
-      alt="Better Together"
+      :src="logoUrl"
+      :alt="alt"
     >
   </b-navbar-brand>
 </template>
 
 <script>
+
+import defaultLogo from '../assets/better-together-logo.png'
+
 export default {
   name: 'BtBrandingLogo',
+  props: {
+    alt: {
+      type: String,
+      default: () => 'Better Together',
+    },
+    logoUrl: {
+      type: String,
+      default: () => defaultLogo,
+    },
+    rootUrl: {
+      type: String,
+      default: () => '/',
+    },
+  },
 }
 </script>
 
