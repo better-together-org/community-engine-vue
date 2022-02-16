@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    <BtNav />
+    <BtHeader background-style="light" />
     <BtMainContent />
   </div>
 </template>
 
 <script>
-import BtNav from './components/BtNav.vue'
-import BtMainContent from './components/MainContent.vue'
+import BtHeader from './components/BtHeader.vue'
+import BtMainContent from './components/BtMainContent.vue'
 
 export default {
   name: 'BtApp',
   components: {
-    BtNav,
+    BtHeader,
     BtMainContent,
   },
 }
