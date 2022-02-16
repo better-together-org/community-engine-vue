@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../pages/Home.vue'
 import Me from '../pages/Me.vue'
+import CommunityEngine from '../pages/CommunityEngine.vue'
 
 // import store from '../store'
 
@@ -28,7 +29,7 @@ import Me from '../pages/Me.vue'
 
 // const documentTitle = 'Better Together'
 
-const setPageTitleAndMeta = (to, from, next) => {
+export const setPageTitleAndMeta = (to, from, next) => {
   // This goes through the matched routes from last to first,
   // finding the closest route with a title.
   // eg. if we have /some/deep/nested/route and /some, /deep, and
@@ -68,7 +69,7 @@ const setPageTitleAndMeta = (to, from, next) => {
 
 Vue.use(VueRouter)
 
-const BtRoutes = [
+export const BtRoutes = [
   {
     path: '/',
     name: 'Home',
@@ -105,6 +106,28 @@ const BtRoutes = [
       ],
     },
   },
+  {
+    path: '/community-engine',
+    name: 'Community Engine',
+    component: CommunityEngine,
+    meta: {
+      title: 'The Community Engine',
+      metaTags: [
+        {
+          name: 'description',
+          content: 'The Community Engine is an open community platform for everyone',
+        },
+        {
+          property: 'og:description',
+          content: 'The Community Engine is an open community platform for everyone',
+        },
+      ],
+    },
+  },
+  // {
+  //   path: '/users/',
+  //   redirect:
+  // },
   {
     path: '/users/sign-in',
     name: 'Sign In',
@@ -180,6 +203,6 @@ const BtRouter = new VueRouter({
 // This callback runs before every route change, including on page load.
 BtRouter.beforeEach(setPageTitleAndMeta)
 
-export { BtRoutes }
+// export { BtRoutes }
 
 export default BtRouter
