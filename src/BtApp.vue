@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import BtNav from './components/BtNav.vue'
-import BtMainContent from './components/MainContent.vue'
+import BtNav from './components/BtNavBar.vue'
+import BtMainContent from './components/BtMainContent.vue'
 
 export default {
   name: 'BtApp',
