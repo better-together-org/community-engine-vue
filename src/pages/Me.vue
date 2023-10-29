@@ -8,12 +8,9 @@
     >
       <div class="col">
         <h1>Me</h1>
-        <p>
-          My page
-        </p>
         <div v-if="hasMe">
-          Person:
-          {{ me }}
+          <h2>{{ me.name }}</h2>
+          <p>{{ me.description }}</p>
         </div>
         <b-btn
           v-if="!hasMe"
