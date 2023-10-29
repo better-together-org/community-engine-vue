@@ -83,6 +83,14 @@ export default {
         }
       }
 
+      ul.dropdown-menu a {
+        color: $default-text-color;
+
+        &:hover {
+          color: $accent-color;
+        }
+      }
+
       @include media-breakpoint-up(md) {
         li.nav-item {
           margin-right: 1vw;
