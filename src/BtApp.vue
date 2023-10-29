@@ -1,19 +1,35 @@
 <template>
   <div id="app">
-    <BtNav />
+    <BtHeader />
     <BtMainContent />
   </div>
 </template>
 
 <script>
-import BtNav from './components/BtNavBar.vue'
+import { mapActions } from 'vuex'
+import BtHeader from './components/BtHeader.vue'
 import BtMainContent from './components/BtMainContent.vue'
 
 export default {
   name: 'BtApp',
   components: {
-    BtNav,
+    BtHeader,
     BtMainContent,
+  },
+  mounted() {
+    this.setHeaderMenuItems([
+      {
+        id: 0,
+        external: false,
+        label: 'About',
+        path: '/about',
+        title: 'About the Better Together Community',
+        sortOrder: 0,
+      },
+    ])
+  },
+  methods: {
+    ...mapActions('CommunityEngine/Menus', ['setHeaderMenuItems']),
   },
 }
 </script>
