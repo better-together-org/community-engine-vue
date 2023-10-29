@@ -48,10 +48,8 @@ export default {
           if (this.$route.path !== '/') {
             this.$router.push('/').then(() => {
               this.$toaster('You are now signed in!', 'success')
-              this.getMe().then((response) => {
-                console.log(response)
-              }).catch(({ response }) => {
-                console.log(response)
+              this.getMe().catch(({ response }) => {
+                // console.log(response)
                 this.$handleResponseError(response)
               })
             })

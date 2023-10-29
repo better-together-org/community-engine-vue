@@ -31,14 +31,14 @@
 import { mapActions } from 'vuex'
 import VueFormGenerator from 'vue-form-generator'
 import BtUserSignUpFormSchema from '../forms/BtUserSignUpFormSchema'
-import toaster from '../mixins/toaster'
+import errorHandling from '../mixins/error-handling'
 
 export default {
   name: 'BtUserSignUpForm',
   components: {
     'vue-form-generator': VueFormGenerator.component,
   },
-  mixins: [toaster],
+  mixins: [errorHandling],
   props: {
     model: {
       type: Object,
@@ -76,12 +76,9 @@ export default {
               )
             })
           }
-        }).catch((err) => {
-          if (err.response) {
-            this.errors = err.response.data.errors
-          } else {
-            console.error(err)
-          }
+        }).catch(({ response }) => {
+          // console.log(response)
+          this.$handleResponseError(response)
         })
       }
     },

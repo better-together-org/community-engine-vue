@@ -14,14 +14,14 @@
 import { mapActions } from 'vuex'
 import VueFormGenerator from 'vue-form-generator'
 import BtUserNewPasswordFormSchema from '../forms/BtUserNewPasswordFormSchema'
-import toaster from '../mixins/toaster'
+import errorHandling from '../mixins/error-handling'
 
 export default {
   name: 'BtUserNewPasswordForm',
   components: {
     'vue-form-generator': VueFormGenerator.component,
   },
-  mixins: [toaster],
+  mixins: [errorHandling],
   props: {
     model: {
       type: Object,
@@ -55,8 +55,9 @@ export default {
               )
             })
           }
-        }).catch((response) => {
-          console.log(response)
+        }).catch(({ response }) => {
+          // console.log(response)
+          this.$handleResponseError(response)
         })
       }
     },
