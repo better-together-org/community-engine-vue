@@ -24,11 +24,13 @@
 import { mapGetters } from 'vuex'
 
 import BtNavItem from './BtNavItem.vue'
+import BtNavUser from './BtNavUser.vue'
 
 export default {
   name: 'NavBar',
   components: {
     BtNavItem,
+    BtNavUser,
   },
   props: {
     navbarClass: {
