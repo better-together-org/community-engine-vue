@@ -2,18 +2,18 @@
 
 echo "VUE_APP_BETTER_TOGETHER_API_URI=${VUE_APP_BETTER_TOGETHER_API_URI}" >> ./.env
 
-npm install --frozen-lockfile
+yarn install --frozen-lockfile
 
 if [ ! -d "dist" ]; then
     mkdir dist
 fi
 
-npm run build
+yarn build
 
 if [ $? -eq 0 ]; then
   echo "Build Success" # Do something here
 else
-  exit 1
+  exit $?
 fi
 
 # optionally, you can activate gzip support wih the following line:
