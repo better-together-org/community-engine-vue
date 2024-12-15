@@ -2,13 +2,13 @@
 
 echo "VUE_APP_BETTER_TOGETHER_API_URI=${VUE_APP_BETTER_TOGETHER_API_URI}" >> ./.env
 
-yarn install --frozen-lockfile
+npm install --frozen-lockfile
 
 if [ ! -d "dist" ]; then
     mkdir dist
 fi
 
-yarn build
+npm run build
 
 if [ $? -eq 0 ]; then
   echo "Build Success" # Do something here
