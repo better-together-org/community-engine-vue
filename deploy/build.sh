@@ -9,5 +9,12 @@ if [ ! -d "dist" ]; then
 fi
 
 yarn build
+
+if [ $? -eq 0 ]; then
+  echo "Build Success" # Do something here
+else
+  exit 1
+fi
+
 # optionally, you can activate gzip support wih the following line:
 find dist -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec gzip -f -k {} \;
