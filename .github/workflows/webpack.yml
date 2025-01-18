@@ -2,9 +2,9 @@ name: NodeJS with Webpack
 
 on:
   push:
-    branches: [ "production" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "production" ]
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -22,13 +22,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Install
-      run: |
-        npm install
-
     - name: Build
       run: |
-        npm run build
+        ./deploy/build.sh
 
     # - name: Lint
     #   run: |
