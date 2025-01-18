@@ -28,7 +28,7 @@
     "@fortawesome/vue-fontawesome": "^2.0.2",
     "@vue/runtime-dom": "^3.3.4",
     "axios": "^1.6.0",
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^5.0.1",
     "bootstrap-vue": "^2.23.1",
     "core-js": "^3.31.1",
     "crip-vue-loading": "^1.2.5",
