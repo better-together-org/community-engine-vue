@@ -186,4 +186,5 @@ export {
   OfflineBanner,
   ExtensionSlot,
 }
+export { useInstallPrompt, useSwUpdate, getCevWorkboxConfig } from './pwa/index'
 export default CommunityEngineVue
