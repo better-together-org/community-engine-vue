@@ -5,6 +5,7 @@
   >
     <BNavbar
       toggleable="lg"
+      :container="false"
       :variant="backgroundStyle"
       :style="headerStyle"
     >
