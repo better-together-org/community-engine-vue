@@ -1,19 +1,31 @@
 <template>
   <BForm @submit.prevent="handleSubmit">
-    <BFormGroup label="New Password *" label-for="new-password">
-      <BFormInput id="new-password" v-model="password" type="password" required minlength="12" placeholder="Your new password" />
-      <BFormText>Minimum 12 characters.</BFormText>
+    <BFormGroup :label="t('bt.auth.new_password')" label-for="new-password">
+      <BFormInput
+        id="new-password"
+        v-model="password"
+        type="password"
+        required
+        minlength="12"
+        :placeholder="t('bt.auth.new_password')"
+      />
+      <BFormText>{{ t('bt.auth.password_hint') }}</BFormText>
     </BFormGroup>
-    <BButton type="submit" variant="primary" class="w-100" :disabled="loading">Change Password</BButton>
+    <BButton type="submit" variant="primary" class="w-100" :disabled="loading">
+      {{ t('bt.auth.change_password') }}
+    </BButton>
   </BForm>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { BForm, BFormGroup, BFormInput, BFormText, BButton } from 'bootstrap-vue-next'
 import { useAuthStore } from '../stores/auth'
 import { useToaster } from '../composables/useToaster'
+
+const { t } = useI18n()
 
 const props = defineProps({
   resetPasswordToken: { type: String, default: '' },

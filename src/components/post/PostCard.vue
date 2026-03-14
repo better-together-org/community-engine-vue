@@ -33,7 +33,9 @@
     <template #footer>
       <slot name="footer">
         <div class="bt-post-card__actions d-flex align-items-center gap-2">
-          <BButton variant="outline-primary" size="sm" @click="$emit('view', post)">Read more</BButton>
+          <BButton variant="outline-primary" size="sm" @click="$emit('view', post)">
+            {{ t('bt.posts.read_more') }}
+          </BButton>
           <ExtensionSlot target="PostCard" slot="footer" :context="{ item: post }" />
         </div>
       </slot>
@@ -43,9 +45,12 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { BCard, BCardBody, BCardText, BBadge, BButton } from 'bootstrap-vue-next'
 import SyncBadge from '../sync/SyncBadge.vue'
 import ExtensionSlot from '../shared/ExtensionSlot.vue'
+
+const { t } = useI18n()
 
 const props = defineProps({
   post: { type: Object, required: true },

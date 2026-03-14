@@ -2,7 +2,7 @@
   <div id="me">
     <section id="introduction">
       <div class="col">
-        <h1>Me</h1>
+        <h1>{{ t('bt.navigation.me') }}</h1>
         <div v-if="peopleStore.hasMe">
           <h2>{{ peopleStore.me.name }}</h2>
           <p>{{ peopleStore.me.description }}</p>
@@ -12,17 +12,17 @@
           v-b-modal="'my-profile-modal'"
           variant="primary"
         >
-          Fill out your profile
+          {{ t('bt.person.fill_profile') }}
         </BButton>
       </div>
     </section>
     <BModal
       id="my-profile-modal"
-      title="My Profile"
+      :title="t('bt.person.my_profile')"
       @ok.prevent="setProfile"
     >
-      <p class="my-4">Fill out your profile details</p>
-      <p v-if="peopleStore.currentPersonChanged">changed</p>
+      <p class="my-4">{{ t('bt.person.fill_profile_details') }}</p>
+      <p v-if="peopleStore.currentPersonChanged">{{ t('bt.person.unsaved_changes') }}</p>
       <BtProfileForm :model="peopleStore.currentPerson" />
       <div>{{ formErrors }}</div>
     </BModal>
@@ -31,9 +31,12 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { BButton, BModal } from 'bootstrap-vue-next'
 import { usePeopleStore } from '../stores/people'
 import BtProfileForm from '../components/BtProfileForm.vue'
+
+const { t } = useI18n()
 
 const peopleStore = usePeopleStore()
 const formErrors = ref('')

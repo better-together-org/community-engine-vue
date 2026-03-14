@@ -1,10 +1,10 @@
 <template>
   <div class="bt-message-list">
     <div v-if="loading" class="text-center p-3 text-muted">
-      <slot name="loading">Loading messages…</slot>
+      <slot name="loading">{{ t('bt.messages.loading') }}</slot>
     </div>
     <div v-else-if="!messages.length" class="text-center p-3 text-muted">
-      <slot name="empty">No messages yet. Start the conversation!</slot>
+      <slot name="empty">{{ t('bt.messages.list_empty') }}</slot>
     </div>
     <template v-else>
       <MessageItem
@@ -16,7 +16,9 @@
   </div>
 </template>
 <script setup>
+import { useI18n } from 'vue-i18n'
 import MessageItem from './MessageItem.vue'
+const { t } = useI18n()
 defineProps({
   messages: { type: Array, default: () => [] },
   loading: { type: Boolean, default: false },

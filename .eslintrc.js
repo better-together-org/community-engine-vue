@@ -24,8 +24,8 @@ module.exports = {
     semi: ['error', 'never'],
     'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['currentState'] }],
     'vue/multi-word-component-names': 'off',
-    // Stage 0: warn only — strings not yet extracted. Will become 'error' in Stage 1.
-    '@intlify/vue-i18n/no-raw-text': 'warn',
+    // Stage 1: error — all strings extracted.
+    '@intlify/vue-i18n/no-raw-text': 'error',
   },
   settings: {
     'vue-i18n': {

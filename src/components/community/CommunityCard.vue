@@ -30,7 +30,7 @@
       <slot name="footer">
         <div class="bt-community-card__actions">
           <BButton variant="outline-primary" size="sm" @click="$emit('view', community)">
-            View Community
+            {{ t('bt.communities.view') }}
           </BButton>
           <ExtensionSlot target="CommunityCard" slot="footer" :context="{ item: community }" />
         </div>
@@ -41,9 +41,12 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { BCard, BCardBody, BCardText, BBadge, BButton } from 'bootstrap-vue-next'
 import SyncBadge from '../sync/SyncBadge.vue'
 import ExtensionSlot from '../shared/ExtensionSlot.vue'
+
+const { t } = useI18n()
 
 const props = defineProps({
   community: { type: Object, required: true },

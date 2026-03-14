@@ -1,34 +1,34 @@
 <template>
   <div class="bt-page-community-joatu">
     <div class="d-flex align-items-center justify-content-between mb-4">
-      <h2>Time Banking</h2>
-      <p class="text-muted mb-0">1 time credit = 1 hour. All labor equally valued.</p>
+      <h2>{{ t('bt.joatu.heading') }}</h2>
+      <p class="text-muted mb-0">{{ t('bt.joatu.tagline') }}</p>
     </div>
 
     <BTabs>
-      <BTab title="Offers">
+      <BTab :title="t('bt.joatu.tabs.offers')">
         <div class="pt-3">
           <div class="d-flex justify-content-end mb-3">
             <BButton variant="success" size="sm" @click="showOfferForm = !showOfferForm">
-              {{ showOfferForm ? 'Cancel' : '+ Add Offer' }}
+              {{ showOfferForm ? t('bt.actions.cancel') : t('bt.joatu.offers.add') }}
             </BButton>
           </div>
           <OfferForm v-if="showOfferForm" class="mb-4" @submit="handleCreateOffer" @cancel="showOfferForm = false" />
           <OfferList :offers="offers" :loading="offersLoading" @view="viewOffer" />
         </div>
       </BTab>
-      <BTab title="Requests">
+      <BTab :title="t('bt.joatu.tabs.requests')">
         <div class="pt-3">
           <div class="d-flex justify-content-end mb-3">
             <BButton variant="warning" size="sm" @click="showRequestForm = !showRequestForm">
-              {{ showRequestForm ? 'Cancel' : '+ Add Request' }}
+              {{ showRequestForm ? t('bt.actions.cancel') : t('bt.joatu.requests.add') }}
             </BButton>
           </div>
           <RequestForm v-if="showRequestForm" class="mb-4" @submit="handleCreateRequest" @cancel="showRequestForm = false" />
           <RequestList :requests="requests" :loading="requestsLoading" @view="viewRequest" />
         </div>
       </BTab>
-      <BTab title="Agreements">
+      <BTab :title="t('bt.joatu.tabs.agreements')">
         <div class="pt-3">
           <AgreementList :agreements="agreements" :loading="agreementsLoading" @view="viewAgreement" />
         </div>
@@ -38,6 +38,7 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { BTabs, BTab, BButton } from 'bootstrap-vue-next'
 import OfferList from '../../components/joatu/OfferList.vue'
@@ -48,6 +49,8 @@ import AgreementList from '../../components/joatu/AgreementList.vue'
 import { useJoaTuOffers } from '../../composables/useJoaTuOffers'
 import { useJoaTuRequests } from '../../composables/useJoaTuRequests'
 import { useJoaTuAgreements } from '../../composables/useJoaTuAgreements'
+
+const { t } = useI18n()
 
 const route = useRoute()
 const router = useRouter()

@@ -2,10 +2,10 @@
   <div class="bt-agreement-list">
     <slot name="header" />
     <div v-if="loading" class="bt-agreement-list__loading">
-      <slot name="loading"><div class="text-center p-4 text-muted">Loading agreements…</div></slot>
+      <slot name="loading"><div class="text-center p-4 text-muted">{{ t('bt.joatu.agreements.loading') }}</div></slot>
     </div>
     <div v-else-if="!agreements.length" class="bt-agreement-list__empty">
-      <slot name="empty"><div class="text-center p-4 text-muted">No agreements yet.</div></slot>
+      <slot name="empty"><div class="text-center p-4 text-muted">{{ t('bt.joatu.agreements.list_empty') }}</div></slot>
     </div>
     <template v-else>
       <slot
@@ -26,7 +26,9 @@
   </div>
 </template>
 <script setup>
+import { useI18n } from 'vue-i18n'
 import AgreementCard from './AgreementCard.vue'
+const { t } = useI18n()
 defineProps({
   agreements: { type: Array, default: () => [] },
   loading: { type: Boolean, default: false },

@@ -8,8 +8,11 @@
       :aria-live="syncStore.online ? 'polite' : 'assertive'"
     >
       <span class="sync-status-bar__icon">
+        <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
         <span v-if="!syncStore.online">⚡</span>
+        <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
         <span v-else-if="syncStore.syncing" class="sync-spin-icon">↻</span>
+        <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
         <span v-else>↻</span>
       </span>
       <span class="sync-status-bar__text">{{ statusText }}</span>
@@ -19,8 +22,10 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useSyncStore } from '../../stores/sync'
 
+const { t } = useI18n()
 const syncStore = useSyncStore()
 
 const showBar = computed(
@@ -36,12 +41,11 @@ const statusText = computed(() => {
   if (!syncStore.online) {
     const n = syncStore.pendingCount
     return n > 0
-      ? `You are offline. ${n} change${n === 1 ? '' : 's'} will sync when you reconnect.`
-      : 'You are offline. Changes will sync when you reconnect.'
+      ? `${t('bt.sync.status_bar_offline')} — ${t('bt.sync.pending_count', n)}`
+      : t('bt.sync.status_bar_offline')
   }
   if (syncStore.syncing || syncStore.pendingCount > 0) {
-    const n = syncStore.pendingCount
-    return `Syncing ${n} item${n === 1 ? '' : 's'}…`
+    return t('bt.sync.pending_count', syncStore.pendingCount)
   }
   return ''
 })

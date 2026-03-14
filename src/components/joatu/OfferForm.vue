@@ -1,27 +1,45 @@
 <template>
   <BForm class="bt-offer-form" @submit.prevent="handleSubmit">
-    <BFormGroup label="What are you offering?" label-for="offer-title">
-      <BFormInput id="offer-title" v-model="form.title" required placeholder="e.g. Web design help, Gardening, Guitar lessons" />
+    <BFormGroup :label="t('bt.joatu.offers.title_label')" label-for="offer-title">
+      <BFormInput
+        id="offer-title"
+        v-model="form.title"
+        required
+        :placeholder="t('bt.joatu.offers.title_placeholder')"
+      />
     </BFormGroup>
-    <BFormGroup label="Description" label-for="offer-description">
-      <BFormTextarea id="offer-description" v-model="form.description" rows="3" placeholder="Describe what you can offer in more detail…" />
+    <BFormGroup :label="t('bt.joatu.offers.description_label')" label-for="offer-description">
+      <BFormTextarea
+        id="offer-description"
+        v-model="form.description"
+        rows="3"
+        :placeholder="t('bt.joatu.offers.description_placeholder')"
+      />
     </BFormGroup>
-    <BFormGroup label="Category" label-for="offer-category">
-      <BFormInput id="offer-category" v-model="form.category" placeholder="e.g. Skills, Labour, Knowledge, Goods" />
+    <BFormGroup :label="t('bt.joatu.offers.category_label')" label-for="offer-category">
+      <BFormInput
+        id="offer-category"
+        v-model="form.category"
+        :placeholder="t('bt.joatu.offers.category_placeholder')"
+      />
     </BFormGroup>
-    <BFormGroup label="Time credits" label-for="offer-credits">
+    <BFormGroup :label="t('bt.joatu.offers.credits_label')" label-for="offer-credits">
       <BFormInput id="offer-credits" v-model.number="form.time_credits" type="number" min="1" max="100" />
-      <template #description>1 time credit = 1 hour. All labor is equally valued.</template>
+      <template #description>{{ t('bt.joatu.offers.credits_hint') }}</template>
     </BFormGroup>
     <div class="d-flex justify-content-end gap-2 mt-3">
-      <BButton type="button" variant="outline-secondary" @click="$emit('cancel')">Cancel</BButton>
-      <BButton type="submit" variant="success">Add Offer</BButton>
+      <BButton type="button" variant="outline-secondary" @click="$emit('cancel')">
+        {{ t('bt.actions.cancel') }}
+      </BButton>
+      <BButton type="submit" variant="success">{{ t('bt.joatu.offers.submit') }}</BButton>
     </div>
   </BForm>
 </template>
 <script setup>
 import { reactive } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { BForm, BFormGroup, BFormInput, BFormTextarea, BButton } from 'bootstrap-vue-next'
+const { t } = useI18n()
 const emit = defineEmits(['submit', 'cancel'])
 const form = reactive({ title: '', description: '', category: '', time_credits: 1 })
 function handleSubmit() {

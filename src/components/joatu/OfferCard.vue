@@ -11,7 +11,7 @@
         <div class="d-flex align-items-center gap-2 mb-2">
           <BBadge :variant="statusVariant">{{ offer.status }}</BBadge>
           <span class="bt-offer-card__credits">
-            <strong>{{ offer.time_credits }}</strong> time credit{{ offer.time_credits !== 1 ? 's' : '' }}
+            {{ t('bt.joatu.offers.credits_display', offer.time_credits) }}
           </span>
           <BBadge v-if="offer.category" variant="outline-secondary">{{ offer.category }}</BBadge>
         </div>
@@ -23,7 +23,9 @@
     <template #footer>
       <slot name="footer">
         <div class="d-flex align-items-center gap-2">
-          <BButton variant="outline-success" size="sm" @click="$emit('view', offer)">View Offer</BButton>
+          <BButton variant="outline-success" size="sm" @click="$emit('view', offer)">
+            {{ t('bt.joatu.offers.view') }}
+          </BButton>
           <ExtensionSlot target="OfferCard" slot="footer" :context="{ item: offer }" />
         </div>
       </slot>
@@ -32,9 +34,11 @@
 </template>
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { BCard, BCardBody, BCardText, BBadge, BButton } from 'bootstrap-vue-next'
 import SyncBadge from '../sync/SyncBadge.vue'
 import ExtensionSlot from '../shared/ExtensionSlot.vue'
+const { t } = useI18n()
 const props = defineProps({ offer: { type: Object, required: true } })
 defineEmits(['view'])
 const truncatedDescription = computed(() => { const d = props.offer.description || ''; return d.length > 150 ? d.slice(0, 150) + '…' : d })

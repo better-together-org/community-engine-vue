@@ -1,10 +1,12 @@
 <template>
   <div class="bt-community-posts">
     <div class="d-flex align-items-center justify-content-between mb-3">
-      <h2>Posts</h2>
-      <BButton v-if="authStore.isAuthenticated" variant="primary" @click="showForm = true">New Post</BButton>
+      <h2>{{ t('bt.navigation.posts') }}</h2>
+      <BButton v-if="authStore.isAuthenticated" variant="primary" @click="showForm = true">
+        {{ t('bt.posts.create') }}
+      </BButton>
     </div>
-    <BModal v-model="showForm" title="New Post" hide-footer>
+    <BModal v-model="showForm" :title="t('bt.posts.create')" hide-footer>
       <PostForm :community-id="communitySlug" @submit="createPost" />
     </BModal>
     <PostList :posts="items" :loading="loading" @view="goToPost" />
@@ -13,12 +15,15 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { BButton, BModal } from 'bootstrap-vue-next'
 import { useAuthStore } from '../../stores/auth'
 import { usePosts } from '../../composables/usePosts'
 import PostList from '../../components/post/PostList.vue'
 import PostForm from '../../components/post/PostForm.vue'
+
+const { t } = useI18n()
 
 const route = useRoute()
 const router = useRouter()

@@ -1,23 +1,37 @@
 <template>
   <BForm @submit.prevent="handleSubmit">
-    <BFormGroup label="Title" label-for="post-title">
-      <BFormInput id="post-title" v-model="form.title" required placeholder="Post title" />
+    <BFormGroup :label="t('bt.posts.title_label')" label-for="post-title">
+      <BFormInput
+        id="post-title"
+        v-model="form.title"
+        required
+        :placeholder="t('bt.posts.title_label')"
+      />
     </BFormGroup>
-    <BFormGroup label="Content" label-for="post-content">
-      <BFormTextarea id="post-content" v-model="form.content" rows="5" placeholder="What's on your mind?" />
+    <BFormGroup :label="t('bt.posts.content_label')" label-for="post-content">
+      <BFormTextarea
+        id="post-content"
+        v-model="form.content"
+        rows="5"
+        :placeholder="t('bt.posts.content_label')"
+      />
     </BFormGroup>
-    <BFormGroup label="Privacy" label-for="post-privacy">
+    <BFormGroup :label="t('bt.posts.privacy_label')" label-for="post-privacy">
       <BFormSelect id="post-privacy" v-model="form.privacy" :options="privacyOptions" />
     </BFormGroup>
     <BButton type="submit" variant="primary" :disabled="loading">
-      <BSpinner v-if="loading" small /> {{ loading ? 'Saving…' : 'Save Post' }}
+      <BSpinner v-if="loading" small />
+      {{ loading ? t('bt.posts.saving') : t('bt.posts.save') }}
     </BButton>
   </BForm>
 </template>
 
 <script setup>
 import { reactive, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { BForm, BFormGroup, BFormInput, BFormTextarea, BFormSelect, BButton, BSpinner } from 'bootstrap-vue-next'
+
+const { t } = useI18n()
 
 const props = defineProps({
   model: { type: Object, default: () => ({}) },

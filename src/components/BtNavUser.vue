@@ -1,21 +1,31 @@
 <template>
   <BNavItemDropdown class="user-dropdown" :text="dropdownText" end>
-    <BDropdownItem v-if="authStore.isAuthenticated" to="/me">Me</BDropdownItem>
-    <BDropdownItem v-if="authStore.isAuthenticated" @click="handleSignOut">Sign Out</BDropdownItem>
-    <BDropdownItem v-if="!authStore.isAuthenticated" to="/users/sign-in">Sign In</BDropdownItem>
-    <BDropdownItem v-if="!authStore.isAuthenticated" to="/users/sign-up">Sign Up</BDropdownItem>
-    <BDropdownItem to="/">Better Together</BDropdownItem>
+    <BDropdownItem v-if="authStore.isAuthenticated" to="/me">
+      {{ t('bt.navigation.me') }}
+    </BDropdownItem>
+    <BDropdownItem v-if="authStore.isAuthenticated" @click="handleSignOut">
+      {{ t('bt.auth.sign_out') }}
+    </BDropdownItem>
+    <BDropdownItem v-if="!authStore.isAuthenticated" to="/users/sign-in">
+      {{ t('bt.auth.sign_in') }}
+    </BDropdownItem>
+    <BDropdownItem v-if="!authStore.isAuthenticated" to="/users/sign-up">
+      {{ t('bt.auth.sign_up') }}
+    </BDropdownItem>
+    <BDropdownItem to="/">{{ t('bt.app.name') }}</BDropdownItem>
   </BNavItemDropdown>
 </template>
 
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { BNavItemDropdown, BDropdownItem } from 'bootstrap-vue-next'
 import { useAuthStore } from '../stores/auth'
 import { usePeopleStore } from '../stores/people'
 import { useToaster } from '../composables/useToaster'
 
+const { t } = useI18n()
 const authStore = useAuthStore()
 const peopleStore = usePeopleStore()
 const router = useRouter()
@@ -26,7 +36,7 @@ const dropdownText = computed(() => {
     if (peopleStore.hasCurrentPerson) return peopleStore.currentPerson.name
     return authStore.currentUser.email
   }
-  return 'Sign In'
+  return t('bt.auth.sign_in')
 })
 
 async function handleSignOut() {

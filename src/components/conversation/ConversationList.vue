@@ -2,10 +2,10 @@
   <div class="bt-conversation-list">
     <slot name="header" />
     <div v-if="loading" class="bt-conversation-list__loading">
-      <slot name="loading"><div class="text-center p-4 text-muted">Loading conversations…</div></slot>
+      <slot name="loading"><div class="text-center p-4 text-muted">{{ t('bt.conversations.loading') }}</div></slot>
     </div>
     <div v-else-if="!conversations.length" class="bt-conversation-list__empty">
-      <slot name="empty"><div class="text-center p-4 text-muted">No conversations yet.</div></slot>
+      <slot name="empty"><div class="text-center p-4 text-muted">{{ t('bt.conversations.list_empty') }}</div></slot>
     </div>
     <template v-else>
       <slot
@@ -26,7 +26,9 @@
   </div>
 </template>
 <script setup>
+import { useI18n } from 'vue-i18n'
 import ConversationCard from './ConversationCard.vue'
+const { t } = useI18n()
 defineProps({
   conversations: { type: Array, default: () => [] },
   loading: { type: Boolean, default: false },

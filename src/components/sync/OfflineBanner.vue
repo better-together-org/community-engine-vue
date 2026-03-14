@@ -8,17 +8,18 @@
       dismissible
       @dismissed="dismiss"
     >
-      <strong>You are offline.</strong>
-      Any changes you make will be saved locally and synced when you reconnect.
+      {{ t('bt.sync.offline_banner') }}
     </BAlert>
   </Transition>
 </template>
 
 <script setup>
 import { ref, watch, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { BAlert } from 'bootstrap-vue-next'
 import { useSyncStore } from '../../stores/sync'
 
+const { t } = useI18n()
 const syncStore = useSyncStore()
 const dismissed = ref(false)
 

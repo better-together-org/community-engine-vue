@@ -11,6 +11,7 @@
       <slot name="meta">
         <div class="bt-event-card__meta mb-2">
           <small class="text-muted">
+            <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
             <span v-if="event.starts_at">📅 {{ formattedDate }}</span>
           </small>
           <BBadge :variant="privacyVariant" class="ms-2">{{ event.privacy }}</BBadge>
@@ -25,7 +26,9 @@
     <template #footer>
       <slot name="footer">
         <div class="d-flex align-items-center gap-2">
-          <BButton variant="outline-primary" size="sm" @click="$emit('view', event)">View Event</BButton>
+          <BButton variant="outline-primary" size="sm" @click="$emit('view', event)">
+            {{ t('bt.events.view') }}
+          </BButton>
           <ExtensionSlot target="EventCard" slot="footer" :context="{ item: event }" />
         </div>
       </slot>
@@ -35,9 +38,12 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { BCard, BCardBody, BCardText, BBadge, BButton } from 'bootstrap-vue-next'
 import SyncBadge from '../sync/SyncBadge.vue'
 import ExtensionSlot from '../shared/ExtensionSlot.vue'
+
+const { t } = useI18n()
 
 const props = defineProps({ event: { type: Object, required: true } })
 defineEmits(['view'])

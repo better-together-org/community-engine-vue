@@ -1,17 +1,20 @@
 <template>
   <div id="reset-password">
     <section>
-      <h2>Reset Your Password</h2>
+      <h2>{{ t('bt.auth.heading_password_reset') }}</h2>
       <BtUserResetPasswordForm />
-      <div><BLink to="/users/sign-in">Remembered your password? Sign in!</BLink></div>
-      <div><BLink to="/users/sign-up">Don't have an account? Sign up!</BLink></div>
+      <div><BLink to="/users/sign-in">{{ t('bt.auth.prompt_remembered_password') }}</BLink></div>
+      <div><BLink to="/users/sign-up">{{ t('bt.auth.prompt_sign_up') }}</BLink></div>
     </section>
   </div>
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { BLink } from 'bootstrap-vue-next'
 import BtUserResetPasswordForm from '../components/BtUserResetPasswordForm.vue'
+
+const { t } = useI18n()
 </script>
 
 <style scoped lang="scss">

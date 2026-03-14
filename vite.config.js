@@ -33,5 +33,6 @@ export default defineConfig({
     include: ['tests/unit/**/*.spec.[jt]s'],
     exclude: ['tests/unit/example.spec.js'],
     css: false,
+    setupFiles: ['tests/unit/setup.js'],
   },
 })

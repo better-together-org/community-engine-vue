@@ -5,7 +5,7 @@
     </div>
     <div class="bt-message-item__body flex-grow-1">
       <div class="d-flex align-items-center gap-2 mb-1">
-        <span class="bt-message-item__author fw-semibold">{{ message.author_name || 'Unknown' }}</span>
+        <span class="bt-message-item__author fw-semibold">{{ message.author_name || t('bt.messages.author_unknown') }}</span>
         <small class="text-muted">{{ formattedTime }}</small>
         <SyncBadge :item="message" />
       </div>
@@ -15,7 +15,9 @@
 </template>
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import SyncBadge from '../sync/SyncBadge.vue'
+const { t } = useI18n()
 const props = defineProps({ message: { type: Object, required: true } })
 const initials = computed(() => {
   const name = props.message.author_name || '?'

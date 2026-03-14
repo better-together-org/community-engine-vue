@@ -30,15 +30,18 @@
       </slot>
     </div>
   </article>
-  <div v-else-if="loading"><BSpinner label="Loading post…" /></div>
-  <div v-else><BAlert variant="warning" :model-value="true">Post not found.</BAlert></div>
+  <div v-else-if="loading"><BSpinner :label="t('bt.posts.loading')" /></div>
+  <div v-else><BAlert variant="warning" :model-value="true">{{ t('bt.errors.not_found') }}</BAlert></div>
 </template>
 
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { BBadge, BSpinner, BAlert } from 'bootstrap-vue-next'
 import SyncBadge from '../sync/SyncBadge.vue'
 import ExtensionSlot from '../shared/ExtensionSlot.vue'
+
+const { t } = useI18n()
 
 const props = defineProps({
   post: { type: Object, default: null },

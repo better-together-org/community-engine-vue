@@ -1,7 +1,7 @@
 <template>
   <div class="bt-conversation-detail">
     <div v-if="conversation" class="bt-conversation-detail__header mb-3">
-      <h4>{{ conversation.subject || 'Conversation' }}</h4>
+      <h4>{{ conversation.subject || t('bt.conversations.no_subject') }}</h4>
       <SyncBadge :item="conversation" />
     </div>
     <slot name="messages">
@@ -14,11 +14,14 @@
 </template>
 <script setup>
 import { computed, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import MessageList from './MessageList.vue'
 import MessageForm from './MessageForm.vue'
 import SyncBadge from '../sync/SyncBadge.vue'
 import { useMessages } from '../../composables/useMessages'
 import { useAuthStore } from '../../stores/auth'
+
+const { t } = useI18n()
 
 const props = defineProps({
   conversation: { type: Object, default: null },

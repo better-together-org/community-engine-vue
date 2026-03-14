@@ -17,7 +17,9 @@
     <template #footer>
       <slot name="footer">
         <div class="d-flex align-items-center gap-2">
-          <BButton variant="outline-primary" size="sm" @click="$emit('view', page)">Read</BButton>
+          <BButton variant="outline-primary" size="sm" @click="$emit('view', page)">
+            {{ t('bt.pages.read') }}
+          </BButton>
           <ExtensionSlot target="PageCard" slot="footer" :context="{ item: page }" />
         </div>
       </slot>
@@ -26,9 +28,11 @@
 </template>
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { BCard, BCardBody, BCardText, BButton } from 'bootstrap-vue-next'
 import SyncBadge from '../sync/SyncBadge.vue'
 import ExtensionSlot from '../shared/ExtensionSlot.vue'
+const { t } = useI18n()
 const props = defineProps({ page: { type: Object, required: true } })
 defineEmits(['view'])
 const excerpt = computed(() => { const c = props.page.content || ''; return c.length > 200 ? c.slice(0, 200) + '…' : c })

@@ -1,5 +1,10 @@
 {
   "bt": {
+    "app": {
+      "name": "Better Together",
+      "home_heading": "Connect with your communities",
+      "home_tagline": "The Community Engine platform allows you to connect with others like never before"
+    },
     "actions": {
       "view": "View",
       "edit": "Edit",
@@ -46,6 +51,24 @@
       "resend_confirmation": "Resend confirmation",
       "sign_in_failed": "Sign in failed. Please check your credentials.",
       "sign_up_failed": "Sign up failed. Please try again.",
+      "login_info": "Login Info",
+      "personal_info": "Personal Info",
+      "password_hint": "Minimum 12 characters.",
+      "change_password": "Change Password",
+      "send_reset_email": "Send password reset email",
+      "send_confirmation_email": "Send confirmation email",
+      "heading_sign_in": "Sign In",
+      "heading_sign_up": "Sign Up",
+      "heading_password_new": "Create a New Password",
+      "heading_password_reset": "Reset Your Password",
+      "heading_resend_confirmation": "Resend your confirmation email",
+      "prompt_sign_up": "Don't have an account? Sign up!",
+      "prompt_sign_in": "Already have an account? Sign in!",
+      "prompt_forgot_password": "Forgot your password? Reset it!",
+      "prompt_resend": "Didn't receive confirmation email? Resend it!",
+      "prompt_resend_full": "Didn't receive your account confirmation email? Resend it!",
+      "prompt_remembered_password": "Remembered your password? Sign in!",
+      "prompt_confirmed": "Already confirmed? Sign in!",
       "errors": {
         "invalid_credentials": "Invalid email or password.",
         "confirmation_mismatch": "Password confirmation does not match.",
@@ -56,14 +79,23 @@
       "home": "Home",
       "communities": "Communities",
       "profile": "Profile",
-      "settings": "Settings"
+      "settings": "Settings",
+      "me": "Me",
+      "posts": "Posts",
+      "events": "Events",
+      "members": "Members",
+      "conversations": "Conversations",
+      "about": "About"
     },
     "errors": {
       "not_found": "Not found.",
       "load_failed": "Failed to load. Please try again.",
       "save_failed": "Failed to save. Please try again.",
       "network": "Network error. Please check your connection.",
-      "unexpected": "An unexpected error occurred."
+      "unexpected": "An unexpected error occurred.",
+      "not_found_heading": "This is not the page you are looking for",
+      "not_found_message": "Looks like the address that you entered doesn't match a page on our site. Perhaps the page has moved to a new address. Please try again.",
+      "visit_home": "Visit Landing Page"
     },
     "communities": {
       "list_empty": "No communities found.",
@@ -71,7 +103,12 @@
       "view": "View Community",
       "create": "Create Community",
       "edit": "Edit Community",
-      "members_count": "0 members | 1 member | {count} members"
+      "members_count": "0 members | 1 member | {count} members",
+      "name_label": "Name",
+      "description_label": "Description",
+      "not_found": "Community not found.",
+      "new": "New Community",
+      "save": "Save Community"
     },
     "posts": {
       "list_empty": "No posts yet.",
@@ -81,7 +118,9 @@
       "saving": "Saving…",
       "title_label": "Title",
       "content_label": "Content",
-      "privacy_label": "Privacy"
+      "privacy_label": "Privacy",
+      "create": "New Post",
+      "recent": "Recent Posts"
     },
     "events": {
       "list_empty": "No upcoming events.",
@@ -91,14 +130,19 @@
       "name_label": "Event name",
       "description_label": "Description",
       "starts_at_label": "Starts at",
-      "ends_at_label": "Ends at"
+      "ends_at_label": "Ends at",
+      "create": "New Event",
+      "upcoming": "Upcoming Events",
+      "not_found": "Event not found."
     },
     "conversations": {
       "list_empty": "No conversations yet.",
       "loading": "Loading conversations…",
       "open": "Open",
       "no_subject": "No subject",
-      "participants": "0 participants | 1 participant | {count} participants"
+      "participants": "0 participants | 1 participant | {count} participants",
+      "not_found": "Conversation not found.",
+      "coming_soon": "Conversations are coming in Phase 5."
     },
     "messages": {
       "list_empty": "No messages yet. Start the conversation!",
@@ -129,13 +173,20 @@
       "list_empty": "No pages yet.",
       "loading": "Loading…",
       "not_found": "Page not found.",
-      "read": "Read"
+      "read": "Read",
+      "heading": "Pages"
     },
     "person": {
       "members_empty": "No members found.",
       "loading": "Loading members…",
       "profile": "Profile",
-      "unknown": "Unknown"
+      "unknown": "Unknown",
+      "name_label": "Name",
+      "description_label": "Description",
+      "fill_profile": "Fill out your profile",
+      "my_profile": "My Profile",
+      "fill_profile_details": "Fill out your profile details",
+      "unsaved_changes": "changed"
     },
     "joatu": {
       "heading": "Time Banking",
@@ -180,6 +231,7 @@
         "credits_label": "Time credits",
         "credits_hint": "1 time credit = 1 hour. All labor is equally valued.",
         "submit": "Add Request",
+        "seeking": "Seeking:",
         "status": {
           "open": "Open",
           "fulfilled": "Fulfilled",

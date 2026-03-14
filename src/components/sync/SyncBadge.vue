@@ -9,14 +9,19 @@
   >
     <span v-if="resolvedStatus === 'local'" class="sync-dot sync-dot--local" />
     <span v-else-if="resolvedStatus === 'syncing'" class="sync-dot sync-dot--syncing sync-dot--spin" />
+    <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
     <span v-else-if="resolvedStatus === 'conflict'" class="sync-dot sync-dot--conflict">!</span>
+    <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
     <span v-else-if="resolvedStatus === 'needs-auth'" class="sync-dot sync-dot--needs-auth">🔒</span>
   </span>
 </template>
 
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useSyncStatus } from '../../composables/useSyncStatus'
+
+const { t } = useI18n()
 
 const props = defineProps({
   item: {
@@ -40,10 +45,10 @@ const showBadge = computed(() => resolvedStatus.value !== 'synced' && resolvedSt
 
 const label = computed(() => {
   switch (resolvedStatus.value) {
-  case 'local': return 'Saved locally — will sync when online'
-  case 'syncing': return 'Syncing…'
-  case 'conflict': return 'Conflict — newer version on server'
-  case 'needs-auth': return 'Sign in to sync this item'
+  case 'local': return t('bt.sync.status.local_title')
+  case 'syncing': return t('bt.sync.status.syncing')
+  case 'conflict': return t('bt.sync.status.conflict')
+  case 'needs-auth': return t('bt.sync.status.needs_auth_title')
   default: return ''
   }
 })

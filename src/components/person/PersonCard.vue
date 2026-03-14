@@ -12,6 +12,7 @@
           </div>
         </slot>
         <slot name="meta">
+          <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
           <small class="text-muted">@{{ person.handle || person.slug }}</small>
         </slot>
         <slot name="body" />

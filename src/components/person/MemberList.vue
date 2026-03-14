@@ -1,8 +1,8 @@
 <template>
   <div class="bt-member-list">
     <slot name="header" />
-    <div v-if="loading"><slot name="loading"><BSpinner label="Loading members…" /></slot></div>
-    <div v-else-if="!members.length"><slot name="empty"><p class="text-muted">No members found.</p></slot></div>
+    <div v-if="loading"><slot name="loading"><BSpinner :label="t('bt.person.loading')" /></slot></div>
+    <div v-else-if="!members.length"><slot name="empty"><p class="text-muted">{{ t('bt.person.members_empty') }}</p></slot></div>
     <div v-else class="bt-member-list__items">
       <div v-for="(member, index) in members" :key="member.id" class="bt-member-list__item">
         <slot name="item" :item="member" :index="index">
@@ -19,8 +19,11 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { BBadge, BSpinner } from 'bootstrap-vue-next'
 import PersonAvatar from './PersonAvatar.vue'
+
+const { t } = useI18n()
 
 defineProps({
   members: { type: Array, default: () => [] },

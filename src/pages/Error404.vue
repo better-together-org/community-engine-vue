@@ -2,20 +2,15 @@
   <section id="error-404">
     <div class="row heading mb-3">
       <div class="col-md">
-        <h2 class="mb-4">
-          This is not the page you are looking for
-        </h2>
-        <p>
-          Looks like the address that you entered doesn't match a page on our
-          site. Perhaps the page has moved to a new address. Please try again.
-        </p>
+        <h2 class="mb-4">{{ t('bt.errors.not_found_heading') }}</h2>
+        <p>{{ t('bt.errors.not_found_message') }}</p>
         <div class="text-center mt-4">
           <RouterLink
             to="/"
-            title="Better Together landing page"
+            :title="t('bt.app.name')"
             class="btn btn-primary card-action"
           >
-            Visit Landing Page
+            {{ t('bt.errors.visit_home') }}
           </RouterLink>
         </div>
       </div>
@@ -24,7 +19,10 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { RouterLink } from 'vue-router'
+
+const { t } = useI18n()
 </script>
 
 <style lang="scss">

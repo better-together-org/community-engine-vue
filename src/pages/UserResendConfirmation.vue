@@ -1,21 +1,24 @@
 <template>
   <div id="resend-confirmation">
     <section>
-      <h2>Resend your confirmation email</h2>
+      <h2>{{ t('bt.auth.heading_resend_confirmation') }}</h2>
       <BtUserResendConfirmationForm />
-      <div><BLink to="/users/sign-in">Already confirmed? Sign in!</BLink></div>
-      <div><BLink to="/users/sign-up">Don't have an account? Sign up!</BLink></div>
+      <div><BLink to="/users/sign-in">{{ t('bt.auth.prompt_confirmed') }}</BLink></div>
+      <div><BLink to="/users/sign-up">{{ t('bt.auth.prompt_sign_up') }}</BLink></div>
     </section>
   </div>
 </template>
 
 <script setup>
 import { onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { BLink } from 'bootstrap-vue-next'
 import { useAuthStore } from '../stores/auth'
 import { useToaster } from '../composables/useToaster'
 import BtUserResendConfirmationForm from '../components/BtUserResendConfirmationForm.vue'
+
+const { t } = useI18n()
 
 const props = defineProps({
   confirmationToken: { type: String, default: null },

@@ -13,7 +13,9 @@
       <slot name="meta">
         <div class="d-flex align-items-center gap-2 mt-2">
           <BBadge :variant="statusVariant">{{ invitation.status }}</BBadge>
-          <small v-if="invitation.expires_at" class="text-muted">Expires {{ formattedExpiry }}</small>
+          <small v-if="invitation.expires_at" class="text-muted">
+            {{ t('bt.invitations.expires', { date: formattedExpiry }) }}
+          </small>
         </div>
       </slot>
       <slot name="body" />
@@ -27,9 +29,11 @@
 </template>
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { BCard, BCardBody, BBadge } from 'bootstrap-vue-next'
 import SyncBadge from '../sync/SyncBadge.vue'
 import ExtensionSlot from '../shared/ExtensionSlot.vue'
+const { t } = useI18n()
 const props = defineProps({ invitation: { type: Object, required: true } })
 const statusVariant = computed(() => ({ pending: 'warning', accepted: 'success', expired: 'secondary' }[props.invitation.status] ?? 'secondary'))
 const formattedExpiry = computed(() => {

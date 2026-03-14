@@ -2,16 +2,17 @@
   <div id="home">
     <section id="introduction">
       <div class="col">
-        <h1>Connect with your communities</h1>
-        <p>
-          The Community Engine platform allows you to connect with others like never before
-        </p>
+        <h1>{{ t('bt.app.home_heading') }}</h1>
+        <p>{{ t('bt.app.home_tagline') }}</p>
       </div>
     </section>
   </div>
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 </script>
 
 <style scoped lang="scss">
