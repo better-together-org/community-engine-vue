@@ -1,6 +1,8 @@
 import { createI18n } from 'vue-i18n'
 import en from './locales/en.json'
 import fr from './locales/fr.json'
+import es from './locales/es.json'
+import uk from './locales/uk.json'
 
 // Extension messages registered by companion packages before install()
 const _extensionMessages = []
@@ -23,6 +25,8 @@ function buildMessages(optionMessages = {}) {
   const merged = {
     en: { bt: { ...en.bt } },
     fr: { bt: { ...fr.bt } },
+    es: { bt: { ...es.bt } },
+    uk: { bt: { ...uk.bt } },
   }
 
   // Merge companion package extension messages

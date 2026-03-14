@@ -103,3 +103,39 @@ jobs:
 
       - name: Check French translation completeness
         run: yarn i18n:check:fr
+
+  i18n-es-health:
+    name: i18n Spanish Completeness
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Check Spanish translation completeness
+        run: yarn i18n:check:es
+
+  i18n-uk-health:
+    name: i18n Ukrainian Completeness
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Check Ukrainian translation completeness
+        run: yarn i18n:check:uk

@@ -1,0 +1,255 @@
+{
+  "bt": {
+    "app": {
+      "name": "Better Together",
+      "home_heading": "Conéctate con tus comunidades",
+      "home_tagline": "La plataforma Community Engine te permite conectarte con otras personas como nunca antes"
+    },
+    "actions": {
+      "view": "Ver",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "remove": "Quitar",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "send": "Enviar",
+      "create": "Crear",
+      "close": "Cerrar",
+      "open": "Abrir",
+      "back": "Volver",
+      "submit": "Enviar",
+      "confirm": "Confirmar",
+      "learn_more": "Más información",
+      "read_more": "Leer más"
+    },
+    "sync": {
+      "status": {
+        "local": "Guardado localmente",
+        "local_title": "Guardado localmente — se sincronizará cuando estés en línea",
+        "syncing": "Sincronizando…",
+        "synced": "Sincronizado",
+        "needs_auth": "Inicia sesión para sincronizar",
+        "needs_auth_title": "Inicia sesión para sincronizar este elemento",
+        "conflict": "Conflicto"
+      },
+      "offline_banner": "Estás sin conexión. Los cambios se sincronizarán cuando te vuelvas a conectar.",
+      "pending_count": "0 pendiente | 1 pendiente | {count} pendientes",
+      "pending_label": "Sincronización pendiente",
+      "status_bar_online": "En línea",
+      "status_bar_offline": "Sin conexión"
+    },
+    "auth": {
+      "sign_in": "Iniciar sesión",
+      "sign_out": "Cerrar sesión",
+      "sign_up": "Registrarse",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "password_confirmation": "Confirmación de contraseña",
+      "forgot_password": "¿Olvidaste tu contraseña?",
+      "reset_password": "Restablecer contraseña",
+      "new_password": "Nueva contraseña",
+      "resend_confirmation": "Reenviar confirmación",
+      "sign_in_failed": "Error al iniciar sesión. Verifica tus credenciales.",
+      "sign_up_failed": "Error al registrarse. Inténtalo de nuevo.",
+      "login_info": "Información de inicio de sesión",
+      "personal_info": "Información personal",
+      "password_hint": "Mínimo 12 caracteres.",
+      "change_password": "Cambiar contraseña",
+      "send_reset_email": "Enviar correo para restablecer contraseña",
+      "send_confirmation_email": "Enviar correo de confirmación",
+      "heading_sign_in": "Iniciar sesión",
+      "heading_sign_up": "Registrarse",
+      "heading_password_new": "Crear una nueva contraseña",
+      "heading_password_reset": "Restablecer tu contraseña",
+      "heading_resend_confirmation": "Reenviar tu correo de confirmación",
+      "prompt_sign_up": "¿No tienes una cuenta? ¡Regístrate!",
+      "prompt_sign_in": "¿Ya tienes una cuenta? ¡Inicia sesión!",
+      "prompt_forgot_password": "¿Olvidaste tu contraseña? ¡Restablécela!",
+      "prompt_resend": "¿No recibiste el correo de confirmación? ¡Reenvíalo!",
+      "prompt_resend_full": "¿No recibiste el correo de confirmación de tu cuenta? ¡Reenvíalo!",
+      "prompt_remembered_password": "¿Recordaste tu contraseña? ¡Inicia sesión!",
+      "prompt_confirmed": "¿Ya confirmaste? ¡Inicia sesión!",
+      "errors": {
+        "invalid_credentials": "Correo electrónico o contraseña inválidos.",
+        "confirmation_mismatch": "La confirmación de contraseña no coincide.",
+        "network": "No se pudo conectar al servidor. Inténtalo de nuevo."
+      }
+    },
+    "navigation": {
+      "home": "Inicio",
+      "communities": "Comunidades",
+      "profile": "Perfil",
+      "settings": "Configuración",
+      "me": "Yo",
+      "posts": "Publicaciones",
+      "events": "Eventos",
+      "members": "Miembros",
+      "conversations": "Conversaciones",
+      "about": "Acerca de"
+    },
+    "errors": {
+      "not_found": "No encontrado.",
+      "load_failed": "Error al cargar. Inténtalo de nuevo.",
+      "save_failed": "Error al guardar. Inténtalo de nuevo.",
+      "network": "Error de red. Verifica tu conexión.",
+      "unexpected": "Ocurrió un error inesperado.",
+      "not_found_heading": "Esta no es la página que buscas",
+      "not_found_message": "Parece que la dirección que ingresaste no corresponde a ninguna página de nuestro sitio. Quizás la página se ha movido a una nueva dirección. Por favor, inténtalo de nuevo.",
+      "visit_home": "Visitar la página de inicio"
+    },
+    "communities": {
+      "list_empty": "No se encontraron comunidades.",
+      "loading": "Cargando comunidades…",
+      "view": "Ver comunidad",
+      "create": "Crear comunidad",
+      "edit": "Editar comunidad",
+      "members_count": "0 miembros | 1 miembro | {count} miembros",
+      "name_label": "Nombre",
+      "description_label": "Descripción",
+      "not_found": "Comunidad no encontrada.",
+      "new": "Nueva comunidad",
+      "save": "Guardar comunidad"
+    },
+    "posts": {
+      "list_empty": "Aún no hay publicaciones.",
+      "loading": "Cargando publicaciones…",
+      "read_more": "Leer más",
+      "save": "Guardar publicación",
+      "saving": "Guardando…",
+      "title_label": "Título",
+      "content_label": "Contenido",
+      "privacy_label": "Privacidad",
+      "create": "Nueva publicación",
+      "recent": "Publicaciones recientes"
+    },
+    "events": {
+      "list_empty": "No hay eventos próximos.",
+      "loading": "Cargando eventos…",
+      "view": "Ver evento",
+      "save": "Guardar evento",
+      "name_label": "Nombre del evento",
+      "description_label": "Descripción",
+      "starts_at_label": "Comienza a las",
+      "ends_at_label": "Termina a las",
+      "create": "Nuevo evento",
+      "upcoming": "Próximos eventos",
+      "not_found": "Evento no encontrado."
+    },
+    "conversations": {
+      "list_empty": "Aún no hay conversaciones.",
+      "loading": "Cargando conversaciones…",
+      "open": "Abrir",
+      "no_subject": "Sin asunto",
+      "participants": "0 participantes | 1 participante | {count} participantes",
+      "not_found": "Conversación no encontrada.",
+      "coming_soon": "Las conversaciones llegarán en la Fase 5."
+    },
+    "messages": {
+      "list_empty": "Aún no hay mensajes. ¡Inicia la conversación!",
+      "loading": "Cargando mensajes…",
+      "placeholder": "Escribe un mensaje…",
+      "send": "Enviar",
+      "author_unknown": "Desconocido"
+    },
+    "invitations": {
+      "list_empty": "Aún no hay invitaciones.",
+      "loading": "Cargando invitaciones…",
+      "email_label": "Dirección de correo electrónico",
+      "name_label": "Nombre (opcional)",
+      "message_label": "Mensaje personal (opcional)",
+      "email_placeholder": "persona@ejemplo.com",
+      "name_placeholder": "Su nombre",
+      "message_placeholder": "Añade un mensaje personal…",
+      "send": "Enviar invitación",
+      "cancel": "Cancelar",
+      "status": {
+        "pending": "Pendiente",
+        "accepted": "Aceptada",
+        "expired": "Vencida"
+      },
+      "expires": "Vence el {date}"
+    },
+    "pages": {
+      "list_empty": "Aún no hay páginas.",
+      "loading": "Cargando…",
+      "not_found": "Página no encontrada.",
+      "read": "Leer",
+      "heading": "Páginas"
+    },
+    "person": {
+      "members_empty": "No se encontraron miembros.",
+      "loading": "Cargando miembros…",
+      "profile": "Perfil",
+      "unknown": "Desconocido",
+      "name_label": "Nombre",
+      "description_label": "Descripción",
+      "fill_profile": "Completa tu perfil",
+      "my_profile": "Mi perfil",
+      "fill_profile_details": "Completa los detalles de tu perfil",
+      "unsaved_changes": "modificado"
+    },
+    "joatu": {
+      "heading": "Banco de tiempo",
+      "tagline": "1 crédito de tiempo = 1 hora. Todo el trabajo tiene el mismo valor.",
+      "tabs": {
+        "offers": "Ofertas",
+        "requests": "Solicitudes",
+        "agreements": "Acuerdos"
+      },
+      "offers": {
+        "list_empty": "Aún no hay ofertas.",
+        "loading": "Cargando ofertas…",
+        "add": "+ Agregar oferta",
+        "view": "Ver oferta",
+        "title_label": "¿Qué ofreces?",
+        "title_placeholder": "p. ej. Ayuda con diseño web, Jardinería, Clases de guitarra",
+        "description_label": "Descripción",
+        "description_placeholder": "Describe lo que puedes ofrecer con más detalle…",
+        "category_label": "Categoría",
+        "category_placeholder": "p. ej. Habilidades, Trabajo, Conocimientos, Bienes",
+        "credits_label": "Créditos de tiempo",
+        "credits_hint": "1 crédito de tiempo = 1 hora. Todo el trabajo tiene el mismo valor.",
+        "submit": "Agregar oferta",
+        "status": {
+          "open": "Disponible",
+          "fulfilled": "Cumplida",
+          "withdrawn": "Retirada"
+        },
+        "credits_display": "0 créditos de tiempo | 1 crédito de tiempo | {count} créditos de tiempo"
+      },
+      "requests": {
+        "list_empty": "Aún no hay solicitudes.",
+        "loading": "Cargando solicitudes…",
+        "add": "+ Agregar solicitud",
+        "view": "Ver solicitud",
+        "fulfill": "Atender solicitud",
+        "title_label": "¿Qué necesitas?",
+        "title_placeholder": "p. ej. Ayuda para mudarse, Cuidado de niños, Reparación de computadora",
+        "description_label": "Descripción",
+        "description_placeholder": "Describe lo que necesitas con más detalle…",
+        "category_label": "Categoría",
+        "credits_label": "Créditos de tiempo",
+        "credits_hint": "1 crédito de tiempo = 1 hora. Todo el trabajo tiene el mismo valor.",
+        "submit": "Agregar solicitud",
+        "seeking": "Buscando:",
+        "status": {
+          "open": "Disponible",
+          "fulfilled": "Cumplida",
+          "withdrawn": "Retirada"
+        }
+      },
+      "agreements": {
+        "list_empty": "Aún no hay acuerdos.",
+        "loading": "Cargando acuerdos…",
+        "agreed_on": "Acordado el {date}",
+        "status": {
+          "pending": "Pendiente",
+          "active": "Activo",
+          "completed": "Completado",
+          "disputed": "En disputa"
+        },
+        "credits_display": "0 créditos de tiempo | 1 crédito de tiempo | {count} créditos de tiempo"
+      }
+    }
+  }
+}

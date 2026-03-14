@@ -217,13 +217,68 @@ Translation conventions (Québécois):
 
 ---
 
-### Stage 3 — Spanish + Ukrainian (`es.json`, `uk.json`)
+### Stage 3 — Spanish + Ukrainian (`es.json`, `uk.json`) ✅
 
-**Goal**: Match CE Rails' locale support.
+**Goal**: Match CE Rails' locale support. Both locales ship bundled directly in CEV, matching the
+pattern established by French in Stage 2.
 
-- [ ] `es.json` — coordinate with CE Rails `es.yml`
-- [ ] `uk.json` — coordinate with CE Rails `uk.yml`
-- [ ] CE Rails Translation Agent Instructions pattern applies here too
+- [x] `src/i18n/locales/es.json` — full `bt.*` translation in Latin American Spanish
+- [x] `src/i18n/locales/uk.json` — full `bt.*` translation in Ukrainian (Cyrillic)
+- [x] `src/i18n/index.js` — `es` and `uk` included in `buildMessages()`
+- [x] `scripts/i18n-check-es.mjs` — completeness check: missing keys = exit 1, extra keys = warn
+- [x] `scripts/i18n-check-uk.mjs` — completeness check: missing keys = exit 1, extra keys = warn
+- [x] `yarn i18n:check:es` and `yarn i18n:check:uk` npm scripts
+- [x] CI `i18n-es-health` and `i18n-uk-health` advisory jobs (`continue-on-error: true`)
+
+#### Rationale
+
+CE Rails already ships `es.yml` and `uk.yml`. CEV must cover the same locales so that host
+applications serving Spanish-speaking or Ukrainian-speaking communities receive translations
+immediately without extra configuration.
+
+#### Activating a locale
+
+```js
+app.use(CommunityEngineVue, { locale: 'es' })
+// or
+app.use(CommunityEngineVue, { locale: 'uk' })
+```
+
+Switch at runtime the same way as French:
+
+```js
+import { useI18n } from 'vue-i18n'
+const { locale } = useI18n()
+locale.value = 'uk'
+```
+
+#### Translation conventions
+
+**Latin American Spanish (`es`)**
+- Informal register: "tú" for user-facing instructions (not "usted")
+- Standard LATAM vocabulary: "contraseña" (password), "correo electrónico" (email),
+  "guardar" (save), "cancelar" (cancel), "enviar" (send/submit)
+- JoaTU: "banco de tiempo", "crédito de tiempo", "oferta", "solicitud", "acuerdo"
+- Sync: "Guardado localmente", "Sincronizando…", "Sincronizado", "Sin conexión"
+- "p. ej." for "e.g." placeholders (matching Quebec's "p. ex." pattern)
+
+**Ukrainian (`uk`)**
+- Informal register: "ти" for user-facing instructions
+- Standard Ukrainian: "пароль" (password), "електронна пошта" (email),
+  "зберегти" (save), "скасувати" (cancel), "надіслати" (send)
+- JoaTU: "банк часу", "часовий кредит", "пропозиція", "запит", "угода"
+- Sync: "Збережено локально", "Синхронізація…", "Синхронізовано", "Офлайн"
+- Pluralization uses vue-i18n pipe syntax (3 slots: 0 | 1 | many):
+  `"0 учасників | 1 учасник | {count} учасників"` — genitive plural in third slot
+
+#### How to add more locales
+
+1. Create `src/i18n/locales/<code>.json` with all `bt.*` keys from `en.json`
+2. Import and include in `buildMessages()` in `src/i18n/index.js`
+3. Copy `scripts/i18n-check-fr.mjs` → `scripts/i18n-check-<code>.mjs`, update file path and labels
+4. Add `"i18n:check:<code>": "node scripts/i18n-check-<code>.mjs"` to `package.json` scripts
+5. Add an advisory CI job to `.github/workflows/ci.yml` (see `i18n-es-health` as template)
+6. Document conventions in `docs/i18n-strategy.md` Stage 3+
 
 ---
 
