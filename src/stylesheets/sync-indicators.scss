@@ -1,8 +1,9 @@
 // Sync status colour tokens
-$sync-local:    #f59e0b;  // amber  — local only, not yet synced
-$sync-syncing:  #3b82f6;  // blue   — in flight
-$sync-synced:   #10b981;  // green  — confirmed on server
-$sync-conflict: #ef4444;  // red    — conflict detected
+$sync-local:       #f59e0b;  // amber  — local only, not yet synced
+$sync-syncing:     #3b82f6;  // blue   — in flight
+$sync-synced:      #10b981;  // green  — confirmed on server
+$sync-conflict:    #ef4444;  // red    — conflict detected
+$sync-needs-auth:  #f59e0b;  // amber  — needs sign-in to sync (same family as local)
 
 // Sync badge sizes
 $sync-badge-size: 8px;

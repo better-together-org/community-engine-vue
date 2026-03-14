@@ -131,6 +131,42 @@ CREATE TABLE IF NOT EXISTS _schema_versions (
 INSERT OR IGNORE INTO _schema_versions (version) VALUES (1);
 `
 
+const migration2Sql = `
+CREATE TABLE IF NOT EXISTS person_community_memberships (
+  id                   TEXT PRIMARY KEY,
+  person_id            TEXT NOT NULL,
+  community_id         TEXT NOT NULL,
+  role                 TEXT DEFAULT 'member',
+  joined_at            TEXT,
+  left_at              TEXT,
+  _sync_status         TEXT NOT NULL DEFAULT 'local',
+  _local_updated       TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+  _server_at           TEXT
+);
+
+CREATE TABLE IF NOT EXISTS uploads (
+  id                   TEXT PRIMARY KEY,
+  url                  TEXT,
+  content_type         TEXT,
+  filename             TEXT,
+  filesize             INTEGER,
+  attachable_type      TEXT,
+  attachable_id        TEXT,
+  _sync_status         TEXT NOT NULL DEFAULT 'local',
+  _local_updated       TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+  _server_at           TEXT
+);
+
+INSERT OR IGNORE INTO _schema_versions (version) VALUES (2);
+`
+
+// Extension migrations registered by companion packages before getDb() is first called
+const _extensionMigrations = []  // { version: number, sql: string }[]
+
+export function registerExtensionMigration(version, sql) {
+  _extensionMigrations.push({ version, sql })
+}
+
 let _db = null
 let _initPromise = null
 
@@ -146,6 +182,18 @@ async function applyMigrations(db) {
 
   if (currentVersion < 1) {
     await db.exec(migrationSql)
+  }
+
+  if (currentVersion < 2) {
+    await db.exec(migration2Sql)
+  }
+
+  // Extension migrations (sorted by version, registered before first getDb() call)
+  const sortedExtMigrations = [..._extensionMigrations].sort((a, b) => a.version - b.version)
+  for (const { version, sql } of sortedExtMigrations) {
+    if (currentVersion < version) {
+      await db.exec(sql)
+    }
   }
 }
 

@@ -37,4 +37,20 @@ describe('SyncBadge', () => {
     })
     expect(wrapper.find('.sync-badge').attributes('title')).toContain('locally')
   })
+
+  it('renders lock icon for needs-auth status', () => {
+    const wrapper = mount(SyncBadge, {
+      props: { status: 'needs-auth' },
+      global: { plugins: [pinia] },
+    })
+    expect(wrapper.find('.sync-dot--needs-auth').exists()).toBe(true)
+  })
+
+  it('shows correct label for needs-auth', () => {
+    const wrapper = mount(SyncBadge, {
+      props: { status: 'needs-auth' },
+      global: { plugins: [pinia] },
+    })
+    expect(wrapper.find('.sync-badge').attributes('title')).toContain('Sign in')
+  })
 })

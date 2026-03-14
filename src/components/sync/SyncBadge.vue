@@ -10,6 +10,7 @@
     <span v-if="resolvedStatus === 'local'" class="sync-dot sync-dot--local" />
     <span v-else-if="resolvedStatus === 'syncing'" class="sync-dot sync-dot--syncing sync-dot--spin" />
     <span v-else-if="resolvedStatus === 'conflict'" class="sync-dot sync-dot--conflict">!</span>
+    <span v-else-if="resolvedStatus === 'needs-auth'" class="sync-dot sync-dot--needs-auth">🔒</span>
   </span>
 </template>
 
@@ -25,7 +26,7 @@ const props = defineProps({
   status: {
     type: String,
     default: null,
-    validator: (v) => ['local', 'syncing', 'synced', 'conflict', null].includes(v),
+    validator: (v) => ['local', 'syncing', 'synced', 'conflict', 'needs-auth', null].includes(v),
   },
 })
 
@@ -42,6 +43,7 @@ const label = computed(() => {
   case 'local': return 'Saved locally — will sync when online'
   case 'syncing': return 'Syncing…'
   case 'conflict': return 'Conflict — newer version on server'
+  case 'needs-auth': return 'Sign in to sync this item'
   default: return ''
   }
 })
@@ -85,6 +87,11 @@ const label = computed(() => {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+  }
+
+  &--needs-auth {
+    background-color: transparent;
+    font-size: 10px;
   }
 }
 </style>
