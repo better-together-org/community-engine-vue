@@ -1,5 +1,6 @@
 import { createI18n } from 'vue-i18n'
 import en from './locales/en.json'
+import fr from './locales/fr.json'
 
 // Extension messages registered by companion packages before install()
 const _extensionMessages = []
@@ -21,6 +22,7 @@ export function registerExtensionMessages(messages) {
 function buildMessages(optionMessages = {}) {
   const merged = {
     en: { bt: { ...en.bt } },
+    fr: { bt: { ...fr.bt } },
   }
 
   // Merge companion package extension messages
@@ -50,10 +52,10 @@ function buildMessages(optionMessages = {}) {
  * Create a standalone vue-i18n instance with CEV messages.
  * Used when the host app does not have its own vue-i18n instance.
  */
-export function createCevI18n(optionMessages = {}) {
+export function createCevI18n(optionMessages = {}, locale = 'en') {
   return createI18n({
     legacy: false,       // Composition API mode
-    locale: 'en',
+    locale,
     fallbackLocale: 'en',
     globalInjection: true,
     messages: buildMessages(optionMessages),
@@ -83,8 +85,14 @@ export function installI18n(app, options = {}) {
     for (const [locale, msgs] of Object.entries(merged)) {
       existing.global.mergeLocaleMessage(locale, msgs)
     }
+    if (options.locale) {
+      existing.global.locale.value = options.locale
+    }
   } else {
-    const i18n = createCevI18n(options.messages ?? {})
+    const i18n = createCevI18n(options.messages ?? {}, options.locale ?? 'en')
     app.use(i18n)
+    if (options.locale) {
+      i18n.global.locale.value = options.locale
+    }
   }
 }

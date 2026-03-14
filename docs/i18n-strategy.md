@@ -145,22 +145,75 @@ import { useI18n } from '@bettertogether/community-engine-vue'
 
 ---
 
-### Stage 2 — French CA (`fr.json`) (priority)
+### Stage 2 — French CA (`fr.json`) ✅
 
-**Goal**: Full French Canadian translation for all `bt.*` strings.
+**Goal**: Full French Canadian translation for all `bt.*` strings, bundled directly in CEV.
 
-BTS operates in Corner Brook, NL — a bilingual region. French CA is the first non-English locale.
+BTS operates in Corner Brook, NL — a bilingual region. French CA is the first non-English locale and
+is treated as a **first-class locale**, not an optional add-on.
 
-- [ ] `src/i18n/locales/fr.json` — translate all `bt.*` keys
-- [ ] Priority order: sync indicators → auth → nav → common actions → empty states → forms
-- [ ] `BLanguageSwitcher` component — dropdown in `BtNavBar`
-- [ ] Locale persisted in Pinia auth store (not PGlite — user preference only)
-- [ ] Coordinate with CE Rails `fr.yml` for consistent terminology
+- [x] `src/i18n/locales/fr.json` — 151 `bt.*` keys in Canadian French (Québécois)
+- [x] `src/i18n/index.js` — `fr` included in `buildMessages()`; `options.locale` respected at install
+- [x] `scripts/i18n-check-fr.mjs` — completeness check: missing keys = exit 1, extra keys = warn
+- [x] `yarn i18n:check:fr` npm script
+- [x] CI `i18n-fr-health` advisory job (`continue-on-error: true`)
+- [ ] `BLanguageSwitcher` component — dropdown in `BtNavBar` (Stage 3 UI work)
+- [ ] Locale persisted in Pinia auth store (Stage 3)
 
-Translation notes:
-- Use "vous" (formal) for UI — community context is professional-adjacent
-- "Synchronisé" for synced, "Hors ligne" for offline
-- "Temps-crédit" for time credits (JoaTU)
+#### Delivery model
+
+`fr.json` is **bundled directly in CEV** (not a separate package). Rationale: BTS serves Francophone
+communities in Corner Brook and across Atlantic Canada — French must be available immediately, without
+requiring a separate install step from host applications.
+
+#### Activating French
+
+Pass `locale: 'fr'` in the plugin options:
+
+```js
+app.use(CommunityEngineVue, { locale: 'fr' })
+```
+
+`installI18n` will set the active locale on the i18n instance (both host-app-owned and CEV-owned instances).
+
+If you need to switch locale at runtime, use `useI18n()` or the global i18n instance directly:
+
+```js
+import { useI18n } from 'vue-i18n'
+const { locale } = useI18n()
+locale.value = 'fr'
+```
+
+#### Companion packages adding French translations
+
+Companion packages register their own French strings alongside English via `registerExtensionMessages()`:
+
+```js
+import { registerExtensionMessages } from '@bettertogether/community-engine-vue'
+
+registerExtensionMessages({
+  en: { commerce: { checkout: { title: 'Checkout' } } },
+  fr: { commerce: { checkout: { title: 'Passer à la caisse' } } },
+})
+```
+
+CEV merges all registered locales (including `fr`) when `installI18n` runs.
+
+#### Translation maintenance
+
+**When adding new keys to `en.json`, always add the French equivalent to `fr.json` at the same time.**
+
+The `yarn i18n:check:fr` script enforces this: keys present in `en.json` but absent from `fr.json`
+cause a CI failure (exit 1). Stage 4 tooling will add this as a blocking gate.
+
+Translation conventions (Québécois):
+- "Courriel" (not "e-mail"), "Mot de passe" (not "password")
+- "Connexion" / "Déconnexion" / "Inscription" for sign in / sign out / sign up
+- "Banque de temps" (time banking), "Crédit de temps" (time credit)
+- "Offre" / "Demande" / "Entente" for offer / request / agreement (JoaTU)
+- "Enregistré localement" / "Synchronisé" / "Hors ligne" (sync states)
+- Use "tu" for direct user instructions (informal Québécois register in app UI)
+- "p. ex." for "e.g." placeholders
 
 ---
 

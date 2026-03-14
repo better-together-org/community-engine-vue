@@ -85,3 +85,21 @@ jobs:
 
       - name: Check for missing i18n keys
         run: yarn i18n:check
+
+  i18n-fr-health:
+    name: i18n French Completeness
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Check French translation completeness
+        run: yarn i18n:check:fr
