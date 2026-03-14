@@ -1,82 +1,40 @@
 <template>
-  <vue-form-generator
-    id="sign-in-form"
-    tag="form"
-    :schema="schema"
-    :model="localModel"
-    rows="3"
-    max-rows="6"
-    @validated="onValidated"
-  />
+  <BForm @submit.prevent="handleSubmit">
+    <BFormGroup label="Email" label-for="sign-in-email">
+      <BFormInput id="sign-in-email" v-model="form.user.email" type="email" required placeholder="Your email address" />
+    </BFormGroup>
+    <BFormGroup label="Password" label-for="sign-in-password">
+      <BFormInput id="sign-in-password" v-model="form.user.password" type="password" required placeholder="Your password" />
+    </BFormGroup>
+    <BButton type="submit" variant="primary" class="w-100" :disabled="loading">Sign In</BButton>
+  </BForm>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
-import VueFormGenerator from 'vue-form-generator'
-import BtUserSignInFormSchema from '../forms/BtUserSignInFormSchema'
-import errorHandling from '../mixins/error-handling'
+<script setup>
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { BForm, BFormGroup, BFormInput, BButton } from 'bootstrap-vue-next'
+import { useAuthStore } from '../stores/auth'
+import { useToaster } from '../composables/useToaster'
 
-export default {
-  name: 'UserSigninForm',
-  components: {
-    'vue-form-generator': VueFormGenerator.component,
-  },
-  mixins: [errorHandling],
-  props: {
-    model: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      schema: BtUserSignInFormSchema,
-    }
-  },
-  computed: {
-    localModel: {
-      get() { return this.model },
-      set(model) { this.$emit('input', model) },
-    },
-  },
-  methods: {
-    ...mapActions('CommunityEngine/Authentication', ['signIn']),
-    ...mapActions('CommunityEngine/People', ['getMe']),
-    onValidated(isValid) {
-      if (isValid) {
-        this.signIn(this.model).then(() => {
-          if (this.$route.path !== '/') {
-            this.$router.push('/').then(() => {
-              this.$toaster('You are now signed in!', 'success')
-              this.getMe().catch(({ response }) => {
-                // console.log(response)
-                this.$handleResponseError(response)
-              })
-            })
-          }
-        }).catch(({ response }) => {
-          this.$handleResponseError(response)
-        })
-      }
-    },
-  },
+const authStore = useAuthStore()
+const router = useRouter()
+const { toast } = useToaster()
+const loading = ref(false)
+
+const form = reactive({ user: { email: '', password: '' } })
+
+async function handleSubmit() {
+  loading.value = true
+  try {
+    await authStore.signIn(form.user)
+    await router.push('/me')
+    toast('Welcome back!', 'success')
+  } catch (err) {
+    const msg = err?.response?.data?.error || 'Sign in failed. Please check your credentials.'
+    toast(msg, 'danger')
+  } finally {
+    loading.value = false
+  }
 }
 </script>
-
-<style scoped lang="scss">
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-
-#sign-in-form {
-  ::v-deep .help-block {
-    margin-top: 5px;
-
-    &.errors {
-      color: theme-color('danger')
-    }
-  }
-  .hint {
-    margin-top: 5px;
-  }
-}
-</style>

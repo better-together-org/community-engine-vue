@@ -1,86 +1,34 @@
 <template>
-  <vue-form-generator
-    id="reset-password-form"
-    tag="div"
-    :schema="schema"
-    :model="localModel"
-    rows="3"
-    max-rows="6"
-    @validated="onValidated"
-  />
+  <BForm @submit.prevent="handleSubmit">
+    <BFormGroup label="Email" label-for="reset-email">
+      <BFormInput id="reset-email" v-model="email" type="email" required placeholder="Your email address" />
+    </BFormGroup>
+    <BButton type="submit" variant="primary" class="w-100" :disabled="loading">Send password reset email</BButton>
+  </BForm>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
-import VueFormGenerator from 'vue-form-generator'
-import BtUserResetPasswordFormSchema from '../forms/BtUserResetPasswordFormSchema'
-import errorHandling from '../mixins/error-handling'
+<script setup>
+import { ref } from 'vue'
+import { BForm, BFormGroup, BFormInput, BButton } from 'bootstrap-vue-next'
+import { useAuthStore } from '../stores/auth'
+import { useToaster } from '../composables/useToaster'
 
-export default {
-  name: 'BtUserResetPasswordForm',
-  components: {
-    'vue-form-generator': VueFormGenerator.component,
-  },
-  mixins: [errorHandling],
-  props: {
-    model: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      schema: BtUserResetPasswordFormSchema,
-    }
-  },
-  computed: {
-    localModel: {
-      get() { return this.model },
-      set(model) { this.$emit('input', model) },
-    },
-  },
-  methods: {
-    ...mapActions('CommunityEngine/Authentication', ['resetPassword']),
-    onValidated(isValid) {
-      if (isValid) {
-        this.resetPassword(this.model).then(() => {
-          if (this.$route.path !== '/') {
-            this.$router.push('/').then(() => {
-              this.$toaster(
-                `Please click on the reset password link emailed to ${this.model.email} to set a new password.`,
-                'info',
-                {
-                  title: 'Please check your email',
-                  autoHideDelay: 6000,
-                  toaster: 'b-toaster-top-center',
-                },
-              )
-            })
-          }
-        }).catch(({ response }) => {
-          // console.log(response)
-          this.$handleResponseError(response)
-        })
-      }
-    },
-  },
+const authStore = useAuthStore()
+const { toast } = useToaster()
+const loading = ref(false)
+const email = ref('')
+
+async function handleSubmit() {
+  loading.value = true
+  try {
+    await authStore.resetPassword({ email: email.value })
+    toast('Password reset email sent. Please check your inbox.', 'success')
+    email.value = ''
+  } catch (err) {
+    const msg = err?.response?.data?.error || 'Failed to send reset email.'
+    toast(msg, 'danger')
+  } finally {
+    loading.value = false
+  }
 }
 </script>
-
-<style scoped lang="scss">
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-
-#reset-password-form {
-  ::v-deep .help-block {
-    margin-top: 5px;
-
-    &.errors {
-      color: theme-color('danger')
-    }
-  }
-  .hint {
-    margin-top: 5px;
-  }
-}
-</style>

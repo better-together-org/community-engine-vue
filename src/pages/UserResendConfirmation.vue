@@ -2,131 +2,46 @@
   <div id="resend-confirmation">
     <section>
       <h2>Resend your confirmation email</h2>
-      <BtUserResendConfirmationForm :model="user" />
-      <div>
-        <b-link to="/users/sign-in">
-          Already confirmed your account? Sign in!
-        </b-link>
-      </div>
-      <div>
-        <b-link to="/users/sign-up">
-          Don't have an account? Sign up!
-        </b-link>
-      </div>
+      <BtUserResendConfirmationForm />
+      <div><BLink to="/users/sign-in">Already confirmed? Sign in!</BLink></div>
+      <div><BLink to="/users/sign-up">Don't have an account? Sign up!</BLink></div>
     </section>
   </div>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
+<script setup>
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { BLink } from 'bootstrap-vue-next'
+import { useAuthStore } from '../stores/auth'
+import { useToaster } from '../composables/useToaster'
 import BtUserResendConfirmationForm from '../components/BtUserResendConfirmationForm.vue'
-import toaster from '../mixins/toaster'
 
-export default {
-  name: 'UserResendConfirmation',
-  components: {
-    BtUserResendConfirmationForm,
-  },
-  mixins: [toaster],
-  props: {
-    confirmationToken: {
-      type: String,
-      default: null,
-    },
-  },
-  data() {
-    return {
-      formValues: {},
-    }
-  },
-  computed: {
-    user() {
-      return {}
-    },
-  },
-  mounted() {
-    this.confirmAccount()
-  },
-  methods: {
-    ...mapActions('CommunityEngine/Authentication', ['sendConfirmation']),
-    confirmAccount() {
-      if (!this.confirmationToken) return
+const props = defineProps({
+  confirmationToken: { type: String, default: null },
+})
 
-      this.sendConfirmation({
-        confirmation_token: this.confirmationToken,
-      }).then(() => {
-        this.$router.push('/users/sign-in').then(() => {
-          this.$toaster(
-            'You can now sign in.',
-            'info',
-            {
-              title: 'Your account is confirmed',
-            },
-          )
-        })
-      }).catch(({ response }) => {
-        let errors = 'There was an error'
-        let fieldName = ''
+const authStore = useAuthStore()
+const router = useRouter()
+const { toast } = useToaster()
 
-        if (response.data.confirmation_token) {
-          fieldName = 'Confirmation Token'
-          errors = response.data.confirmation_token.join(', ')
-        } else if (response.data.email) {
-          fieldName = 'Email'
-          errors = response.data.email.join(', ')
-        }
-        this.$toaster(
-          `${fieldName} ${errors}`,
-          'danger',
-          {
-            title: 'Confirmation Error',
-            autoHideDelay: 6000,
-          },
-        )
-      })
-    },
-  },
-}
+onMounted(async () => {
+  if (!props.confirmationToken) return
+  try {
+    await authStore.sendConfirmation({ confirmation_token: props.confirmationToken })
+    await router.push('/users/sign-in')
+    toast('Your account is confirmed. You can now sign in.', 'info')
+  } catch (err) {
+    const resp = err?.response?.data || {}
+    const field = resp.confirmation_token ? 'Confirmation Token' : resp.email ? 'Email' : ''
+    const errors = (resp.confirmation_token || resp.email || ['There was an error']).join(', ')
+    toast(`${field} ${errors}`, 'danger', { title: 'Confirmation Error', autoHideDelay: 6000 })
+  }
+})
 </script>
 
 <style scoped lang="scss">
-  @media (min-width: 992px) {
-    #resend-confirmation {
-      width: 50vw;
-      margin: auto;
-
-      section {
-        padding: 10%;
-      }
-    }
-  }
-
-  .login-form {
-    padding: 2em;
-    border: 1px solid #a8a8a8;
-    border-radius: .5em;
-    max-width: 500px;
-    box-sizing: border-box;
-  }
-  .form-title {
-    margin-top: 0;
-  }
-  .login-form::v-deep .formulate-input .formulate-input-element {
-    max-width: none;
-  }
-  @media (min-width: 420px) {
-    .double-wide {
-      display: flex;
-    }
-    .double-wide .formulate-input {
-      flex-grow: 1;
-      width: calc(50% - .5em);
-    }
-    .double-wide .formulate-input:first-child {
-      margin-right: .5em;
-    }
-    .double-wide .formulate-input:last-child {
-      margin-left: .5em;
-    }
-  }
+@media (min-width: 992px) {
+  #resend-confirmation { width: 50vw; margin: auto; section { padding: 10%; } }
+}
 </style>

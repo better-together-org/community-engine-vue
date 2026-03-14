@@ -1,56 +1,37 @@
 <template>
-  <b-navbar-nav
-    :class="navbarClass"
-    pills
-    align="center"
-  >
+  <BNavbarNav :class="navbarClass" pills align="center">
     <BtNavItem
-      v-for="menuItem in headerMenuItems"
-      :id="menuItem.id"
-      :key="menuItem.id"
-      :external="menuItem.external"
-      :label="menuItem.label"
-      :target="menuItem.target"
-      :title="menuItem.title"
-      :path="menuItem.path"
-      :url="menuItem.url"
+      v-for="item in menuStore.headerMenuItems"
+      :id="item.id"
+      :key="item.id"
+      :external="item.external"
+      :label="item.label"
+      :target="item.target"
+      :title="item.title"
+      :path="item.path"
+      :url="item.url"
       :navitem-class="navitemClass"
     />
-    <BtNavUser v-if="isAuthenticated" />
-  </b-navbar-nav>
+    <BtNavUser v-if="authStore.isAuthenticated" />
+  </BNavbarNav>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-
+<script setup>
+import { BNavbarNav } from 'bootstrap-vue-next'
+import { useAuthStore } from '../stores/auth'
+import { useMenuStore } from '../stores/menus'
 import BtNavItem from './BtNavItem.vue'
 import BtNavUser from './BtNavUser.vue'
 
-export default {
-  name: 'NavBar',
-  components: {
-    BtNavItem,
-    BtNavUser,
-  },
-  props: {
-    navbarClass: {
-      type: String,
-      default: '',
-    },
-    navitemClass: {
-      type: String,
-      default: '',
-    },
-  },
-  computed: {
-    ...mapGetters('CommunityEngine/Authentication', ['isAuthenticated']),
-    ...mapGetters('CommunityEngine/Menus', ['headerMenuItems']),
-  },
-}
+defineProps({
+  navbarClass: { type: String, default: '' },
+  navitemClass: { type: String, default: '' },
+})
+
+const authStore = useAuthStore()
+const menuStore = useMenuStore()
 </script>
 
 <style scoped lang="scss">
-  .center {
-    text-align: center;
-  }
+.center { text-align: center; }
 </style>

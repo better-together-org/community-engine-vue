@@ -1,79 +1,55 @@
 <template>
-  <div
-    id="me"
-    class=""
-  >
-    <section
-      id="introduction"
-    >
+  <div id="me">
+    <section id="introduction">
       <div class="col">
         <h1>Me</h1>
-        <div v-if="hasMe">
-          <h2>{{ me.name }}</h2>
-          <p>{{ me.description }}</p>
+        <div v-if="peopleStore.hasMe">
+          <h2>{{ peopleStore.me.name }}</h2>
+          <p>{{ peopleStore.me.description }}</p>
         </div>
-        <b-btn
-          v-if="!hasMe"
-          v-b-modal.my-profile-modal
+        <BButton
+          v-if="!peopleStore.hasMe"
+          v-b-modal="'my-profile-modal'"
           variant="primary"
         >
           Fill out your profile
-        </b-btn>
+        </BButton>
       </div>
     </section>
-    <b-modal
+    <BModal
       id="my-profile-modal"
       title="My Profile"
       @ok.prevent="setProfile"
     >
-      <p class="my-4">
-        Fill out your profile details
-      </p>
-      <p v-if="currentPersonChanged">
-        changed
-      </p>
-      <BtProfileForm :model="currentPerson" />
-      <div>{{ formErrors }} </div>
-    </b-modal>
+      <p class="my-4">Fill out your profile details</p>
+      <p v-if="peopleStore.currentPersonChanged">changed</p>
+      <BtProfileForm :model="peopleStore.currentPerson" />
+      <div>{{ formErrors }}</div>
+    </BModal>
   </div>
 </template>
 
-<script>
-import { mapActions, mapGetters, mapState } from 'vuex'
+<script setup>
+import { ref } from 'vue'
+import { BButton, BModal } from 'bootstrap-vue-next'
+import { usePeopleStore } from '../stores/people'
 import BtProfileForm from '../components/BtProfileForm.vue'
 
-export default {
-  name: 'Me',
-  components: {
-    BtProfileForm,
-  },
-  data() {
-    return {
-      formErrors: '',
-    }
-  },
-  computed: {
-    ...mapState('CommunityEngine/People', ['currentPerson', 'me']),
-    ...mapGetters('CommunityEngine/People', ['hasMe', 'currentPersonChanged']),
-  },
-  methods: {
-    ...mapActions('CommunityEngine/People', ['postPerson']),
-    createCommunity() {
-      this.postCommunity(this.newCommunity)
-        .then(() => {
-          this.formErrors = {}
-          this.newCommunity = {}
-        })
-        .catch((response) => {
-          this.formErrors = response
-        })
-    },
-  },
+const peopleStore = usePeopleStore()
+const formErrors = ref('')
+
+async function setProfile() {
+  try {
+    await peopleStore.postPerson(peopleStore.currentPerson)
+    formErrors.value = ''
+  } catch (err) {
+    formErrors.value = err?.response?.data || 'Error saving profile'
+  }
 }
 </script>
 
 <style scoped lang="scss">
-  h2 {
-    margin-bottom: 1.5rem;
-  }
+h2 {
+  margin-bottom: 1.5rem;
+}
 </style>

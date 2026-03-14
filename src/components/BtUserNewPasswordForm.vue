@@ -1,84 +1,41 @@
 <template>
-  <vue-form-generator
-    id="new-password-form"
-    tag="div"
-    :schema="schema"
-    :model="localModel"
-    rows="3"
-    max-rows="6"
-    @validated="onValidated"
-  />
+  <BForm @submit.prevent="handleSubmit">
+    <BFormGroup label="New Password *" label-for="new-password">
+      <BFormInput id="new-password" v-model="password" type="password" required minlength="12" placeholder="Your new password" />
+      <BFormText>Minimum 12 characters.</BFormText>
+    </BFormGroup>
+    <BButton type="submit" variant="primary" class="w-100" :disabled="loading">Change Password</BButton>
+  </BForm>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
-import VueFormGenerator from 'vue-form-generator'
-import BtUserNewPasswordFormSchema from '../forms/BtUserNewPasswordFormSchema'
-import errorHandling from '../mixins/error-handling'
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { BForm, BFormGroup, BFormInput, BFormText, BButton } from 'bootstrap-vue-next'
+import { useAuthStore } from '../stores/auth'
+import { useToaster } from '../composables/useToaster'
 
-export default {
-  name: 'BtUserNewPasswordForm',
-  components: {
-    'vue-form-generator': VueFormGenerator.component,
-  },
-  mixins: [errorHandling],
-  props: {
-    model: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      schema: BtUserNewPasswordFormSchema,
-    }
-  },
-  computed: {
-    localModel: {
-      get() { return this.model },
-      set(model) { this.$emit('input', model) },
-    },
-  },
-  methods: {
-    ...mapActions('CommunityEngine/Authentication', ['newPassword']),
-    onValidated(isValid) {
-      if (isValid) {
-        this.newPassword(this.model).then(() => {
-          if (this.$route.path !== '/') {
-            this.$router.push('/users/sign-in').then(() => {
-              this.$toaster(
-                'You can now log in with your new password',
-                'success',
-                {
-                  title: 'Your password has been changed',
-                },
-              )
-            })
-          }
-        }).catch(({ response }) => {
-          // console.log(response)
-          this.$handleResponseError(response)
-        })
-      }
-    },
-  },
+const props = defineProps({
+  resetPasswordToken: { type: String, default: '' },
+})
+
+const authStore = useAuthStore()
+const router = useRouter()
+const { toast } = useToaster()
+const loading = ref(false)
+const password = ref('')
+
+async function handleSubmit() {
+  loading.value = true
+  try {
+    await authStore.newPassword({ user: { reset_password_token: props.resetPasswordToken, password: password.value } })
+    await router.push('/users/sign-in')
+    toast('Password changed. You can now sign in.', 'success')
+  } catch (err) {
+    const msg = err?.response?.data?.error || 'Failed to change password.'
+    toast(msg, 'danger')
+  } finally {
+    loading.value = false
+  }
 }
 </script>
-
-<style scoped lang="scss">
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-
-#new-password-form {
-  ::v-deep .help-block {
-    margin-top: 5px;
-
-    &.errors {
-      color: theme-color('danger')
-    }
-  }
-  ::v-deep .hint {
-    margin-top: 5px;
-  }
-}
-</style>

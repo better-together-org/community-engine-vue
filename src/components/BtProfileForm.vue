@@ -1,45 +1,30 @@
 <template>
-  <vue-form-generator
-    tag="div"
-    :schema="schema"
-    :model="localModel"
-    rows="3"
-    max-rows="6"
-    :is-new-model="true"
-  />
+  <BForm @submit.prevent="handleSubmit">
+    <BFormGroup label="Name" label-for="profile-name">
+      <BFormInput id="profile-name" v-model="localModel.name" type="text" placeholder="Your name" />
+    </BFormGroup>
+    <BFormGroup label="Description" label-for="profile-description">
+      <BFormTextarea id="profile-description" v-model="localModel.description" rows="3" placeholder="Your bio" />
+    </BFormGroup>
+    <BButton type="submit" variant="primary">Save Profile</BButton>
+  </BForm>
 </template>
 
-<script>
-import VueFormGenerator from 'vue-form-generator'
-import BtProfileFormSchema from '../forms/BtProfileFormSchema'
+<script setup>
+import { computed } from 'vue'
+import { BForm, BFormGroup, BFormInput, BFormTextarea, BButton } from 'bootstrap-vue-next'
 
-export default {
-  name: 'BtProfileForm',
-  components: {
-    'vue-form-generator': VueFormGenerator.component,
-  },
-  props: {
-    model: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      schema: BtProfileFormSchema,
-      name: '',
-      description: '',
-    }
-  },
-  computed: {
-    localModel: {
-      get() { return this.model },
-      set(model) { this.$emit('input', model) },
-    },
-  },
+const props = defineProps({
+  model: { type: Object, required: true },
+})
+const emit = defineEmits(['update:model'])
+
+const localModel = computed({
+  get: () => props.model,
+  set: (val) => emit('update:model', val),
+})
+
+function handleSubmit() {
+  emit('update:model', localModel.value)
 }
 </script>
-
-<style scoped lang="scss">
-
-</style>

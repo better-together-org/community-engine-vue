@@ -1,108 +1,59 @@
 <template>
-  <b-nav-item-dropdown
-    class="user-dropdown"
-    :text="dropdownText"
-    right
-  >
-    <b-dropdown-item
-      v-if="isAuthenticated"
-      to="/me"
-    >
-      Me
-    </b-dropdown-item>
-    <b-dropdown-item
-      v-if="isAuthenticated"
-      @click="signOutAction"
-    >
-      Sign Out
-    </b-dropdown-item>
-    <b-dropdown-item
-      v-if="!isAuthenticated"
-      to="/users/sign-in"
-    >
-      Sign In
-    </b-dropdown-item>
-    <b-dropdown-item
-      v-if="!isAuthenticated"
-      to="/users/sign-up"
-    >
-      Sign Up
-    </b-dropdown-item>
-    <b-dropdown-item
-      to="/"
-    >
-      Better Together
-    </b-dropdown-item>
-  </b-nav-item-dropdown>
+  <BNavItemDropdown class="user-dropdown" :text="dropdownText" end>
+    <BDropdownItem v-if="authStore.isAuthenticated" to="/me">Me</BDropdownItem>
+    <BDropdownItem v-if="authStore.isAuthenticated" @click="handleSignOut">Sign Out</BDropdownItem>
+    <BDropdownItem v-if="!authStore.isAuthenticated" to="/users/sign-in">Sign In</BDropdownItem>
+    <BDropdownItem v-if="!authStore.isAuthenticated" to="/users/sign-up">Sign Up</BDropdownItem>
+    <BDropdownItem to="/">Better Together</BDropdownItem>
+  </BNavItemDropdown>
 </template>
 
-<script>
-import { mapActions, mapGetters, mapState } from 'vuex'
-import toaster from '../mixins/toaster'
+<script setup>
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { BNavItemDropdown, BDropdownItem } from 'bootstrap-vue-next'
+import { useAuthStore } from '../stores/auth'
+import { usePeopleStore } from '../stores/people'
+import { useToaster } from '../composables/useToaster'
 
-export default {
-  name: 'NavUser',
-  mixins: [toaster],
-  computed: {
-    ...mapState('CommunityEngine/Authentication', ['currentUser']),
-    ...mapGetters('CommunityEngine/Authentication', ['isAuthenticated']),
-    ...mapState('CommunityEngine/People', ['currentPerson']),
-    ...mapGetters('CommunityEngine/People', ['hasCurrentPerson']),
-    dropdownText() {
-      if (this.isAuthenticated) {
-        if (this.hasCurrentPerson) return this.currentPerson.name
-        return this.currentUser.email
-      }
+const authStore = useAuthStore()
+const peopleStore = usePeopleStore()
+const router = useRouter()
+const { toast } = useToaster()
 
-      return 'Sign In'
-    },
-  },
-  methods: {
-    ...mapActions('CommunityEngine/Authentication', ['signOut']),
-    signOutAction() {
-      this.signOut().then(() => {
-        if (this.$route.path !== '/') {
-          this.$router.push('/').then(() => {
-            this.$toaster('You are now signed out!', 'info')
-          })
-        } else {
-          this.$toaster('You are now signed out!', 'info')
-        }
-      })
-    },
-  },
+const dropdownText = computed(() => {
+  if (authStore.isAuthenticated) {
+    if (peopleStore.hasCurrentPerson) return peopleStore.currentPerson.name
+    return authStore.currentUser.email
+  }
+  return 'Sign In'
+})
+
+async function handleSignOut() {
+  await authStore.signOut()
+  peopleStore.clearCurrentPerson()
+  if (router.currentRoute.value.path !== '/') {
+    await router.push('/')
+  }
+  toast('You are now signed out!', 'info')
 }
 </script>
 
 <style scoped lang="scss">
-  @import '../stylesheets/theme.scss';
+@import '../stylesheets/theme.scss';
 
-  .user-dropdown {
-    ::v-deep a.dropdown-item {
-      font-weight: bold;
-      color: $default-text-color;
-      text-align: right;
-
-      &.router-link-exact-active,
-      &:hover {
-        color: $accent-color;
-      }
-    }
-
-    ::v-deep a.dropdown-toggle {
-      font-weight: bold;
-      color: $default-text-color-bg-dark;
-
-      &.router-link-exact-active,
-      &:hover {
-        color: $accent-color;
-      }
-
-      > span {
-        max-width: 75px;
-        display: inline-block;
-        overflow: clip;
-      }
-    }
+.user-dropdown {
+  :deep(a.dropdown-item) {
+    font-weight: bold;
+    color: $default-text-color;
+    text-align: right;
+    &.router-link-exact-active, &:hover { color: $accent-color; }
   }
+  :deep(a.dropdown-toggle) {
+    font-weight: bold;
+    color: $default-text-color-bg-dark;
+    &.router-link-exact-active, &:hover { color: $accent-color; }
+    > span { max-width: 75px; display: inline-block; overflow: clip; }
+  }
+}
 </style>

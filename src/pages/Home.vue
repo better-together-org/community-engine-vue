@@ -1,11 +1,6 @@
 <template>
-  <div
-    id="home"
-    class=""
-  >
-    <section
-      id="introduction"
-    >
+  <div id="home">
+    <section id="introduction">
       <div class="col">
         <h1>Connect with your communities</h1>
         <p>
@@ -16,14 +11,11 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Home',
-}
+<script setup>
 </script>
 
 <style scoped lang="scss">
-  h2 {
-    margin-bottom: 1.5rem;
-  }
+h2 {
+  margin-bottom: 1.5rem;
+}
 </style>
