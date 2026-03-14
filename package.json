@@ -75,6 +75,7 @@
   "resolutions": {
     "lodash": "^4.17.23",
     "cross-spawn": "^7.0.6",
-    "flatted": "^3.2.8"
+    "flatted": "^3.2.8",
+    "yauzl": "^3.2.1"
   }
 }
