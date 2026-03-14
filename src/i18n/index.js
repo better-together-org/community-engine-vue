@@ -82,18 +82,31 @@ export function createCevI18n(optionMessages = {}, locale = 'en') {
  * @param {Object} options - Plugin options (may include options.messages for locale overrides)
  */
 export function installI18n(app, options = {}) {
-  const existing = app.config.globalProperties.$i18n
+  // In vue-i18n v9 with legacy:false, app.config.globalProperties.$i18n is a stripped
+  // proxy (only locale/t/d/etc) — it has no .global or .mergeLocaleMessage.
+  // The only reliable way to merge into the host's i18n is if the host passes the
+  // i18n instance explicitly via options.i18n.
+  const hostI18n = options.i18n
 
-  if (existing) {
-    // Merge CEV bt.* into the host app's existing i18n instance.
-    // $i18n is already the global composer (i18n.global), not the i18n instance itself.
-    const composer = existing.global ?? existing
+  if (hostI18n?.global?.mergeLocaleMessage) {
     const merged = buildMessages(options.messages ?? {})
     for (const [locale, msgs] of Object.entries(merged)) {
-      composer.mergeLocaleMessage(locale, msgs)
+      hostI18n.global.mergeLocaleMessage(locale, msgs)
     }
     if (options.locale) {
-      composer.locale.value = options.locale
+      hostI18n.global.locale.value = options.locale
+    }
+  } else if (app.config.globalProperties.$i18n) {
+    // Legacy mode fallback: $i18n is the VueI18n instance which has .global
+    const composer = app.config.globalProperties.$i18n.global
+    if (composer?.mergeLocaleMessage) {
+      const merged = buildMessages(options.messages ?? {})
+      for (const [locale, msgs] of Object.entries(merged)) {
+        composer.mergeLocaleMessage(locale, msgs)
+      }
+      if (options.locale) {
+        composer.locale.value = options.locale
+      }
     }
   } else {
     const i18n = createCevI18n(options.messages ?? {}, options.locale ?? 'en')
