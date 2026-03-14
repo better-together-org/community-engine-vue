@@ -1,45 +1,53 @@
 <template>
-  <vue-form-generator
-    tag="div"
-    :schema="schema"
-    :model="localModel"
-    rows="3"
-    max-rows="6"
-    :is-new-model="true"
-  />
+  <BForm @submit.prevent="handleSubmit">
+    <BFormGroup
+      :label="t('bt.communities.name_label')"
+      label-for="community-name"
+    >
+      <BFormInput
+        id="community-name"
+        v-model="form.name"
+        type="text"
+        required
+        :placeholder="t('bt.communities.name_label')"
+      />
+    </BFormGroup>
+    <BFormGroup
+      :label="t('bt.communities.description_label')"
+      label-for="community-description"
+    >
+      <BFormTextarea
+        id="community-description"
+        v-model="form.description"
+        rows="3"
+        required
+        :placeholder="t('bt.communities.description_label')"
+      />
+    </BFormGroup>
+    <BButton
+      type="submit"
+      variant="primary"
+    >
+      {{ t('bt.communities.save') }}
+    </BButton>
+  </BForm>
 </template>
 
-<script>
-import VueFormGenerator from 'vue-form-generator'
-import CommunityFormSchema from '../forms/CommunityFormSchema'
+<script setup>
+import { reactive } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { BForm, BFormGroup, BFormInput, BFormTextarea, BButton } from 'bootstrap-vue-next'
 
-export default {
-  name: 'CommunityForm',
-  components: {
-    'vue-form-generator': VueFormGenerator.component,
-  },
-  props: {
-    model: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      schema: CommunityFormSchema,
-      name: '',
-      description: '',
-    }
-  },
-  computed: {
-    localModel: {
-      get() { return this.model },
-      set(model) { this.$emit('input', model) },
-    },
-  },
+const { t } = useI18n()
+
+const props = defineProps({
+  model: { type: Object, default: () => ({}) },
+})
+const emit = defineEmits(['submit'])
+
+const form = reactive({ name: props.model.name || '', description: props.model.description || '' })
+
+function handleSubmit() {
+  emit('submit', { ...form })
 }
 </script>
-
-<style scoped lang="scss">
-
-</style>

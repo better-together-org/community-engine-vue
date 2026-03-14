@@ -1,0 +1,223 @@
+{
+  "bt": {
+    "actions": {
+      "view": "Voir",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "remove": "Retirer",
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "send": "Envoyer",
+      "create": "Créer",
+      "close": "Fermer",
+      "open": "Ouvrir",
+      "back": "Retour",
+      "submit": "Soumettre",
+      "confirm": "Confirmer",
+      "learn_more": "En savoir plus",
+      "read_more": "Lire la suite"
+    },
+    "sync": {
+      "status": {
+        "local": "Enregistré localement",
+        "local_title": "Enregistré localement — sera synchronisé une fois en ligne",
+        "syncing": "Synchronisation en cours…",
+        "synced": "Synchronisé",
+        "needs_auth": "Connecte-toi pour synchroniser",
+        "needs_auth_title": "Connecte-toi pour synchroniser cet élément",
+        "conflict": "Conflit"
+      },
+      "offline_banner": "Tu es hors ligne. Les modifications seront synchronisées à la reconnexion.",
+      "pending_count": "0 en attente | 1 en attente | {count} en attente",
+      "pending_label": "Synchronisation en attente",
+      "status_bar_online": "En ligne",
+      "status_bar_offline": "Hors ligne"
+    },
+    "auth": {
+      "sign_in": "Connexion",
+      "sign_out": "Déconnexion",
+      "sign_up": "Inscription",
+      "email": "Courriel",
+      "password": "Mot de passe",
+      "password_confirmation": "Confirmation du mot de passe",
+      "forgot_password": "Mot de passe oublié?",
+      "reset_password": "Réinitialiser le mot de passe",
+      "new_password": "Nouveau mot de passe",
+      "resend_confirmation": "Renvoyer la confirmation",
+      "sign_in_failed": "Connexion échouée. Vérifie tes identifiants.",
+      "sign_up_failed": "Inscription échouée. Réessaie.",
+      "errors": {
+        "invalid_credentials": "Courriel ou mot de passe invalide.",
+        "confirmation_mismatch": "La confirmation du mot de passe ne correspond pas.",
+        "network": "Impossible de se connecter au serveur. Réessaie."
+      }
+    },
+    "navigation": {
+      "home": "Accueil",
+      "communities": "Communautés",
+      "profile": "Profil",
+      "settings": "Paramètres"
+    },
+    "errors": {
+      "not_found": "Introuvable.",
+      "load_failed": "Chargement échoué. Réessaie.",
+      "save_failed": "Enregistrement échoué. Réessaie.",
+      "network": "Erreur réseau. Vérifie ta connexion.",
+      "unexpected": "Une erreur inattendue s'est produite."
+    },
+    "communities": {
+      "list_empty": "Aucune communauté trouvée.",
+      "loading": "Chargement des communautés…",
+      "view": "Voir la communauté",
+      "create": "Créer une communauté",
+      "edit": "Modifier la communauté",
+      "members_count": "0 membre | 1 membre | {count} membres"
+    },
+    "posts": {
+      "list_empty": "Aucune publication pour l'instant.",
+      "loading": "Chargement des publications…",
+      "read_more": "Lire la suite",
+      "save": "Enregistrer la publication",
+      "saving": "Enregistrement…",
+      "title_label": "Titre",
+      "content_label": "Contenu",
+      "privacy_label": "Confidentialité"
+    },
+    "events": {
+      "list_empty": "Aucun événement à venir.",
+      "loading": "Chargement des événements…",
+      "view": "Voir l'événement",
+      "save": "Enregistrer l'événement",
+      "name_label": "Nom de l'événement",
+      "description_label": "Description",
+      "starts_at_label": "Commence à",
+      "ends_at_label": "Se termine à"
+    },
+    "conversations": {
+      "list_empty": "Aucune conversation pour l'instant.",
+      "loading": "Chargement des conversations…",
+      "open": "Ouvrir",
+      "no_subject": "Sans objet",
+      "participants": "0 participant | 1 participant | {count} participants"
+    },
+    "messages": {
+      "list_empty": "Aucun message pour l'instant. Commence la conversation!",
+      "loading": "Chargement des messages…",
+      "placeholder": "Écris un message…",
+      "send": "Envoyer",
+      "author_unknown": "Inconnu"
+    },
+    "invitations": {
+      "list_empty": "Aucune invitation pour l'instant.",
+      "loading": "Chargement des invitations…",
+      "email_label": "Adresse courriel",
+      "name_label": "Nom (facultatif)",
+      "message_label": "Message personnel (facultatif)",
+      "email_placeholder": "personne@exemple.com",
+      "name_placeholder": "Son nom",
+      "message_placeholder": "Ajoute un message personnel…",
+      "send": "Envoyer l'invitation",
+      "cancel": "Annuler",
+      "status": {
+        "pending": "En attente",
+        "accepted": "Acceptée",
+        "expired": "Expirée"
+      },
+      "expires": "Expire le {date}"
+    },
+    "pages": {
+      "list_empty": "Aucune page pour l'instant.",
+      "loading": "Chargement…",
+      "not_found": "Page introuvable.",
+      "read": "Lire"
+    },
+    "person": {
+      "members_empty": "Aucun membre trouvé.",
+      "loading": "Chargement des membres…",
+      "profile": "Profil",
+      "unknown": "Inconnu",
+      "block": "Bloquer",
+      "unblock": "Débloquer"
+    },
+    "roles": {
+      "title": "Gestionnaire de rôles",
+      "assign": "Attribuer un rôle",
+      "revoke": "Révoquer",
+      "no_roles": "Aucun rôle attribué",
+      "grant_success": "Rôle attribué",
+      "revoke_success": "Rôle révoqué"
+    },
+    "community": {
+      "settings": {
+        "title": "Paramètres de la communauté",
+        "general": "Général",
+        "members": "Membres",
+        "danger_zone": "Zone dangereuse",
+        "leave": "Quitter la communauté",
+        "leave_confirm": "Êtes-vous sûr de vouloir quitter cette communauté ?"
+      }
+    },
+    "joatu": {
+      "heading": "Banque de temps",
+      "tagline": "1 crédit de temps = 1 heure. Tout le travail a une valeur égale.",
+      "tabs": {
+        "offers": "Offres",
+        "requests": "Demandes",
+        "agreements": "Ententes"
+      },
+      "offers": {
+        "list_empty": "Aucune offre pour l'instant.",
+        "loading": "Chargement des offres…",
+        "add": "+ Ajouter une offre",
+        "view": "Voir l'offre",
+        "title_label": "Qu'est-ce que tu offres?",
+        "title_placeholder": "p. ex. Aide en conception web, Jardinage, Cours de guitare",
+        "description_label": "Description",
+        "description_placeholder": "Décris ce que tu peux offrir en détail…",
+        "category_label": "Catégorie",
+        "category_placeholder": "p. ex. Compétences, Travail, Connaissances, Biens",
+        "credits_label": "Crédits de temps",
+        "credits_hint": "1 crédit de temps = 1 heure. Tout le travail a une valeur égale.",
+        "submit": "Ajouter l'offre",
+        "status": {
+          "open": "Disponible",
+          "fulfilled": "Accomplie",
+          "withdrawn": "Retirée"
+        },
+        "credits_display": "0 crédit de temps | 1 crédit de temps | {count} crédits de temps"
+      },
+      "requests": {
+        "list_empty": "Aucune demande pour l'instant.",
+        "loading": "Chargement des demandes…",
+        "add": "+ Ajouter une demande",
+        "view": "Voir la demande",
+        "fulfill": "Répondre à la demande",
+        "title_label": "De quoi as-tu besoin?",
+        "title_placeholder": "p. ex. Aide au déménagement, Garde d'enfants, Réparation d'ordinateur",
+        "description_label": "Description",
+        "description_placeholder": "Décris ce dont tu as besoin en détail…",
+        "category_label": "Catégorie",
+        "credits_label": "Crédits de temps",
+        "credits_hint": "1 crédit de temps = 1 heure. Tout le travail a une valeur égale.",
+        "submit": "Ajouter la demande",
+        "status": {
+          "open": "Disponible",
+          "fulfilled": "Accomplie",
+          "withdrawn": "Retirée"
+        }
+      },
+      "agreements": {
+        "list_empty": "Aucune entente pour l'instant.",
+        "loading": "Chargement des ententes…",
+        "agreed_on": "Convenu le {date}",
+        "status": {
+          "pending": "En attente",
+          "active": "Active",
+          "completed": "Complétée",
+          "disputed": "En litige"
+        },
+        "credits_display": "0 crédit de temps | 1 crédit de temps | {count} crédits de temps"
+      }
+    }
+  }
+}

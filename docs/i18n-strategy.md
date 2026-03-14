@@ -1,0 +1,354 @@
+# Internationalization (i18n) Strategy
+
+## Overview
+
+`community-engine-vue` uses [vue-i18n v9](https://vue-i18n.intlify.dev/) (Composition API mode) as its localization framework, mirroring the CE Rails engine's locale structure. All user-facing strings are namespaced under the `bt.*` key prefix to avoid collisions with host applications.
+
+**Supported locales** (matching CE Rails): `en` (source), `fr` (French CA — priority), `es`, `uk`
+
+---
+
+## Key Hierarchy
+
+All CEV strings live under the `bt` namespace:
+
+```
+bt.
+  actions.*          — Generic actions: view, edit, delete, save, cancel, send, create, close
+  auth.*             — Sign in/out/up, password, confirmation
+  sync.*             — Sync status labels, offline banner, pending count
+  errors.*           — Generic error messages, network errors
+  offline.*          — Offline mode messages
+  navigation.*       — Nav labels
+  communities.*      — Community list, empty states, loading
+  posts.*            — Post list, form labels, empty states
+  events.*           — Event list, form labels, empty states
+  conversations.*    — Conversation list, message thread
+  messages.*         — Message form, empty thread
+  invitations.*      — Invitation card, form, status labels
+  pages.*            — CMS page list/detail
+  joatu.*            — JoaTU time-banking: offers, requests, agreements
+  person.*           — Person card, member list, profile
+```
+
+Host applications and companion packages add their own top-level keys (never `bt.*`):
+- `bts.*` — better-together-vue (BTS marketing site)
+- `commerce.*` — community-commerce-vue
+- (host app) — any key outside `bt.*`
+
+---
+
+## Architecture
+
+### Plugin Installation
+
+CEV's `install()` hook checks whether the host application has already installed vue-i18n. If so, it merges CEV messages into the existing instance rather than creating a new one. This prevents double-installation when the host app also uses vue-i18n.
+
+```js
+// In your host app:
+import { createI18n } from 'vue-i18n'
+import CommunityEngineVue from '@bettertogether/community-engine-vue'
+
+const i18n = createI18n({ locale: 'en', messages: { en: { /* your strings */ } } })
+app.use(i18n)           // install first
+app.use(CommunityEngineVue, {
+  messages: {           // optional — extend CEV's bt.* translations
+    fr: { bt: { actions: { view: 'Voir' } } }
+  }
+})
+// CEV detects the existing i18n instance and merges bt.* into it
+```
+
+If no i18n instance exists, CEV installs its own with English as the default.
+
+### Extending from Companion Packages
+
+Companion packages (e.g. `community-commerce-vue`) register their strings via `registerExtensionMessages()` before the plugin installs:
+
+```js
+import { registerExtensionMessages } from '@bettertogether/community-engine-vue'
+
+registerExtensionMessages({
+  en: { commerce: { checkout: { title: 'Checkout' } } },
+  fr: { commerce: { checkout: { title: 'Passer à la caisse' } } },
+})
+```
+
+These are merged in during `installI18n()`.
+
+### Using Translations in Components
+
+```vue
+<script setup>
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+</script>
+
+<template>
+  <p>{{ t('bt.communities.list_empty') }}</p>
+  <BButton>{{ t('bt.actions.view') }}</BButton>
+</template>
+```
+
+CEV also re-exports `useI18n` from `vue-i18n` for convenience:
+```js
+import { useI18n } from '@bettertogether/community-engine-vue'
+```
+
+---
+
+## Migration Stages
+
+### Stage 0 — Foundation ✅ (current)
+
+**Goal**: Infrastructure in place. No strings extracted yet. Advisory linting only.
+
+- [x] `vue-i18n@9` installed in CEV
+- [x] `src/i18n/index.js` — `createCevI18n()` + `installI18n()` + `registerExtensionMessages()`
+- [x] `src/i18n/locales/en.json` — full `bt.*` key skeleton (English only, all strings)
+- [x] `@intlify/eslint-plugin-vue-i18n` installed, `no-raw-text: warn` (advisory)
+- [x] `scripts/i18n-check.mjs` — missing key check (exit 1) + unused key report
+- [x] `yarn i18n:check` npm script
+- [x] CI `i18n-health` job added (`continue-on-error: true` — advisory until Stage 2)
+
+**Policy**: New components SHOULD use `t()` but are not yet blocked.
+
+---
+
+### Stage 1 — Audit + Extraction (next sprint)
+
+**Goal**: Zero hardcoded strings in all existing components. CI becomes blocking.
+
+- [ ] Audit all `src/components/**/*.vue` and `src/pages/**/*.vue`
+- [ ] Replace ~150–200 hardcoded strings with `t(key)` calls
+- [ ] All keys present in `en.json`
+- [ ] ESLint `no-raw-text` upgraded from `warn` → `error`
+- [ ] CI `i18n-health` job: `continue-on-error: false` (blocking)
+- [ ] Script/test coupling: any new `.vue` file without `t()` that has visible text = lint error
+
+**Estimated string count by category**:
+| Category | Est. strings |
+|----------|-------------|
+| Sync indicators | 8 |
+| Auth forms | 15 |
+| Navigation | 8 |
+| Communities | 10 |
+| Posts | 10 |
+| Events | 8 |
+| Conversations/Messages | 12 |
+| Invitations | 8 |
+| Pages (CMS) | 6 |
+| JoaTU | 20 |
+| Common actions | 10 |
+| Error messages | 10 |
+| **Total** | **~125** |
+
+---
+
+### Stage 2 — French CA (`fr.json`) ✅
+
+**Goal**: Full French Canadian translation for all `bt.*` strings, bundled directly in CEV.
+
+BTS operates in Corner Brook, NL — a bilingual region. French CA is the first non-English locale and
+is treated as a **first-class locale**, not an optional add-on.
+
+- [x] `src/i18n/locales/fr.json` — 151 `bt.*` keys in Canadian French (Québécois)
+- [x] `src/i18n/index.js` — `fr` included in `buildMessages()`; `options.locale` respected at install
+- [x] `scripts/i18n-check-fr.mjs` — completeness check: missing keys = exit 1, extra keys = warn
+- [x] `yarn i18n:check:fr` npm script
+- [x] CI `i18n-fr-health` advisory job (`continue-on-error: true`)
+- [ ] `BLanguageSwitcher` component — dropdown in `BtNavBar` (Stage 3 UI work)
+- [ ] Locale persisted in Pinia auth store (Stage 3)
+
+#### Delivery model
+
+`fr.json` is **bundled directly in CEV** (not a separate package). Rationale: BTS serves Francophone
+communities in Corner Brook and across Atlantic Canada — French must be available immediately, without
+requiring a separate install step from host applications.
+
+#### Activating French
+
+Pass `locale: 'fr'` in the plugin options:
+
+```js
+app.use(CommunityEngineVue, { locale: 'fr' })
+```
+
+`installI18n` will set the active locale on the i18n instance (both host-app-owned and CEV-owned instances).
+
+If you need to switch locale at runtime, use `useI18n()` or the global i18n instance directly:
+
+```js
+import { useI18n } from 'vue-i18n'
+const { locale } = useI18n()
+locale.value = 'fr'
+```
+
+#### Companion packages adding French translations
+
+Companion packages register their own French strings alongside English via `registerExtensionMessages()`:
+
+```js
+import { registerExtensionMessages } from '@bettertogether/community-engine-vue'
+
+registerExtensionMessages({
+  en: { commerce: { checkout: { title: 'Checkout' } } },
+  fr: { commerce: { checkout: { title: 'Passer à la caisse' } } },
+})
+```
+
+CEV merges all registered locales (including `fr`) when `installI18n` runs.
+
+#### Translation maintenance
+
+**When adding new keys to `en.json`, always add the French equivalent to `fr.json` at the same time.**
+
+The `yarn i18n:check:fr` script enforces this: keys present in `en.json` but absent from `fr.json`
+cause a CI failure (exit 1). Stage 4 tooling will add this as a blocking gate.
+
+Translation conventions (Québécois):
+- "Courriel" (not "e-mail"), "Mot de passe" (not "password")
+- "Connexion" / "Déconnexion" / "Inscription" for sign in / sign out / sign up
+- "Banque de temps" (time banking), "Crédit de temps" (time credit)
+- "Offre" / "Demande" / "Entente" for offer / request / agreement (JoaTU)
+- "Enregistré localement" / "Synchronisé" / "Hors ligne" (sync states)
+- Use "tu" for direct user instructions (informal Québécois register in app UI)
+- "p. ex." for "e.g." placeholders
+
+---
+
+### Stage 3 — Spanish + Ukrainian (`es.json`, `uk.json`) ✅
+
+**Goal**: Match CE Rails' locale support. Both locales ship bundled directly in CEV, matching the
+pattern established by French in Stage 2.
+
+- [x] `src/i18n/locales/es.json` — full `bt.*` translation in Latin American Spanish
+- [x] `src/i18n/locales/uk.json` — full `bt.*` translation in Ukrainian (Cyrillic)
+- [x] `src/i18n/index.js` — `es` and `uk` included in `buildMessages()`
+- [x] `scripts/i18n-check-es.mjs` — completeness check: missing keys = exit 1, extra keys = warn
+- [x] `scripts/i18n-check-uk.mjs` — completeness check: missing keys = exit 1, extra keys = warn
+- [x] `yarn i18n:check:es` and `yarn i18n:check:uk` npm scripts
+- [x] CI `i18n-es-health` and `i18n-uk-health` advisory jobs (`continue-on-error: true`)
+
+#### Rationale
+
+CE Rails already ships `es.yml` and `uk.yml`. CEV must cover the same locales so that host
+applications serving Spanish-speaking or Ukrainian-speaking communities receive translations
+immediately without extra configuration.
+
+#### Activating a locale
+
+```js
+app.use(CommunityEngineVue, { locale: 'es' })
+// or
+app.use(CommunityEngineVue, { locale: 'uk' })
+```
+
+Switch at runtime the same way as French:
+
+```js
+import { useI18n } from 'vue-i18n'
+const { locale } = useI18n()
+locale.value = 'uk'
+```
+
+#### Translation conventions
+
+**Latin American Spanish (`es`)**
+- Informal register: "tú" for user-facing instructions (not "usted")
+- Standard LATAM vocabulary: "contraseña" (password), "correo electrónico" (email),
+  "guardar" (save), "cancelar" (cancel), "enviar" (send/submit)
+- JoaTU: "banco de tiempo", "crédito de tiempo", "oferta", "solicitud", "acuerdo"
+- Sync: "Guardado localmente", "Sincronizando…", "Sincronizado", "Sin conexión"
+- "p. ej." for "e.g." placeholders (matching Quebec's "p. ex." pattern)
+
+**Ukrainian (`uk`)**
+- Informal register: "ти" for user-facing instructions
+- Standard Ukrainian: "пароль" (password), "електронна пошта" (email),
+  "зберегти" (save), "скасувати" (cancel), "надіслати" (send)
+- JoaTU: "банк часу", "часовий кредит", "пропозиція", "запит", "угода"
+- Sync: "Збережено локально", "Синхронізація…", "Синхронізовано", "Офлайн"
+- Pluralization uses vue-i18n pipe syntax (3 slots: 0 | 1 | many):
+  `"0 учасників | 1 учасник | {count} учасників"` — genitive plural in third slot
+
+#### How to add more locales
+
+1. Create `src/i18n/locales/<code>.json` with all `bt.*` keys from `en.json`
+2. Import and include in `buildMessages()` in `src/i18n/index.js`
+3. Copy `scripts/i18n-check-fr.mjs` → `scripts/i18n-check-<code>.mjs`, update file path and labels
+4. Add `"i18n:check:<code>": "node scripts/i18n-check-<code>.mjs"` to `package.json` scripts
+5. Add an advisory CI job to `.github/workflows/ci.yml` (see `i18n-es-health` as template)
+6. Document conventions in `docs/i18n-strategy.md` Stage 3+
+
+---
+
+### Stage 4 — RTL + Advanced (deferred)
+
+- RTL layout support (`dir="rtl"`) for Arabic/Hebrew
+- Number + date formatting per locale
+- Pluralization rules for Slavic locales (Ukrainian)
+
+---
+
+## CI Job: `i18n-health`
+
+Located in `.github/workflows/ci.yml`, runs after lint and unit tests.
+
+**Stage 0** (advisory):
+```yaml
+- name: i18n health check
+  run: yarn i18n:check
+  continue-on-error: true
+```
+
+**Stage 2** (blocking — after all strings extracted):
+```yaml
+- name: i18n health check
+  run: yarn i18n:check
+  # no continue-on-error
+```
+
+### What `yarn i18n:check` does
+
+Script: `scripts/i18n-check.mjs`
+
+1. Scans `src/**/*.vue` and `src/**/*.js` for `t('key')` and `$t('key')` references
+2. Reads `src/i18n/locales/en.json`, flattens to dot-notation keys
+3. **FAIL** (exit 1): any key referenced in code but absent from `en.json`
+4. **WARN** (exit 0): any key in `en.json` not referenced in code
+
+Running locally:
+```bash
+yarn i18n:check          # check for missing/unused keys
+yarn i18n:check --strict # also fail on unused keys
+```
+
+---
+
+## Translation Agent Instructions
+
+When contributing translations to locale files:
+
+1. **Never modify** `en.json` structure — only add/update values in `fr.json`, `es.json`, `uk.json`
+2. **Preserve interpolation** — `{count}`, `{name}` placeholders must appear in translations
+3. **Preserve pluralization pipes** — `"no items | one item | {count} items"` (vue-i18n pipe syntax)
+4. **Namespace strictly** — all CEV keys start with `bt.`; never add top-level keys to CEV locale files
+5. **Consistency with CE Rails** — check `config/locales/{locale}.yml` for established terminology
+6. **Cultural appropriateness** — formal register ("vous") for FR, research proper terms for ES/UK
+
+Checking translation completeness:
+```bash
+yarn i18n:check           # missing keys = strings used in code without translations
+```
+
+---
+
+## BTV i18n
+
+`better-together-vue` is a host application. It:
+1. Installs CEV (which provides `bt.*` translations)
+2. Adds its own strings under `bts.*` using its own i18n instance or extending CEV's
+
+BTV locale files: `src/i18n/locales/en.json` (key: `bts.*`).
+
+BTV page content (About, Opportunities, etc.) is long-form prose — defer translation until Stage 2/3 when infrastructure is confirmed stable.

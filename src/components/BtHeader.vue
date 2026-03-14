@@ -3,10 +3,10 @@
     id="bt-header"
     class="container-fluid"
   >
-    <b-navbar
+    <BNavbar
       toggleable="lg"
-      :type="backgroundStyle"
-      :style="headerStyle()"
+      :variant="backgroundStyle"
+      :style="headerStyle"
     >
       <div
         id="nav-inner"
@@ -15,115 +15,57 @@
         <slot name="branding-logo">
           <BtBrandingLogo />
         </slot>
-        <b-navbar-toggle target="mobile-collapse" />
-        <b-collapse
-          id="right-collapse"
-          is-nav
-          invisible
-        >
-          <BtNavBar navbar-class="ml-auto justify-content-center" />
-        </b-collapse>
-
-        <b-collapse
-          id="mobile-collapse"
+        <BNavbarToggle target="nav-collapse" />
+        <BCollapse
+          id="nav-collapse"
           is-nav
         >
-          <BtNavBar
-            navbar-class="m-auto d-block d-lg-none center"
-          />
-        </b-collapse>
+          <BtNavBar navbar-class="ms-auto justify-content-center" />
+        </BCollapse>
       </div>
-    </b-navbar>
+    </BNavbar>
   </header>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script setup>
+import { computed } from 'vue'
+import { BNavbar, BNavbarToggle, BCollapse } from 'bootstrap-vue-next'
+import { useCommunityStore } from '../stores/communities'
 import BtBrandingLogo from './BtBrandingLogo.vue'
 import BtNavBar from './BtNavBar.vue'
 
-export default {
-  name: 'BtHeader',
-  components: {
-    BtBrandingLogo,
-    BtNavBar,
-  },
-  props: {
-    backgroundStyle: {
-      type: String,
-      default: () => 'dark',
-    },
-  },
-  computed: {
-    ...mapGetters('CommunityEngine/Communities', ['customization']),
-  },
-  methods: {
-    headerStyle() {
-      const styles = {
-        backgroundColor: this.customization.backgroundColor,
-      }
+defineProps({
+  backgroundStyle: { type: String, default: 'dark' },
+})
 
-      if (this.customization.coverImageUrl !== '' && this.customization.coverImageUrl !== undefined) {
-        styles.backgroundImage = `url(${this.customization.coverImageUrl})`
-        styles.backgroundPositionY = this.customization.coverImagePositionY
-      }
+const communityStore = useCommunityStore()
 
-      return styles
-    },
-  },
-}
+const headerStyle = computed(() => {
+  const { customization } = communityStore
+  const styles = { backgroundColor: customization.backgroundColor }
+  if (customization.coverImageUrl) {
+    styles.backgroundImage = `url(${customization.coverImageUrl})`
+    styles.backgroundPositionY = customization.coverImagePositionY
+  }
+  return styles
+})
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-@import 'bootstrap/scss/_mixins.scss';
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
 @import '../stylesheets/theme.scss';
 
 #bt-header {
   min-height: 15vh;
-
   nav {
     z-index: 1000;
     background-repeat: no-repeat;
     background-size: cover;
-
-    ::v-deep #nav-inner {
-      position: relative;
-    }
+    :deep(#nav-inner) { position: relative; }
   }
-
-  #right-collapse {
-    bottom: 0;
-    position: absolute;
-    right: 0;
-  }
-
-  #mobile-collapse.show {
-    ::v-deep .user-dropdown {
-      a.dropdown-toggle {
-        > span {
-          max-width: initial;
-        }
-      }
-      a.dropdown-item {
-        text-align: center;
-        color: $default-text-color-bg-dark;
-
-        &.router-link-exact-active,
-        &:hover {
-          background-color: initial;
-          color: $accent-color;
-        }
-      }
-      ul.dropdown-menu {
-        background-color: initial;
-      }
-    }
-  }
-
-  .navbar-toggler >>> .navbar-toggler-icon {
+  :deep(.navbar-toggler .navbar-toggler-icon) {
     width: 1em;
     height: 1em;
   }

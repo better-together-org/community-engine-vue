@@ -1,86 +1,37 @@
 <template>
   <div id="sign-in">
     <section>
-      <h2>Sign In</h2>
-      <BtUserSignInForm :model="user" />
+      <h2>{{ t('bt.auth.heading_sign_in') }}</h2>
+      <BtUserSignInForm />
       <div>
-        <b-link to="/users/sign-up">
-          Don't have an account? Sign up!
-        </b-link>
+        <BLink to="/users/sign-up">
+          {{ t('bt.auth.prompt_sign_up') }}
+        </BLink>
       </div>
       <div>
-        <b-link to="/users/password/reset">
-          Forgot your password? Reset it!
-        </b-link>
+        <BLink to="/users/password/reset">
+          {{ t('bt.auth.prompt_forgot_password') }}
+        </BLink>
       </div>
       <div>
-        <b-link to="/users/confirmation/resend">
-          Didn't receive your account confirmation email? Resend it!
-        </b-link>
+        <BLink to="/users/confirmation/resend">
+          {{ t('bt.auth.prompt_resend') }}
+        </BLink>
       </div>
     </section>
   </div>
 </template>
 
-<script>
+<script setup>
+import { useI18n } from 'vue-i18n'
+import { BLink } from 'bootstrap-vue-next'
 import BtUserSignInForm from '../components/BtUserSignInForm.vue'
 
-export default {
-  name: 'UsersSignIn',
-  components: {
-    BtUserSignInForm,
-  },
-  data() {
-    return {
-      formValues: {},
-    }
-  },
-  computed: {
-    user() {
-      return {}
-    },
-  },
-}
+const { t } = useI18n()
 </script>
 
 <style scoped lang="scss">
-  @media (min-width: 992px) {
-    #sign-in {
-      width: 50vw;
-      margin: auto;
-
-      section {
-        padding: 10%;
-      }
-    }
-  }
-
-  .login-form {
-    padding: 2em;
-    border: 1px solid #a8a8a8;
-    border-radius: .5em;
-    max-width: 500px;
-    box-sizing: border-box;
-  }
-  .form-title {
-    margin-top: 0;
-  }
-  .login-form::v-deep .formulate-input .formulate-input-element {
-    max-width: none;
-  }
-  @media (min-width: 420px) {
-    .double-wide {
-      display: flex;
-    }
-    .double-wide .formulate-input {
-      flex-grow: 1;
-      width: calc(50% - .5em);
-    }
-    .double-wide .formulate-input:first-child {
-      margin-right: .5em;
-    }
-    .double-wide .formulate-input:last-child {
-      margin-left: .5em;
-    }
-  }
+@media (min-width: 992px) {
+  #sign-in { width: 50vw; margin: auto; section { padding: 10%; } }
+}
 </style>

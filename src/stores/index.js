@@ -1,0 +1,5 @@
+export { useAuthStore } from './auth'
+export { useCommunityStore } from './communities'
+export { useMenuStore } from './menus'
+export { usePeopleStore } from './people'
+export { useSyncStore } from './sync'

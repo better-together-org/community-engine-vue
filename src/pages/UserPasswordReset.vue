@@ -1,81 +1,32 @@
 <template>
   <div id="reset-password">
     <section>
-      <h2>Reset Your Password</h2>
-      <BtUserResetPasswordForm :model="user" />
+      <h2>{{ t('bt.auth.heading_password_reset') }}</h2>
+      <BtUserResetPasswordForm />
       <div>
-        <b-link to="/users/sign-in">
-          Remembered your password? Sign in!
-        </b-link>
+        <BLink to="/users/sign-in">
+          {{ t('bt.auth.prompt_remembered_password') }}
+        </BLink>
       </div>
       <div>
-        <b-link to="/users/sign-up">
-          Don't have an account? Sign up!
-        </b-link>
+        <BLink to="/users/sign-up">
+          {{ t('bt.auth.prompt_sign_up') }}
+        </BLink>
       </div>
     </section>
   </div>
 </template>
 
-<script>
+<script setup>
+import { useI18n } from 'vue-i18n'
+import { BLink } from 'bootstrap-vue-next'
 import BtUserResetPasswordForm from '../components/BtUserResetPasswordForm.vue'
 
-export default {
-  name: 'UsersResetPassword',
-  components: {
-    BtUserResetPasswordForm,
-  },
-  data() {
-    return {
-      formValues: {},
-    }
-  },
-  computed: {
-    user() {
-      return {}
-    },
-  },
-}
+const { t } = useI18n()
 </script>
 
 <style scoped lang="scss">
-  @media (min-width: 992px) {
-    #reset-password {
-      width: 50vw;
-      margin: auto;
-
-      section {
-        padding: 10%;
-      }
-    }
-  }
-
-  .login-form {
-    padding: 2em;
-    border: 1px solid #a8a8a8;
-    border-radius: .5em;
-    max-width: 500px;
-    box-sizing: border-box;
-  }
-  .form-title {
-    margin-top: 0;
-  }
-  .login-form::v-deep .formulate-input .formulate-input-element {
-    max-width: none;
-  }
-  @media (min-width: 420px) {
-    .double-wide {
-      display: flex;
-    }
-    .double-wide .formulate-input {
-      flex-grow: 1;
-      width: calc(50% - .5em);
-    }
-    .double-wide .formulate-input:first-child {
-      margin-right: .5em;
-    }
-    .double-wide .formulate-input:last-child {
-      margin-left: .5em;
-    }
-  }
+@media (min-width: 992px) {
+  #reset-password { width: 50vw; margin: auto; section { padding: 10%; } }
+}
 </style>

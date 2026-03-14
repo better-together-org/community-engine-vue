@@ -1,26 +1,17 @@
-import toaster from './toaster'
+import { useToaster } from '../composables/useToaster'
 
 export default {
-  mixins: [
-    toaster,
-  ],
   methods: {
     $handleResponseError(response) {
+      const { toast } = useToaster()
       const { status } = response
       let message = ''
-
       switch (status) {
-      case 401:
-        message = response.data.error
-        break
-      case 500:
-        message = 'Sorry, there was a server error. Please try again.'
-        break
-      default:
-        message = 'Sorry, there was an error'
+      case 401: message = response.data.error; break
+      case 500: message = 'Sorry, there was a server error. Please try again.'; break
+      default: message = 'Sorry, there was an error'
       }
-
-      this.$toaster(message, 'danger')
+      toast(message, 'danger')
     },
   },
 }

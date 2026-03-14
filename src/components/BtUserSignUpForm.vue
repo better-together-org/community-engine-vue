@@ -1,110 +1,100 @@
 <template>
-  <div id="sign-up-form">
-    <div
-      v-if="hasErrors"
-      id="sign-up-errors"
-      class="errors text-danger mb-4"
-    >
-      <h4>Errors</h4>
-      <ul
-        v-for="(value, name) in errors"
-        :key="name"
+  <BForm @submit.prevent="handleSubmit">
+    <fieldset>
+      <legend>{{ t('bt.auth.login_info') }}</legend>
+      <BFormGroup
+        :label="t('bt.auth.email')"
+        label-for="sign-up-email"
       >
-        <li>
-          {{ name }}: {{ value.join(", ") }}
-        </li>
-      </ul>
-    </div>
-    <p><strong>*</strong> indicates a required field</p>
-    <vue-form-generator
-      tag="div"
-      :schema="schema"
-      :model="localModel"
-      rows="3"
-      max-rows="6"
-      @validated="onValidated"
-    />
-  </div>
+        <BFormInput
+          id="sign-up-email"
+          v-model="form.user.email"
+          type="email"
+          required
+          :placeholder="t('bt.auth.email')"
+        />
+      </BFormGroup>
+      <BFormGroup
+        :label="t('bt.auth.password')"
+        label-for="sign-up-password"
+      >
+        <BFormInput
+          id="sign-up-password"
+          v-model="form.user.password"
+          type="password"
+          required
+          minlength="12"
+          :placeholder="t('bt.auth.password')"
+        />
+        <BFormText>{{ t('bt.auth.password_hint') }}</BFormText>
+      </BFormGroup>
+    </fieldset>
+    <fieldset>
+      <legend>{{ t('bt.auth.personal_info') }}</legend>
+      <BFormGroup
+        :label="t('bt.person.name_label')"
+        label-for="sign-up-name"
+      >
+        <BFormInput
+          id="sign-up-name"
+          v-model="form.user.person_attributes.name"
+          type="text"
+          required
+          :placeholder="t('bt.person.name_label')"
+        />
+      </BFormGroup>
+      <BFormGroup
+        :label="t('bt.person.description_label')"
+        label-for="sign-up-description"
+      >
+        <BFormTextarea
+          id="sign-up-description"
+          v-model="form.user.person_attributes.description"
+          required
+          :placeholder="t('bt.person.description_label')"
+          rows="3"
+        />
+      </BFormGroup>
+    </fieldset>
+    <BButton
+      type="submit"
+      variant="primary"
+      class="w-100"
+      :disabled="loading"
+    >
+      {{ t('bt.auth.sign_up') }}
+    </BButton>
+  </BForm>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
-import VueFormGenerator from 'vue-form-generator'
-import BtUserSignUpFormSchema from '../forms/BtUserSignUpFormSchema'
-import errorHandling from '../mixins/error-handling'
+<script setup>
+import { reactive, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+import { BForm, BFormGroup, BFormInput, BFormTextarea, BFormText, BButton } from 'bootstrap-vue-next'
+import { useAuthStore } from '../stores/auth'
+import { useToaster } from '../composables/useToaster'
 
-export default {
-  name: 'BtUserSignUpForm',
-  components: {
-    'vue-form-generator': VueFormGenerator.component,
-  },
-  mixins: [errorHandling],
-  props: {
-    model: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      schema: BtUserSignUpFormSchema,
-      errors: {},
-    }
-  },
-  computed: {
-    hasErrors() { return Object.keys(this.errors).length > 0 },
-    localModel: {
-      get() { return this.model },
-      set(model) { this.$emit('input', model) },
-    },
-  },
-  methods: {
-    ...mapActions('CommunityEngine/Authentication', ['signUp']),
-    onValidated(isValid) {
-      if (isValid) {
-        this.errors = {}
-        this.signUp(this.model).then((data) => {
-          if (this.$route.path !== '/') {
-            this.$router.push('/').then(() => {
-              this.$toaster(
-                `Please click on the confirmation link emailed to ${data.email} to log in.`,
-                'info',
-                {
-                  title: 'Please confirm your email address',
-                  autoHideDelay: 6000,
-                },
-              )
-            })
-          }
-        }).catch(({ response }) => {
-          // console.log(response)
-          this.$handleResponseError(response)
-        })
-      }
-    },
-  },
+const { t } = useI18n()
+
+const authStore = useAuthStore()
+const router = useRouter()
+const { toast } = useToaster()
+const loading = ref(false)
+
+const form = reactive({ user: { email: '', password: '', person_attributes: { name: '', description: '' } } })
+
+async function handleSubmit() {
+  loading.value = true
+  try {
+    await authStore.signUp(form.user)
+    await router.push('/users/sign-in')
+    toast('Please check your email to confirm your account.', 'success')
+  } catch (err) {
+    const msg = err?.response?.data?.error || 'Sign up failed. Please try again.'
+    toast(msg, 'danger')
+  } finally {
+    loading.value = false
+  }
 }
 </script>
-
-<style scoped lang="scss">
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-
-#sign-up-form {
-  ::v-deep .help-block {
-    margin-top: 5px;
-
-    &.errors {
-      color: theme-color('danger')
-    }
-  }
-  ::v-deep .hint {
-    margin-top: 5px;
-  }
-}
-#sign-up-errors {
-  h4 {
-    text-align: left;
-  }
-}
-</style>

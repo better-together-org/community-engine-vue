@@ -1,15 +1,20 @@
-import 'mutationobserver-shim'
-import Vue from 'vue'
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import BtApp from './BtApp.vue'
-import './plugins'
-import './registerServiceWorker'
 import router from './router'
-import store from './store'
+import { setupPlugins } from './plugins'
+import { useSyncStore } from './stores/sync'
 
-Vue.config.productionTip = false
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
 
-new Vue({
-  router,
-  store,
-  render: (h) => h(BtApp),
-}).$mount('#app')
+const app = createApp(BtApp)
+app.use(pinia)
+app.use(router)
+setupPlugins(app)
+app.mount('#app')
+
+// Initialize network listeners after mount (store is accessible after pinia is installed)
+const syncStore = useSyncStore()
+syncStore.initNetworkListeners()

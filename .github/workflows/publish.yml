@@ -1,0 +1,43 @@
+name: Publish npm package
+
+# Triggers: push a tag like v0.2.1, or run manually from the Actions UI.
+#
+# Required secret: FORGEJO_NPM_TOKEN
+#   Set at org level (better-together-org → Settings → Secrets) or repo level.
+#   Value: a Forgejo personal access token with write:package scope.
+#   Token managed via: python3 scripts/encrypted_credentials.py get FORGEJO_NPM_TOKEN
+#   (management-tool repo, config/credentials.enc)
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g. 0.2.1) — informational only; actual version comes from package.json'
+        required: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://git.btsdev.ca/api/packages/better-together-org/npm/'
+          scope: '@bettertogether'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build
+        run: yarn build
+        continue-on-error: true  # build artefacts are optional for source-only publish
+
+      - name: Publish
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.FORGEJO_NPM_TOKEN }}

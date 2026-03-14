@@ -1,43 +1,38 @@
 <template>
   <div id="app">
+    <BToastOrchestrator />
+    <SyncStatusBar />
     <BtHeader />
+    <OfflineBanner />
     <BtMainContent />
   </div>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
+<script setup>
+import { onMounted } from 'vue'
+import { BToastOrchestrator } from 'bootstrap-vue-next'
+import { useMenuStore } from './stores/menus'
+import { useSyncStore } from './stores/sync'
 import BtHeader from './components/BtHeader.vue'
 import BtMainContent from './components/BtMainContent.vue'
+import SyncStatusBar from './components/sync/SyncStatusBar.vue'
+import OfflineBanner from './components/sync/OfflineBanner.vue'
 
-export default {
-  name: 'BtApp',
-  components: {
-    BtHeader,
-    BtMainContent,
-  },
-  mounted() {
-    this.setHeaderMenuItems([
-      {
-        id: 0,
-        external: false,
-        label: 'About',
-        path: '/about',
-        title: 'About the Better Together Community',
-        sortOrder: 0,
-      },
-    ])
-  },
-  methods: {
-    ...mapActions('CommunityEngine/Menus', ['setHeaderMenuItems']),
-  },
-}
+const menuStore = useMenuStore()
+const syncStore = useSyncStore()
+
+onMounted(() => {
+  menuStore.setHeaderMenuItems([
+    { id: 0, external: false, label: 'About', path: '/about', title: 'About the Better Together Community', sortOrder: 0 },
+  ])
+  syncStore.initNetworkListeners()
+})
 </script>
 
 <style lang="scss">
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-@import 'bootstrap/scss/_mixins.scss';
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
 @import 'stylesheets/theme.scss';
 
 #app {
@@ -48,17 +43,13 @@ export default {
 
   a {
     color: $accent-color;
-
-    &:hover {
-      color: $accent-color;
-    }
+    &:hover { color: $accent-color; }
   }
 
   .btn-primary {
     color: $default-text-color-bg-dark;
     background-color: $accent-color;
     border-color: $accent-color;
-
     &:hover, &:focus, &:active {
       color: $default-text-color-bg-dark;
       background-color: #399f71;
@@ -66,53 +57,29 @@ export default {
     }
   }
 
-  header,
-  footer {
-    // width: 100vw;
-    // height: 15vh;
+  header, footer {
     padding: 0;
-
     .navbar-nav {
       a {
         font-weight: bold;
         color: $default-text-color-bg-dark;
-
-        &.router-link-exact-active,
-        &:hover {
-          color: $accent-color;
-        }
+        &.router-link-exact-active, &:hover { color: $accent-color; }
       }
-
       ul.dropdown-menu a {
         color: $default-text-color;
-
-        &:hover {
-          color: $accent-color;
-        }
+        &:hover { color: $accent-color; }
       }
-
       @include media-breakpoint-up(md) {
         li.nav-item {
           margin-right: 1vw;
-
-          &:last-child {
-            margin-right: 0;
-          }
+          &:last-child { margin-right: 0; }
         }
       }
     }
   }
 
   @include media-breakpoint-down(lg) {
-    header,
-    footer {
-      height: 10vh;
-    }
+    header, footer { height: 10vh; }
   }
-}
-
-.b-toaster.b-toaster-top-center .b-toaster-slot,
-.b-toaster.b-toaster-top-right .b-toaster-slot {
-  top: 10vh;
 }
 </style>

@@ -3,32 +3,28 @@
     <div class="row heading mb-3">
       <div class="col-md">
         <h2 class="mb-4">
-          This is not the page you are looking for
+          {{ t('bt.errors.not_found_heading') }}
         </h2>
-        <p>
-          Looks like the address that you entered does't match a page on our
-          site. Perhaps the page has move to a new address. Please try again.
-        </p>
+        <p>{{ t('bt.errors.not_found_message') }}</p>
         <div class="text-center mt-4">
-          <router-link
+          <RouterLink
             to="/"
-            title="Better Together landing page"
+            :title="t('bt.app.name')"
             class="btn btn-primary card-action"
           >
-            Visit Landing Page
-          </router-link>
+            {{ t('bt.errors.visit_home') }}
+          </RouterLink>
         </div>
       </div>
     </div>
   </section>
 </template>
 
-<script>
-// @ is an alias to /src
+<script setup>
+import { useI18n } from 'vue-i18n'
+import { RouterLink } from 'vue-router'
 
-export default {
-  name: 'Error404',
-}
+const { t } = useI18n()
 </script>
 
 <style lang="scss">

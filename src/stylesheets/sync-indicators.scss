@@ -1,0 +1,34 @@
+// Sync status colour tokens
+$sync-local:       #f59e0b;  // amber  — local only, not yet synced
+$sync-syncing:     #3b82f6;  // blue   — in flight
+$sync-synced:      #10b981;  // green  — confirmed on server
+$sync-conflict:    #ef4444;  // red    — conflict detected
+$sync-needs-auth:  #f59e0b;  // amber  — needs sign-in to sync (same family as local)
+
+// Sync badge sizes
+$sync-badge-size: 8px;
+$sync-badge-size-lg: 12px;
+
+// App-wide sync bar
+$sync-bar-height: 3px;
+$sync-bar-height-offline: 28px;
+
+// Animation
+@keyframes sync-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes sync-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+// Mixin for status dot
+@mixin sync-dot($color) {
+  width: $sync-badge-size;
+  height: $sync-badge-size;
+  border-radius: 50%;
+  background-color: $color;
+  display: inline-block;
+}
