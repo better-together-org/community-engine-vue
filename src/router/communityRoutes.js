@@ -41,6 +41,26 @@ export const communityRoutes = [
         name: 'CommunityConversations',
         component: () => import('../pages/community/CommunityConversations.vue'),
       },
+      {
+        path: 'conversations/:id',
+        name: 'CommunityConversation',
+        component: () => import('../pages/community/CommunityConversation.vue'),
+      },
+      {
+        path: 'pages',
+        name: 'CommunityPages',
+        component: () => import('../pages/community/CommunityPages.vue'),
+      },
+      {
+        path: 'pages/:id',
+        name: 'CommunityPage',
+        component: () => import('../pages/community/CommunityPage.vue'),
+      },
+      {
+        path: 'joatu',
+        name: 'CommunityJoaTu',
+        component: () => import('../pages/community/CommunityJoaTu.vue'),
+      },
     ],
   },
 ]

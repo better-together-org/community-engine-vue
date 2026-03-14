@@ -35,6 +35,26 @@ import PostDetail from './components/post/PostDetail.vue'
 import EventCard from './components/event/EventCard.vue'
 import EventList from './components/event/EventList.vue'
 import EventForm from './components/event/EventForm.vue'
+import ConversationCard from './components/conversation/ConversationCard.vue'
+import ConversationList from './components/conversation/ConversationList.vue'
+import ConversationDetail from './components/conversation/ConversationDetail.vue'
+import MessageItem from './components/conversation/MessageItem.vue'
+import MessageList from './components/conversation/MessageList.vue'
+import MessageForm from './components/conversation/MessageForm.vue'
+import InvitationCard from './components/invitation/InvitationCard.vue'
+import InvitationList from './components/invitation/InvitationList.vue'
+import InvitationForm from './components/invitation/InvitationForm.vue'
+import PageCard from './components/page/PageCard.vue'
+import PageList from './components/page/PageList.vue'
+import PageDetail from './components/page/PageDetail.vue'
+import OfferCard from './components/joatu/OfferCard.vue'
+import OfferList from './components/joatu/OfferList.vue'
+import OfferForm from './components/joatu/OfferForm.vue'
+import RequestCard from './components/joatu/RequestCard.vue'
+import RequestList from './components/joatu/RequestList.vue'
+import RequestForm from './components/joatu/RequestForm.vue'
+import AgreementCard from './components/joatu/AgreementCard.vue'
+import AgreementList from './components/joatu/AgreementList.vue'
 
 export {
   useAuthStore,
@@ -52,6 +72,11 @@ export { usePosts } from './composables/usePosts'
 export { useEvents } from './composables/useEvents'
 export { useConversations } from './composables/useConversations'
 export { useMessages } from './composables/useMessages'
+export { useInvitations } from './composables/useInvitations'
+export { usePages } from './composables/usePages'
+export { useJoaTuOffers } from './composables/useJoaTuOffers'
+export { useJoaTuRequests } from './composables/useJoaTuRequests'
+export { useJoaTuAgreements } from './composables/useJoaTuAgreements'
 export { useMembers } from './composables/useMembers'
 export { useNotifications } from './composables/useNotifications'
 export { useSyncStatus } from './composables/useSyncStatus'
@@ -76,6 +101,13 @@ export {
   EventCard,
   EventList,
   EventForm,
+  ConversationCard, ConversationList, ConversationDetail,
+  MessageItem, MessageList, MessageForm,
+  InvitationCard, InvitationList, InvitationForm,
+  PageCard, PageList, PageDetail,
+  OfferCard, OfferList, OfferForm,
+  RequestCard, RequestList, RequestForm,
+  AgreementCard, AgreementList,
 }
 
 library.add(faExternalLinkAlt)
@@ -118,6 +150,13 @@ const install = (app, options = {}) => {
   app.component('BtEventCard', EventCard)
   app.component('BtPersonCard', PersonCard)
   app.component('BtPersonAvatar', PersonAvatar)
+  app.component('BtConversationCard', ConversationCard)
+  app.component('BtMessageItem', MessageItem)
+  app.component('BtInvitationCard', InvitationCard)
+  app.component('BtPageCard', PageCard)
+  app.component('BtOfferCard', OfferCard)
+  app.component('BtRequestCard', RequestCard)
+  app.component('BtAgreementCard', AgreementCard)
 }
 
 const CommunityEngineVue = { install, NAME }
