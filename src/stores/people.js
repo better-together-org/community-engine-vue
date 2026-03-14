@@ -14,7 +14,7 @@ export const usePeopleStore = defineStore('btPeople', () => {
 
   async function getMe() {
     const response = await axios.get(
-      `${import.meta.env.VITE_BETTER_TOGETHER_API_URI}/bt/api/v1/people/me`,
+      `${import.meta.env.VITE_BETTER_TOGETHER_API_URI}/api/v1/people/me`,
     )
     const person = response.status === 200 ? response.data : {}
     currentPerson.value = { ...person }
@@ -24,7 +24,7 @@ export const usePeopleStore = defineStore('btPeople', () => {
 
   async function postPerson(params) {
     const { data } = await axios.post(
-      `${import.meta.env.VITE_BETTER_TOGETHER_API_URI}/bt/api/v1/people/me`,
+      `${import.meta.env.VITE_BETTER_TOGETHER_API_URI}/api/v1/people/me`,
       params,
     )
     currentPerson.value = data
