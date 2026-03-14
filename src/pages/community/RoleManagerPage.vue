@@ -26,42 +26,28 @@
           {{ t('bt.person.members_empty') }}
         </div>
 
-        <BTable
+        <BTableSimple
           v-else
           responsive
-          :fields="fields"
-          :items="items"
         >
-          <template #cell(member)="{ item }">
+          <BThead>
+            <BTr>
+              <BTh>{{ t('bt.person.name_label') }}</BTh>
+              <BTh>{{ t('bt.navigation.members') }}</BTh>
+              <BTh>{{ t('bt.roles.assign') }}</BTh>
+              <BTh />
+            </BTr>
+          </BThead>
+          <BTbody>
             <MemberRoleRow
-              :member="item"
+              v-for="member in items"
+              :key="member.id"
+              :member="member"
               resource-type="community"
               :resource-id="communitySlug"
             />
-          </template>
-        </BTable>
-
-        <template v-if="items.length">
-          <BTableSimple responsive>
-            <BThead>
-              <BTr>
-                <BTh>{{ t('bt.person.name_label') }}</BTh>
-                <BTh>{{ t('bt.navigation.members') }}</BTh>
-                <BTh>{{ t('bt.roles.assign') }}</BTh>
-                <BTh />
-              </BTr>
-            </BThead>
-            <BTbody>
-              <MemberRoleRow
-                v-for="member in items"
-                :key="member.id"
-                :member="member"
-                resource-type="community"
-                :resource-id="communitySlug"
-              />
-            </BTbody>
-          </BTableSimple>
-        </template>
+          </BTbody>
+        </BTableSimple>
 
         <template #footer>
           <ExtensionSlot
@@ -100,8 +86,6 @@ const communitySlug = route.params.communitySlug
 
 const { items, loading, listActive } = useMembers(communitySlug)
 const { loadRoles } = useRoles('community', communitySlug)
-
-const fields = []
 
 onMounted(async () => {
   await Promise.all([listActive(), loadRoles()])

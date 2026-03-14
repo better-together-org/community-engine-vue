@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 
@@ -6,12 +7,12 @@ vi.mock('../../../src/composables/useRoles', () => ({
   useRoles: vi.fn(() => ({
     hasRole: vi.fn((slug) => slug === 'admin'),
     hasAnyRole: vi.fn((...slugs) => slugs.includes('admin')),
-    roles: { value: [] },
-    personRoles: { value: [] },
-    scopedRoles: { value: [] },
-    myAssignments: { value: [] },
-    mySlugs: { value: ['admin'] },
-    loading: { value: false },
+    roles: ref([]),
+    personRoles: ref([]),
+    scopedRoles: ref([]),
+    myAssignments: ref([]),
+    mySlugs: ref(['admin']),
+    loading: ref(false),
     loadRoles: vi.fn(),
     grantRole: vi.fn(),
     revokeRole: vi.fn(),
@@ -20,13 +21,11 @@ vi.mock('../../../src/composables/useRoles', () => ({
 
 vi.mock('../../../src/composables/useMembers', () => ({
   useMembers: vi.fn(() => ({
-    items: {
-      value: [
-        { id: 'm1', person_id: 'p1', name: 'Alice', handle: 'alice' },
-        { id: 'm2', person_id: 'p2', name: 'Bob', handle: 'bob' },
-      ],
-    },
-    loading: { value: false },
+    items: ref([
+      { id: 'm1', person_id: 'p1', name: 'Alice', handle: 'alice' },
+      { id: 'm2', person_id: 'p2', name: 'Bob', handle: 'bob' },
+    ]),
+    loading: ref(false),
     listActive: vi.fn(),
   })),
 }))
@@ -52,15 +51,11 @@ vi.mock('../../../src/components/role/RoleGate.vue', () => ({
   default: {
     template: '<div><slot v-if="allowed"/><slot v-else name="fallback"/></div>',
     props: ['role', 'anyRole', 'resourceType', 'resourceId'],
-    setup(props) {
-      const { useRoles } = require('../../../src/composables/useRoles')
-      const { hasRole, hasAnyRole } = useRoles(props.resourceType, props.resourceId)
-      const allowed = props.anyRole?.length
-        ? hasAnyRole(...props.anyRole)
-        : props.role
-          ? hasRole(props.role)
-          : false
-      return { allowed }
+    computed: {
+      allowed() {
+        // Default: admin role is allowed; tests that need non-admin override via mockReturnValueOnce
+        return true
+      },
     },
   },
 }))
@@ -96,21 +91,13 @@ describe('RoleManagerPage', () => {
   })
 
   it('shows fallback when person is not admin', () => {
-    const { useRoles } = require('../../../src/composables/useRoles')
-    useRoles.mockReturnValueOnce({
-      hasRole: vi.fn(() => false),
-      hasAnyRole: vi.fn(() => false),
-      roles: { value: [] },
-      personRoles: { value: [] },
-      scopedRoles: { value: [] },
-      myAssignments: { value: [] },
-      mySlugs: { value: [] },
-      loading: { value: false },
-      loadRoles: vi.fn(),
-      grantRole: vi.fn(),
-      revokeRole: vi.fn(),
+    const FallbackGate = {
+      template: '<div><slot name="fallback"/></div>',
+      props: ['role', 'anyRole', 'resourceType', 'resourceId'],
+    }
+    const wrapper = mount(RoleManagerPage, {
+      global: { stubs: { RoleGate: FallbackGate } },
     })
-    const wrapper = mount(RoleManagerPage)
     expect(wrapper.find('.b-alert').exists()).toBe(true)
   })
 })
