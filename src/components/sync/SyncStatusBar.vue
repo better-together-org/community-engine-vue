@@ -16,6 +16,14 @@
         <span v-else>↻</span>
       </span>
       <span class="sync-status-bar__text">{{ statusText }}</span>
+      <span
+        v-if="syncStore.online && syncStore.electricConnected"
+        class="sync-status-bar__electric"
+        title="Electric sync connected"
+      >
+        <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+        <span class="sync-electric-dot" aria-hidden="true">●</span>
+      </span>
     </div>
   </Transition>
 </template>
@@ -90,6 +98,13 @@ const statusText = computed(() => {
 .sync-spin-icon {
   display: inline-block;
   animation: sync-spin 1s linear infinite;
+}
+
+.sync-status-bar__electric {
+  margin-left: 6px;
+  font-size: 0.65rem;
+  color: #4caf50;
+  line-height: 1;
 }
 
 .sync-bar-fade-enter-active,

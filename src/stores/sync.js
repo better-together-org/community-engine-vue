@@ -14,6 +14,7 @@ export const useSyncStore = defineStore('btSync', () => {
   const online = ref(navigator.onLine)
   const pendingCount = ref(0)
   const syncing = ref(false)
+  const electricConnected = ref(false)
 
   const statusLabel = computed(() => {
     if (!online.value) return 'offline'
@@ -31,6 +32,10 @@ export const useSyncStore = defineStore('btSync', () => {
 
   function setSyncing(val) {
     syncing.value = val
+  }
+
+  function setConnected(val) {
+    electricConnected.value = !!val
   }
 
   async function markPendingAsNeedsAuth() {
@@ -75,10 +80,12 @@ export const useSyncStore = defineStore('btSync', () => {
     online,
     pendingCount,
     syncing,
+    electricConnected,
     statusLabel,
     setOnline,
     setPendingCount,
     setSyncing,
+    setConnected,
     markPendingAsNeedsAuth,
     drainSyncQueue,
     initNetworkListeners,

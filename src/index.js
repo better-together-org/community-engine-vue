@@ -21,6 +21,8 @@ import ExtensionSlot from './components/shared/ExtensionSlot.vue'
 
 import { setCevContext } from './context'
 import { installI18n } from './i18n'
+import { getDb } from './db/client'
+import { startSync } from './db/sync'
 import { useCommunities } from './composables/useCommunities'
 import { communityRoutes } from './router/communityRoutes'
 import CommunityCard from './components/community/CommunityCard.vue'
@@ -143,6 +145,9 @@ const install = (app, options = {}) => {
 
   // Store plugin context so extensions and composables can access app + options
   setCevContext({ app, options })
+
+  // Start Electric sync if configured (graceful no-op when VITE_ELECTRIC_URL unset)
+  getDb().then(db => startSync(db)).catch(() => { /* Electric not configured */ })
 
   // Install companion extensions
   if (options.extensions?.length) {
