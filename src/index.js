@@ -14,13 +14,28 @@ import BtUserResendConfirmationForm from './components/BtUserResendConfirmationF
 import BtUserResetPasswordForm from './components/BtUserResetPasswordForm.vue'
 import BtUserSignInForm from './components/BtUserSignInForm.vue'
 import BtUserSignUpForm from './components/BtUserSignUpForm.vue'
+import SyncBadge from './components/sync/SyncBadge.vue'
+import SyncStatusBar from './components/sync/SyncStatusBar.vue'
+import OfflineBanner from './components/sync/OfflineBanner.vue'
 
 export {
   useAuthStore,
   useCommunityStore,
   useMenuStore,
   usePeopleStore,
+  useSyncStore,
 } from './stores'
+
+export { getDb } from './db/client'
+
+export { useResource } from './composables/useResource'
+export { usePosts } from './composables/usePosts'
+export { useEvents } from './composables/useEvents'
+export { useConversations } from './composables/useConversations'
+export { useMessages } from './composables/useMessages'
+export { useMembers } from './composables/useMembers'
+export { useNotifications } from './composables/useNotifications'
+export { useSyncStatus } from './composables/useSyncStatus'
 
 library.add(faExternalLinkAlt)
 
@@ -48,5 +63,8 @@ export {
   BtUserResetPasswordForm,
   BtUserSignInForm,
   BtUserSignUpForm,
+  SyncBadge,
+  SyncStatusBar,
+  OfflineBanner,
 }
 export default CommunityEngineVue

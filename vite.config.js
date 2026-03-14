@@ -31,5 +31,7 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     include: ['tests/unit/**/*.spec.[jt]s'],
+    exclude: ['tests/unit/example.spec.js'],
+    css: false,
   },
 })

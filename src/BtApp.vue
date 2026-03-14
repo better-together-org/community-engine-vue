@@ -1,8 +1,10 @@
 <template>
   <div id="app">
-    <BtHeader />
-    <BtMainContent />
     <BToastOrchestrator />
+    <SyncStatusBar />
+    <BtHeader />
+    <OfflineBanner />
+    <BtMainContent />
   </div>
 </template>
 
@@ -10,15 +12,20 @@
 import { onMounted } from 'vue'
 import { BToastOrchestrator } from 'bootstrap-vue-next'
 import { useMenuStore } from './stores/menus'
+import { useSyncStore } from './stores/sync'
 import BtHeader from './components/BtHeader.vue'
 import BtMainContent from './components/BtMainContent.vue'
+import SyncStatusBar from './components/sync/SyncStatusBar.vue'
+import OfflineBanner from './components/sync/OfflineBanner.vue'
 
 const menuStore = useMenuStore()
+const syncStore = useSyncStore()
 
 onMounted(() => {
   menuStore.setHeaderMenuItems([
     { id: 0, external: false, label: 'About', path: '/about', title: 'About the Better Together Community', sortOrder: 0 },
   ])
+  syncStore.initNetworkListeners()
 })
 </script>
 
