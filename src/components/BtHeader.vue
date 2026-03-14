@@ -8,6 +8,7 @@
       :container="false"
       :variant="backgroundStyle"
       :style="headerStyle"
+      data-bs-theme="dark"
     >
       <div
         id="nav-inner"
@@ -69,6 +70,18 @@ const headerStyle = computed(() => {
   :deep(.navbar-toggler .navbar-toggler-icon) {
     width: 1em;
     height: 1em;
+  }
+
+  // Mobile: center nav items and don't stretch them full-width
+  @include media-breakpoint-down(lg) {
+    :deep(.navbar-collapse .navbar-nav) {
+      align-items: center;
+      padding: 0.5rem 0;
+      .nav-item {
+        width: auto;
+        text-align: center;
+      }
+    }
   }
 }
 </style>
