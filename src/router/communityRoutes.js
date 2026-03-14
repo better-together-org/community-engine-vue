@@ -61,6 +61,18 @@ export const communityRoutes = [
         name: 'CommunityJoaTu',
         component: () => import('../pages/community/CommunityJoaTu.vue'),
       },
+      {
+        path: 'settings',
+        name: 'community-settings',
+        component: () => import('../pages/community/CommunitySettingsPage.vue'),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: 'settings/roles',
+        name: 'community-role-manager',
+        component: () => import('../pages/community/RoleManagerPage.vue'),
+        meta: { requiresAuth: true },
+      },
     ],
   },
 ]

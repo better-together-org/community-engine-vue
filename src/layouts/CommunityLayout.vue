@@ -52,6 +52,7 @@ import { useRoute } from 'vue-router'
 import { BSpinner, BAlert } from 'bootstrap-vue-next'
 import { useCommunityStore } from '../stores/communities'
 import { useCommunities } from '../composables/useCommunities'
+import { useRoles } from '../composables/useRoles'
 import CommunityHeader from '../components/community/CommunityHeader.vue'
 
 const { t } = useI18n()
@@ -61,13 +62,21 @@ const { findBySlug, current: community, loading } = useCommunities()
 
 const communitySlug = ref(route.params.communitySlug)
 
-const communityNav = computed(() => [
-  { name: 'CommunityHome', label: t('bt.navigation.home') },
-  { name: 'CommunityPosts', label: t('bt.navigation.posts') },
-  { name: 'CommunityEvents', label: t('bt.navigation.events') },
-  { name: 'CommunityMembers', label: t('bt.navigation.members') },
-  { name: 'CommunityConversations', label: t('bt.navigation.conversations') },
-])
+const { hasRole } = useRoles('community', communitySlug)
+
+const communityNav = computed(() => {
+  const links = [
+    { name: 'CommunityHome', label: t('bt.navigation.home') },
+    { name: 'CommunityPosts', label: t('bt.navigation.posts') },
+    { name: 'CommunityEvents', label: t('bt.navigation.events') },
+    { name: 'CommunityMembers', label: t('bt.navigation.members') },
+    { name: 'CommunityConversations', label: t('bt.navigation.conversations') },
+  ]
+  if (hasRole('admin')) {
+    links.push({ name: 'community-settings', label: t('bt.navigation.settings') })
+  }
+  return links
+})
 
 async function loadCommunity(slug) {
   communitySlug.value = slug

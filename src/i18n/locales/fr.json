@@ -139,6 +139,24 @@
       "block": "Bloquer",
       "unblock": "Débloquer"
     },
+    "roles": {
+      "title": "Gestionnaire de rôles",
+      "assign": "Attribuer un rôle",
+      "revoke": "Révoquer",
+      "no_roles": "Aucun rôle attribué",
+      "grant_success": "Rôle attribué",
+      "revoke_success": "Rôle révoqué"
+    },
+    "community": {
+      "settings": {
+        "title": "Paramètres de la communauté",
+        "general": "Général",
+        "members": "Membres",
+        "danger_zone": "Zone dangereuse",
+        "leave": "Quitter la communauté",
+        "leave_confirm": "Êtes-vous sûr de vouloir quitter cette communauté ?"
+      }
+    },
     "joatu": {
       "heading": "Banque de temps",
       "tagline": "1 crédit de temps = 1 heure. Tout le travail a une valeur égale.",

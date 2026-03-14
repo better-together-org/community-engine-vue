@@ -190,6 +190,24 @@
       "block": "Block",
       "unblock": "Unblock"
     },
+    "roles": {
+      "title": "Role Manager",
+      "assign": "Assign Role",
+      "revoke": "Revoke",
+      "no_roles": "No roles assigned",
+      "grant_success": "Role granted",
+      "revoke_success": "Role revoked"
+    },
+    "community": {
+      "settings": {
+        "title": "Community Settings",
+        "general": "General",
+        "members": "Members",
+        "danger_zone": "Danger Zone",
+        "leave": "Leave Community",
+        "leave_confirm": "Are you sure you want to leave this community?"
+      }
+    },
     "joatu": {
       "heading": "Time Banking",
       "tagline": "1 time credit = 1 hour. All labor equally valued.",

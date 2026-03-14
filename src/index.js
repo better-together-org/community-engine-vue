@@ -60,6 +60,9 @@ import AgreementCard from './components/joatu/AgreementCard.vue'
 import AgreementList from './components/joatu/AgreementList.vue'
 import RoleGate from './components/role/RoleGate.vue'
 import BlockButton from './components/role/BlockButton.vue'
+import RoleBadge from './components/role/RoleBadge.vue'
+import RoleSelector from './components/role/RoleSelector.vue'
+import MemberRoleRow from './components/community/MemberRoleRow.vue'
 
 export {
   useAuthStore,
@@ -118,6 +121,7 @@ export {
   RequestCard, RequestList, RequestForm,
   AgreementCard, AgreementList,
   RoleGate, BlockButton,
+  RoleBadge, RoleSelector, MemberRoleRow,
 }
 
 library.add(faExternalLinkAlt)
@@ -176,6 +180,9 @@ const install = (app, options = {}) => {
   app.component('RoleGate', RoleGate)
   app.component('BtRoleGate', RoleGate)
   app.component('BtBlockButton', BlockButton)
+  app.component('BtRoleBadge', RoleBadge)
+  app.component('BtRoleSelector', RoleSelector)
+  app.component('BtMemberRoleRow', MemberRoleRow)
 }
 
 const CommunityEngineVue = { install, NAME }
