@@ -3,27 +3,19 @@ import VueRouter from 'vue-router'
 import Home from '../pages/Home.vue'
 import Me from '../pages/Me.vue'
 
+// Auth guards are intentionally disabled. The pattern below of reading
+// store.getters at module-load time is architecturally broken — the store
+// is not yet reactive when this module is first imported. Re-enablement
+// requires the guards to be rewritten as inline beforeEach callbacks that
+// read store.getters at navigation time, not at module evaluation time.
+// This is addressed in the Vue 3 migration where a Pinia-based approach
+// will replace the current Vuex pattern.
+//
 // import store from '../store'
-
-// const isAuthenticated = store.getters['CommunityEngine/Authentication/isAuthenticated']
-// const isAdmin = store.getters['Authentication/isAdmin']
-
 // const ensureAuthenticated = (to, from, next) => {
-//   if (isAuthenticated) {
-//     next()
-//   } else {
-//     next({ name: 'Sign In', query: { redirect_to: to.fullPath } })
-//   }
-// }
-
-// const ensureAdmin = (to, from, next) => {
-//   ensureAuthenticated(to, from, next)
-
-//   if (isAdmin) {
-//     next()
-//   } else {
-//     next({ name: 'Home' })
-//   }
+//   const isAuthenticated = store.getters['CommunityEngine/Authentication/isAuthenticated']
+//   if (isAuthenticated) { next() }
+//   else { next({ name: 'Sign In', query: { redirect_to: to.fullPath } }) }
 // }
 
 // const documentTitle = 'Better Together'
