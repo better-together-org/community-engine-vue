@@ -186,7 +186,9 @@
       "fill_profile": "Fill out your profile",
       "my_profile": "My Profile",
       "fill_profile_details": "Fill out your profile details",
-      "unsaved_changes": "changed"
+      "unsaved_changes": "changed",
+      "block": "Block",
+      "unblock": "Unblock"
     },
     "joatu": {
       "heading": "Time Banking",

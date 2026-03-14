@@ -1,11 +1,25 @@
 <template>
   <div class="bt-conversation-list">
     <slot name="header" />
-    <div v-if="loading" class="bt-conversation-list__loading">
-      <slot name="loading"><div class="text-center p-4 text-muted">{{ t('bt.conversations.loading') }}</div></slot>
+    <div
+      v-if="loading"
+      class="bt-conversation-list__loading"
+    >
+      <slot name="loading">
+        <div class="text-center p-4 text-muted">
+          {{ t('bt.conversations.loading') }}
+        </div>
+      </slot>
     </div>
-    <div v-else-if="!conversations.length" class="bt-conversation-list__empty">
-      <slot name="empty"><div class="text-center p-4 text-muted">{{ t('bt.conversations.list_empty') }}</div></slot>
+    <div
+      v-else-if="!conversations.length"
+      class="bt-conversation-list__empty"
+    >
+      <slot name="empty">
+        <div class="text-center p-4 text-muted">
+          {{ t('bt.conversations.list_empty') }}
+        </div>
+      </slot>
     </div>
     <template v-else>
       <slot

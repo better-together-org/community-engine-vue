@@ -4,16 +4,25 @@
       <slot name="title">
         <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
           <div>
-            <h6 class="mb-0">{{ invitation.name || invitation.email }}</h6>
+            <h6 class="mb-0">
+              {{ invitation.name || invitation.email }}
+            </h6>
             <small class="text-muted">{{ invitation.email }}</small>
           </div>
-          <slot name="sync-badge"><SyncBadge :item="invitation" /></slot>
+          <slot name="sync-badge">
+            <SyncBadge :item="invitation" />
+          </slot>
         </div>
       </slot>
       <slot name="meta">
         <div class="d-flex align-items-center gap-2 mt-2">
-          <BBadge :variant="statusVariant">{{ invitation.status }}</BBadge>
-          <small v-if="invitation.expires_at" class="text-muted">
+          <BBadge :variant="statusVariant">
+            {{ invitation.status }}
+          </BBadge>
+          <small
+            v-if="invitation.expires_at"
+            class="text-muted"
+          >
             {{ t('bt.invitations.expires', { date: formattedExpiry }) }}
           </small>
         </div>
@@ -22,7 +31,11 @@
     </BCardBody>
     <template #footer>
       <slot name="footer">
-        <ExtensionSlot target="InvitationCard" slot="footer" :context="{ item: invitation }" />
+        <ExtensionSlot
+          slot="footer"
+          target="InvitationCard"
+          :context="{ item: invitation }"
+        />
       </slot>
     </template>
   </BCard>

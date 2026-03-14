@@ -1,11 +1,25 @@
 <template>
   <div class="bt-page-list">
     <slot name="header" />
-    <div v-if="loading" class="bt-page-list__loading">
-      <slot name="loading"><div class="text-center p-4 text-muted">{{ t('bt.pages.loading') }}</div></slot>
+    <div
+      v-if="loading"
+      class="bt-page-list__loading"
+    >
+      <slot name="loading">
+        <div class="text-center p-4 text-muted">
+          {{ t('bt.pages.loading') }}
+        </div>
+      </slot>
     </div>
-    <div v-else-if="!pages.length" class="bt-page-list__empty">
-      <slot name="empty"><div class="text-center p-4 text-muted">{{ t('bt.pages.list_empty') }}</div></slot>
+    <div
+      v-else-if="!pages.length"
+      class="bt-page-list__empty"
+    >
+      <slot name="empty">
+        <div class="text-center p-4 text-muted">
+          {{ t('bt.pages.list_empty') }}
+        </div>
+      </slot>
     </div>
     <template v-else>
       <slot

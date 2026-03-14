@@ -2,7 +2,9 @@
   <section id="error-404">
     <div class="row heading mb-3">
       <div class="col-md">
-        <h2 class="mb-4">{{ t('bt.errors.not_found_heading') }}</h2>
+        <h2 class="mb-4">
+          {{ t('bt.errors.not_found_heading') }}
+        </h2>
         <p>{{ t('bt.errors.not_found_message') }}</p>
         <div class="text-center mt-4">
           <RouterLink

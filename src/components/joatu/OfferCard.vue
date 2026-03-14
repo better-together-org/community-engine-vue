@@ -3,17 +3,28 @@
     <BCardBody>
       <slot name="title">
         <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
-          <h5 class="bt-offer-card__title mb-0">{{ offer.title }}</h5>
-          <slot name="sync-badge"><SyncBadge :item="offer" /></slot>
+          <h5 class="bt-offer-card__title mb-0">
+            {{ offer.title }}
+          </h5>
+          <slot name="sync-badge">
+            <SyncBadge :item="offer" />
+          </slot>
         </div>
       </slot>
       <slot name="meta">
         <div class="d-flex align-items-center gap-2 mb-2">
-          <BBadge :variant="statusVariant">{{ offer.status }}</BBadge>
+          <BBadge :variant="statusVariant">
+            {{ offer.status }}
+          </BBadge>
           <span class="bt-offer-card__credits">
             {{ t('bt.joatu.offers.credits_display', offer.time_credits) }}
           </span>
-          <BBadge v-if="offer.category" variant="outline-secondary">{{ offer.category }}</BBadge>
+          <BBadge
+            v-if="offer.category"
+            variant="outline-secondary"
+          >
+            {{ offer.category }}
+          </BBadge>
         </div>
       </slot>
       <slot name="body">
@@ -23,10 +34,18 @@
     <template #footer>
       <slot name="footer">
         <div class="d-flex align-items-center gap-2">
-          <BButton variant="outline-success" size="sm" @click="$emit('view', offer)">
+          <BButton
+            variant="outline-success"
+            size="sm"
+            @click="$emit('view', offer)"
+          >
             {{ t('bt.joatu.offers.view') }}
           </BButton>
-          <ExtensionSlot target="OfferCard" slot="footer" :context="{ item: offer }" />
+          <ExtensionSlot
+            slot="footer"
+            target="OfferCard"
+            :context="{ item: offer }"
+          />
         </div>
       </slot>
     </template>

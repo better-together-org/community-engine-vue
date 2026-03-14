@@ -1,8 +1,21 @@
 <template>
   <div class="bt-page-community-conversation">
-    <div v-if="loading" class="text-center p-4 text-muted">{{ t('bt.pages.loading') }}</div>
-    <div v-else-if="!current" class="text-center p-4 text-muted">{{ t('bt.conversations.not_found') }}</div>
-    <ConversationDetail v-else :conversation="current" />
+    <div
+      v-if="loading"
+      class="text-center p-4 text-muted"
+    >
+      {{ t('bt.pages.loading') }}
+    </div>
+    <div
+      v-else-if="!current"
+      class="text-center p-4 text-muted"
+    >
+      {{ t('bt.conversations.not_found') }}
+    </div>
+    <ConversationDetail
+      v-else
+      :conversation="current"
+    />
   </div>
 </template>
 <script setup>

@@ -1,7 +1,9 @@
 <template>
   <div class="bt-message-item d-flex gap-2 mb-2">
     <div class="bt-message-item__avatar">
-      <div class="bt-message-item__avatar-circle">{{ initials }}</div>
+      <div class="bt-message-item__avatar-circle">
+        {{ initials }}
+      </div>
     </div>
     <div class="bt-message-item__body flex-grow-1">
       <div class="d-flex align-items-center gap-2 mb-1">
@@ -9,7 +11,9 @@
         <small class="text-muted">{{ formattedTime }}</small>
         <SyncBadge :item="message" />
       </div>
-      <div class="bt-message-item__content">{{ message.content }}</div>
+      <div class="bt-message-item__content">
+        {{ message.content }}
+      </div>
     </div>
   </div>
 </template>

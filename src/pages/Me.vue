@@ -21,8 +21,12 @@
       :title="t('bt.person.my_profile')"
       @ok.prevent="setProfile"
     >
-      <p class="my-4">{{ t('bt.person.fill_profile_details') }}</p>
-      <p v-if="peopleStore.currentPersonChanged">{{ t('bt.person.unsaved_changes') }}</p>
+      <p class="my-4">
+        {{ t('bt.person.fill_profile_details') }}
+      </p>
+      <p v-if="peopleStore.currentPersonChanged">
+        {{ t('bt.person.unsaved_changes') }}
+      </p>
       <BtProfileForm :model="peopleStore.currentPerson" />
       <div>{{ formErrors }}</div>
     </BModal>

@@ -239,6 +239,46 @@ CREATE TABLE IF NOT EXISTS joa_tu_agreements (
 INSERT OR IGNORE INTO _schema_versions (version) VALUES (3);
 `
 
+const migration4Sql = `
+CREATE TABLE IF NOT EXISTS roles (
+  id              TEXT PRIMARY KEY,
+  name            TEXT NOT NULL,
+  slug            TEXT NOT NULL,
+  description     TEXT,
+  resource_type   TEXT,
+  resource_id     TEXT,
+  _sync_status    TEXT NOT NULL DEFAULT 'local',
+  _local_updated  TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+  _server_at      TEXT
+);
+
+CREATE TABLE IF NOT EXISTS person_roles (
+  id              TEXT PRIMARY KEY,
+  person_id       TEXT NOT NULL,
+  role_id         TEXT NOT NULL,
+  resource_type   TEXT,
+  resource_id     TEXT,
+  granted_at      TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+  granted_by_id   TEXT,
+  _sync_status    TEXT NOT NULL DEFAULT 'local',
+  _local_updated  TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+  _server_at      TEXT
+);
+
+CREATE TABLE IF NOT EXISTS person_blocks (
+  id              TEXT PRIMARY KEY,
+  blocker_id      TEXT NOT NULL,
+  blocked_id      TEXT NOT NULL,
+  reason          TEXT,
+  created_at      TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+  _sync_status    TEXT NOT NULL DEFAULT 'local',
+  _local_updated  TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+  _server_at      TEXT
+);
+
+INSERT OR IGNORE INTO _schema_versions (version) VALUES (4);
+`
+
 // Extension migrations registered by companion packages before getDb() is first called
 const _extensionMigrations = []  // { version: number, sql: string }[]
 
@@ -269,6 +309,10 @@ async function applyMigrations(db) {
 
   if (currentVersion < 3) {
     await db.exec(migration3Sql)
+  }
+
+  if (currentVersion < 4) {
+    await db.exec(migration4Sql)
   }
 
   // Extension migrations (sorted by version, registered before first getDb() call)

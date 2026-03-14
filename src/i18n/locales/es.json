@@ -186,7 +186,9 @@
       "fill_profile": "Completa tu perfil",
       "my_profile": "Mi perfil",
       "fill_profile_details": "Completa los detalles de tu perfil",
-      "unsaved_changes": "modificado"
+      "unsaved_changes": "modificado",
+      "block": "Bloquear",
+      "unblock": "Desbloquear"
     },
     "joatu": {
       "heading": "Banco de tiempo",

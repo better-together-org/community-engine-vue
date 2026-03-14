@@ -1,37 +1,69 @@
 <template>
-  <article class="bt-post-detail" v-if="post">
+  <article
+    v-if="post"
+    class="bt-post-detail"
+  >
     <slot name="header">
-      <img v-if="post.cover_image_url" :src="post.cover_image_url" :alt="post.title" class="bt-post-detail__cover" />
+      <img
+        v-if="post.cover_image_url"
+        :src="post.cover_image_url"
+        :alt="post.title"
+        class="bt-post-detail__cover"
+      >
     </slot>
 
     <div class="bt-post-detail__content">
       <slot name="title">
         <div class="d-flex align-items-center gap-2 mb-2">
-          <h1 class="bt-post-detail__title mb-0">{{ post.title }}</h1>
-          <slot name="sync-badge"><SyncBadge :item="post" /></slot>
+          <h1 class="bt-post-detail__title mb-0">
+            {{ post.title }}
+          </h1>
+          <slot name="sync-badge">
+            <SyncBadge :item="post" />
+          </slot>
         </div>
       </slot>
 
       <slot name="meta">
         <p class="text-muted mb-3">
           <span v-if="post.published_at">{{ formattedDate }}</span>
-          <BBadge :variant="privacyVariant" class="ms-2">{{ post.privacy }}</BBadge>
+          <BBadge
+            :variant="privacyVariant"
+            class="ms-2"
+          >
+            {{ post.privacy }}
+          </BBadge>
         </p>
       </slot>
 
       <slot name="body">
-        <div class="bt-post-detail__body">{{ post.content }}</div>
+        <div class="bt-post-detail__body">
+          {{ post.content }}
+        </div>
       </slot>
 
       <slot name="footer">
         <div class="bt-post-detail__footer mt-4">
-          <ExtensionSlot target="PostDetail" slot="footer" :context="{ item: post }" />
+          <ExtensionSlot
+            slot="footer"
+            target="PostDetail"
+            :context="{ item: post }"
+          />
         </div>
       </slot>
     </div>
   </article>
-  <div v-else-if="loading"><BSpinner :label="t('bt.posts.loading')" /></div>
-  <div v-else><BAlert variant="warning" :model-value="true">{{ t('bt.errors.not_found') }}</BAlert></div>
+  <div v-else-if="loading">
+    <BSpinner :label="t('bt.posts.loading')" />
+  </div>
+  <div v-else>
+    <BAlert
+      variant="warning"
+      :model-value="true"
+    >
+      {{ t('bt.errors.not_found') }}
+    </BAlert>
+  </div>
 </template>
 
 <script setup>

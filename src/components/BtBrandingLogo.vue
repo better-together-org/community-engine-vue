@@ -1,6 +1,10 @@
 <template>
   <BNavbarBrand href="/">
-    <img class="logo" src="../assets/better-together-logo.png" alt="Better Together">
+    <img
+      class="logo"
+      src="../assets/better-together-logo.png"
+      alt="Better Together"
+    >
   </BNavbarBrand>
 </template>
 

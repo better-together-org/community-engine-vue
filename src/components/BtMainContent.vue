@@ -1,5 +1,8 @@
 <template>
-  <main id="main-content" class="container">
+  <main
+    id="main-content"
+    class="container"
+  >
     <RouterView />
   </main>
 </template>

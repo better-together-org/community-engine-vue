@@ -1,5 +1,8 @@
 <template>
-  <BForm class="bt-message-form" @submit.prevent="handleSubmit">
+  <BForm
+    class="bt-message-form"
+    @submit.prevent="handleSubmit"
+  >
     <BFormGroup>
       <BFormTextarea
         v-model="content"
@@ -10,7 +13,12 @@
       />
     </BFormGroup>
     <div class="d-flex justify-content-end gap-2 mt-2">
-      <BButton type="submit" variant="primary" size="sm" :disabled="!content.trim() || submitting">
+      <BButton
+        type="submit"
+        variant="primary"
+        size="sm"
+        :disabled="!content.trim() || submitting"
+      >
         {{ t('bt.messages.send') }}
       </BButton>
     </div>

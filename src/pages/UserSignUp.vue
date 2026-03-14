@@ -3,8 +3,16 @@
     <section>
       <h2>{{ t('bt.auth.heading_sign_up') }}</h2>
       <BtUserSignUpForm />
-      <div><BLink to="/users/sign-in">{{ t('bt.auth.prompt_sign_in') }}</BLink></div>
-      <div><BLink to="/users/confirmation/resend">{{ t('bt.auth.prompt_resend_full') }}</BLink></div>
+      <div>
+        <BLink to="/users/sign-in">
+          {{ t('bt.auth.prompt_sign_in') }}
+        </BLink>
+      </div>
+      <div>
+        <BLink to="/users/confirmation/resend">
+          {{ t('bt.auth.prompt_resend_full') }}
+        </BLink>
+      </div>
     </section>
   </div>
 </template>

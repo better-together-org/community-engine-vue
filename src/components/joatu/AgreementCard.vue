@@ -6,24 +6,40 @@
           <h5 class="bt-agreement-card__title mb-0">
             {{ t('bt.joatu.agreements.credits_display', agreement.time_credits) }}
           </h5>
-          <slot name="sync-badge"><SyncBadge :item="agreement" /></slot>
+          <slot name="sync-badge">
+            <SyncBadge :item="agreement" />
+          </slot>
         </div>
       </slot>
       <slot name="meta">
         <div class="d-flex align-items-center gap-2 mb-2">
-          <BBadge :variant="statusVariant">{{ agreement.status }}</BBadge>
-          <small v-if="agreement.agreed_at" class="text-muted">
+          <BBadge :variant="statusVariant">
+            {{ agreement.status }}
+          </BBadge>
+          <small
+            v-if="agreement.agreed_at"
+            class="text-muted"
+          >
             {{ t('bt.joatu.agreements.agreed_on', { date: formattedAgreedAt }) }}
           </small>
         </div>
       </slot>
       <slot name="body">
-        <BCardText v-if="agreement.notes" class="text-muted">{{ agreement.notes }}</BCardText>
+        <BCardText
+          v-if="agreement.notes"
+          class="text-muted"
+        >
+          {{ agreement.notes }}
+        </BCardText>
       </slot>
     </BCardBody>
     <template #footer>
       <slot name="footer">
-        <ExtensionSlot target="AgreementCard" slot="footer" :context="{ item: agreement }" />
+        <ExtensionSlot
+          slot="footer"
+          target="AgreementCard"
+          :context="{ item: agreement }"
+        />
       </slot>
     </template>
   </BCard>

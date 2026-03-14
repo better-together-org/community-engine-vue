@@ -1,6 +1,9 @@
 <template>
   <BForm @submit.prevent="handleSubmit">
-    <BFormGroup :label="t('bt.person.name_label')" label-for="profile-name">
+    <BFormGroup
+      :label="t('bt.person.name_label')"
+      label-for="profile-name"
+    >
       <BFormInput
         id="profile-name"
         v-model="localModel.name"
@@ -8,7 +11,10 @@
         :placeholder="t('bt.person.name_label')"
       />
     </BFormGroup>
-    <BFormGroup :label="t('bt.person.description_label')" label-for="profile-description">
+    <BFormGroup
+      :label="t('bt.person.description_label')"
+      label-for="profile-description"
+    >
       <BFormTextarea
         id="profile-description"
         v-model="localModel.description"
@@ -16,7 +22,12 @@
         :placeholder="t('bt.person.description_label')"
       />
     </BFormGroup>
-    <BButton type="submit" variant="primary">{{ t('bt.actions.save') }}</BButton>
+    <BButton
+      type="submit"
+      variant="primary"
+    >
+      {{ t('bt.actions.save') }}
+    </BButton>
   </BForm>
 </template>
 

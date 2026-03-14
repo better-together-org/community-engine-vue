@@ -3,8 +3,12 @@
     <BCardBody>
       <slot name="title">
         <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
-          <h5 class="bt-conversation-card__subject mb-0">{{ conversation.subject || t('bt.conversations.no_subject') }}</h5>
-          <slot name="sync-badge"><SyncBadge :item="conversation" /></slot>
+          <h5 class="bt-conversation-card__subject mb-0">
+            {{ conversation.subject || t('bt.conversations.no_subject') }}
+          </h5>
+          <slot name="sync-badge">
+            <SyncBadge :item="conversation" />
+          </slot>
         </div>
       </slot>
       <slot name="meta">
@@ -15,10 +19,18 @@
     <template #footer>
       <slot name="footer">
         <div class="bt-conversation-card__actions d-flex align-items-center gap-2">
-          <BButton variant="outline-primary" size="sm" @click="$emit('view', conversation)">
+          <BButton
+            variant="outline-primary"
+            size="sm"
+            @click="$emit('view', conversation)"
+          >
             {{ t('bt.conversations.open') }}
           </BButton>
-          <ExtensionSlot target="ConversationCard" slot="footer" :context="{ item: conversation }" />
+          <ExtensionSlot
+            slot="footer"
+            target="ConversationCard"
+            :context="{ item: conversation }"
+          />
         </div>
       </slot>
     </template>

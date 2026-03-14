@@ -1,9 +1,15 @@
 <template>
   <div class="bt-community-post">
-    <RouterLink :to="{ name: 'CommunityPosts', params: { communitySlug: route.params.communitySlug } }" class="btn btn-link ps-0">
+    <RouterLink
+      :to="{ name: 'CommunityPosts', params: { communitySlug: route.params.communitySlug } }"
+      class="btn btn-link ps-0"
+    >
       {{ t('bt.actions.back') }}
     </RouterLink>
-    <PostDetail :post="current" :loading="loading" />
+    <PostDetail
+      :post="current"
+      :loading="loading"
+    />
   </div>
 </template>
 

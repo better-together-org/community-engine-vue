@@ -1,6 +1,9 @@
 <template>
   <BForm @submit.prevent="handleSubmit">
-    <BFormGroup :label="t('bt.auth.new_password')" label-for="new-password">
+    <BFormGroup
+      :label="t('bt.auth.new_password')"
+      label-for="new-password"
+    >
       <BFormInput
         id="new-password"
         v-model="password"
@@ -11,7 +14,12 @@
       />
       <BFormText>{{ t('bt.auth.password_hint') }}</BFormText>
     </BFormGroup>
-    <BButton type="submit" variant="primary" class="w-100" :disabled="loading">
+    <BButton
+      type="submit"
+      variant="primary"
+      class="w-100"
+      :disabled="loading"
+    >
       {{ t('bt.auth.change_password') }}
     </BButton>
   </BForm>

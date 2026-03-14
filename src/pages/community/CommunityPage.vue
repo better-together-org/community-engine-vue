@@ -1,8 +1,21 @@
 <template>
   <div class="bt-page-community-page">
-    <div v-if="loading" class="text-center p-4 text-muted">{{ t('bt.pages.loading') }}</div>
-    <div v-else-if="!current" class="text-center p-4 text-muted">{{ t('bt.pages.not_found') }}</div>
-    <PageDetail v-else :page="current" />
+    <div
+      v-if="loading"
+      class="text-center p-4 text-muted"
+    >
+      {{ t('bt.pages.loading') }}
+    </div>
+    <div
+      v-else-if="!current"
+      class="text-center p-4 text-muted"
+    >
+      {{ t('bt.pages.not_found') }}
+    </div>
+    <PageDetail
+      v-else
+      :page="current"
+    />
   </div>
 </template>
 <script setup>

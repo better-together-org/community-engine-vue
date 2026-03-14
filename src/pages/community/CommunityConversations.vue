@@ -1,7 +1,12 @@
 <template>
   <div class="bt-community-conversations">
     <h2>{{ t('bt.navigation.conversations') }}</h2>
-    <BAlert variant="info" :model-value="true">{{ t('bt.conversations.coming_soon') }}</BAlert>
+    <BAlert
+      variant="info"
+      :model-value="true"
+    >
+      {{ t('bt.conversations.coming_soon') }}
+    </BAlert>
   </div>
 </template>
 

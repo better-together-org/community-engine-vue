@@ -1,5 +1,9 @@
 <template>
-  <BNavbarNav :class="navbarClass" pills align="center">
+  <BNavbarNav
+    :class="navbarClass"
+    pills
+    align="center"
+  >
     <BtNavItem
       v-for="item in menuStore.headerMenuItems"
       :id="item.id"

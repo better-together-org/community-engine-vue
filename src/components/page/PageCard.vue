@@ -3,12 +3,19 @@
     <BCardBody>
       <slot name="title">
         <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
-          <h5 class="bt-page-card__title mb-0">{{ page.title }}</h5>
-          <slot name="sync-badge"><SyncBadge :item="page" /></slot>
+          <h5 class="bt-page-card__title mb-0">
+            {{ page.title }}
+          </h5>
+          <slot name="sync-badge">
+            <SyncBadge :item="page" />
+          </slot>
         </div>
       </slot>
       <slot name="meta">
-        <small class="text-muted" v-if="page.published_at">{{ formattedDate }}</small>
+        <small
+          v-if="page.published_at"
+          class="text-muted"
+        >{{ formattedDate }}</small>
       </slot>
       <slot name="body">
         <BCardText>{{ excerpt }}</BCardText>
@@ -17,10 +24,18 @@
     <template #footer>
       <slot name="footer">
         <div class="d-flex align-items-center gap-2">
-          <BButton variant="outline-primary" size="sm" @click="$emit('view', page)">
+          <BButton
+            variant="outline-primary"
+            size="sm"
+            @click="$emit('view', page)"
+          >
             {{ t('bt.pages.read') }}
           </BButton>
-          <ExtensionSlot target="PageCard" slot="footer" :context="{ item: page }" />
+          <ExtensionSlot
+            slot="footer"
+            target="PageCard"
+            :context="{ item: page }"
+          />
         </div>
       </slot>
     </template>

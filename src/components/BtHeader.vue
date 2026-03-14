@@ -1,12 +1,25 @@
 <template>
-  <header id="bt-header" class="container-fluid">
-    <BNavbar toggleable="lg" :variant="backgroundStyle" :style="headerStyle">
-      <div id="nav-inner" class="container">
+  <header
+    id="bt-header"
+    class="container-fluid"
+  >
+    <BNavbar
+      toggleable="lg"
+      :variant="backgroundStyle"
+      :style="headerStyle"
+    >
+      <div
+        id="nav-inner"
+        class="container"
+      >
         <slot name="branding-logo">
           <BtBrandingLogo />
         </slot>
         <BNavbarToggle target="nav-collapse" />
-        <BCollapse id="nav-collapse" is-nav>
+        <BCollapse
+          id="nav-collapse"
+          is-nav
+        >
           <BtNavBar navbar-class="ms-auto justify-content-center" />
         </BCollapse>
       </div>

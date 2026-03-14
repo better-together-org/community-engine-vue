@@ -8,7 +8,12 @@
   >
     <nobr>
       {{ label }}
-      <FontAwesomeIcon v-if="external" icon="external-link-alt" size="xs" title="External Link" />
+      <FontAwesomeIcon
+        v-if="external"
+        icon="external-link-alt"
+        size="xs"
+        title="External Link"
+      />
     </nobr>
   </BNavItem>
 </template>

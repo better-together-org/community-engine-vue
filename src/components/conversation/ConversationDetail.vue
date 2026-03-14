@@ -1,11 +1,18 @@
 <template>
   <div class="bt-conversation-detail">
-    <div v-if="conversation" class="bt-conversation-detail__header mb-3">
+    <div
+      v-if="conversation"
+      class="bt-conversation-detail__header mb-3"
+    >
       <h4>{{ conversation.subject || t('bt.conversations.no_subject') }}</h4>
       <SyncBadge :item="conversation" />
     </div>
     <slot name="messages">
-      <MessageList :messages="messages" :loading="messagesLoading" class="mb-3" />
+      <MessageList
+        :messages="messages"
+        :loading="messagesLoading"
+        class="mb-3"
+      />
     </slot>
     <slot name="form">
       <MessageForm @submit="handleSend" />

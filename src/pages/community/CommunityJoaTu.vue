@@ -2,35 +2,67 @@
   <div class="bt-page-community-joatu">
     <div class="d-flex align-items-center justify-content-between mb-4">
       <h2>{{ t('bt.joatu.heading') }}</h2>
-      <p class="text-muted mb-0">{{ t('bt.joatu.tagline') }}</p>
+      <p class="text-muted mb-0">
+        {{ t('bt.joatu.tagline') }}
+      </p>
     </div>
 
     <BTabs>
       <BTab :title="t('bt.joatu.tabs.offers')">
         <div class="pt-3">
           <div class="d-flex justify-content-end mb-3">
-            <BButton variant="success" size="sm" @click="showOfferForm = !showOfferForm">
+            <BButton
+              variant="success"
+              size="sm"
+              @click="showOfferForm = !showOfferForm"
+            >
               {{ showOfferForm ? t('bt.actions.cancel') : t('bt.joatu.offers.add') }}
             </BButton>
           </div>
-          <OfferForm v-if="showOfferForm" class="mb-4" @submit="handleCreateOffer" @cancel="showOfferForm = false" />
-          <OfferList :offers="offers" :loading="offersLoading" @view="viewOffer" />
+          <OfferForm
+            v-if="showOfferForm"
+            class="mb-4"
+            @submit="handleCreateOffer"
+            @cancel="showOfferForm = false"
+          />
+          <OfferList
+            :offers="offers"
+            :loading="offersLoading"
+            @view="viewOffer"
+          />
         </div>
       </BTab>
       <BTab :title="t('bt.joatu.tabs.requests')">
         <div class="pt-3">
           <div class="d-flex justify-content-end mb-3">
-            <BButton variant="warning" size="sm" @click="showRequestForm = !showRequestForm">
+            <BButton
+              variant="warning"
+              size="sm"
+              @click="showRequestForm = !showRequestForm"
+            >
               {{ showRequestForm ? t('bt.actions.cancel') : t('bt.joatu.requests.add') }}
             </BButton>
           </div>
-          <RequestForm v-if="showRequestForm" class="mb-4" @submit="handleCreateRequest" @cancel="showRequestForm = false" />
-          <RequestList :requests="requests" :loading="requestsLoading" @view="viewRequest" />
+          <RequestForm
+            v-if="showRequestForm"
+            class="mb-4"
+            @submit="handleCreateRequest"
+            @cancel="showRequestForm = false"
+          />
+          <RequestList
+            :requests="requests"
+            :loading="requestsLoading"
+            @view="viewRequest"
+          />
         </div>
       </BTab>
       <BTab :title="t('bt.joatu.tabs.agreements')">
         <div class="pt-3">
-          <AgreementList :agreements="agreements" :loading="agreementsLoading" @view="viewAgreement" />
+          <AgreementList
+            :agreements="agreements"
+            :loading="agreementsLoading"
+            @view="viewAgreement"
+          />
         </div>
       </BTab>
     </BTabs>

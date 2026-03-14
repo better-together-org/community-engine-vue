@@ -11,7 +11,10 @@
         <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
         <span v-if="!syncStore.online">⚡</span>
         <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
-        <span v-else-if="syncStore.syncing" class="sync-spin-icon">↻</span>
+        <span
+          v-else-if="syncStore.syncing"
+          class="sync-spin-icon"
+        >↻</span>
         <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
         <span v-else>↻</span>
       </span>
@@ -22,7 +25,10 @@
         title="Electric sync connected"
       >
         <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
-        <span class="sync-electric-dot" aria-hidden="true">●</span>
+        <span
+          class="sync-electric-dot"
+          aria-hidden="true"
+        >●</span>
       </span>
     </div>
   </Transition>

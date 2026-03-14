@@ -1,6 +1,9 @@
 <template>
   <BForm @submit.prevent="handleSubmit">
-    <BFormGroup :label="t('bt.events.name_label')" label-for="event-name">
+    <BFormGroup
+      :label="t('bt.events.name_label')"
+      label-for="event-name"
+    >
       <BFormInput
         id="event-name"
         v-model="form.name"
@@ -8,7 +11,10 @@
         :placeholder="t('bt.events.name_label')"
       />
     </BFormGroup>
-    <BFormGroup :label="t('bt.events.description_label')" label-for="event-description">
+    <BFormGroup
+      :label="t('bt.events.description_label')"
+      label-for="event-description"
+    >
       <BFormTextarea
         id="event-description"
         v-model="form.description"
@@ -18,20 +24,46 @@
     </BFormGroup>
     <BRow>
       <BCol md="6">
-        <BFormGroup :label="t('bt.events.starts_at_label')" label-for="event-starts">
-          <BFormInput id="event-starts" v-model="form.starts_at" type="datetime-local" />
+        <BFormGroup
+          :label="t('bt.events.starts_at_label')"
+          label-for="event-starts"
+        >
+          <BFormInput
+            id="event-starts"
+            v-model="form.starts_at"
+            type="datetime-local"
+          />
         </BFormGroup>
       </BCol>
       <BCol md="6">
-        <BFormGroup :label="t('bt.events.ends_at_label')" label-for="event-ends">
-          <BFormInput id="event-ends" v-model="form.ends_at" type="datetime-local" />
+        <BFormGroup
+          :label="t('bt.events.ends_at_label')"
+          label-for="event-ends"
+        >
+          <BFormInput
+            id="event-ends"
+            v-model="form.ends_at"
+            type="datetime-local"
+          />
         </BFormGroup>
       </BCol>
     </BRow>
-    <BFormGroup :label="t('bt.posts.privacy_label')" label-for="event-privacy">
-      <BFormSelect id="event-privacy" v-model="form.privacy" :options="privacyOptions" />
+    <BFormGroup
+      :label="t('bt.posts.privacy_label')"
+      label-for="event-privacy"
+    >
+      <BFormSelect
+        id="event-privacy"
+        v-model="form.privacy"
+        :options="privacyOptions"
+      />
     </BFormGroup>
-    <BButton type="submit" variant="primary">{{ t('bt.events.save') }}</BButton>
+    <BButton
+      type="submit"
+      variant="primary"
+    >
+      {{ t('bt.events.save') }}
+    </BButton>
   </BForm>
 </template>
 

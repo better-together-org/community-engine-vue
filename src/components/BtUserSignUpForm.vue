@@ -2,7 +2,10 @@
   <BForm @submit.prevent="handleSubmit">
     <fieldset>
       <legend>{{ t('bt.auth.login_info') }}</legend>
-      <BFormGroup :label="t('bt.auth.email')" label-for="sign-up-email">
+      <BFormGroup
+        :label="t('bt.auth.email')"
+        label-for="sign-up-email"
+      >
         <BFormInput
           id="sign-up-email"
           v-model="form.user.email"
@@ -11,7 +14,10 @@
           :placeholder="t('bt.auth.email')"
         />
       </BFormGroup>
-      <BFormGroup :label="t('bt.auth.password')" label-for="sign-up-password">
+      <BFormGroup
+        :label="t('bt.auth.password')"
+        label-for="sign-up-password"
+      >
         <BFormInput
           id="sign-up-password"
           v-model="form.user.password"
@@ -25,7 +31,10 @@
     </fieldset>
     <fieldset>
       <legend>{{ t('bt.auth.personal_info') }}</legend>
-      <BFormGroup :label="t('bt.person.name_label')" label-for="sign-up-name">
+      <BFormGroup
+        :label="t('bt.person.name_label')"
+        label-for="sign-up-name"
+      >
         <BFormInput
           id="sign-up-name"
           v-model="form.user.person_attributes.name"
@@ -34,7 +43,10 @@
           :placeholder="t('bt.person.name_label')"
         />
       </BFormGroup>
-      <BFormGroup :label="t('bt.person.description_label')" label-for="sign-up-description">
+      <BFormGroup
+        :label="t('bt.person.description_label')"
+        label-for="sign-up-description"
+      >
         <BFormTextarea
           id="sign-up-description"
           v-model="form.user.person_attributes.description"
@@ -44,7 +56,12 @@
         />
       </BFormGroup>
     </fieldset>
-    <BButton type="submit" variant="primary" class="w-100" :disabled="loading">
+    <BButton
+      type="submit"
+      variant="primary"
+      class="w-100"
+      :disabled="loading"
+    >
       {{ t('bt.auth.sign_up') }}
     </BButton>
   </BForm>

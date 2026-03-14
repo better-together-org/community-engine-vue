@@ -58,6 +58,8 @@ import RequestList from './components/joatu/RequestList.vue'
 import RequestForm from './components/joatu/RequestForm.vue'
 import AgreementCard from './components/joatu/AgreementCard.vue'
 import AgreementList from './components/joatu/AgreementList.vue'
+import RoleGate from './components/role/RoleGate.vue'
+import BlockButton from './components/role/BlockButton.vue'
 
 export {
   useAuthStore,
@@ -77,6 +79,8 @@ export { useConversations } from './composables/useConversations'
 export { useMessages } from './composables/useMessages'
 export { useInvitations } from './composables/useInvitations'
 export { usePages } from './composables/usePages'
+export { useRoles } from './composables/useRoles'
+export { usePersonBlocks } from './composables/usePersonBlocks'
 export { useJoaTuOffers } from './composables/useJoaTuOffers'
 export { useJoaTuRequests } from './composables/useJoaTuRequests'
 export { useJoaTuAgreements } from './composables/useJoaTuAgreements'
@@ -113,6 +117,7 @@ export {
   OfferCard, OfferList, OfferForm,
   RequestCard, RequestList, RequestForm,
   AgreementCard, AgreementList,
+  RoleGate, BlockButton,
 }
 
 library.add(faExternalLinkAlt)
@@ -168,6 +173,9 @@ const install = (app, options = {}) => {
   app.component('BtOfferCard', OfferCard)
   app.component('BtRequestCard', RequestCard)
   app.component('BtAgreementCard', AgreementCard)
+  app.component('RoleGate', RoleGate)
+  app.component('BtRoleGate', RoleGate)
+  app.component('BtBlockButton', BlockButton)
 }
 
 const CommunityEngineVue = { install, NAME }

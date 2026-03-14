@@ -1,11 +1,25 @@
 <template>
   <div class="bt-community-event">
-    <RouterLink :to="{ name: 'CommunityEvents', params: { communitySlug: route.params.communitySlug } }" class="btn btn-link ps-0">
+    <RouterLink
+      :to="{ name: 'CommunityEvents', params: { communitySlug: route.params.communitySlug } }"
+      class="btn btn-link ps-0"
+    >
       {{ t('bt.actions.back') }}
     </RouterLink>
-    <div v-if="loading"><BSpinner :label="t('bt.events.loading')" /></div>
-    <EventCard v-else-if="current" :event="current" />
-    <BAlert v-else variant="warning" :model-value="true">{{ t('bt.events.not_found') }}</BAlert>
+    <div v-if="loading">
+      <BSpinner :label="t('bt.events.loading')" />
+    </div>
+    <EventCard
+      v-else-if="current"
+      :event="current"
+    />
+    <BAlert
+      v-else
+      variant="warning"
+      :model-value="true"
+    >
+      {{ t('bt.events.not_found') }}
+    </BAlert>
   </div>
 </template>
 

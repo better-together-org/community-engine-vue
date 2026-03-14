@@ -1,7 +1,10 @@
 <template>
   <div class="bt-community-members">
     <h2>{{ t('bt.navigation.members') }}</h2>
-    <MemberList :members="items" :loading="loading" />
+    <MemberList
+      :members="items"
+      :loading="loading"
+    />
   </div>
 </template>
 

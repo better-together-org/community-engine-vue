@@ -1,18 +1,36 @@
 <template>
-  <BNavItemDropdown class="user-dropdown" :text="dropdownText" end>
-    <BDropdownItem v-if="authStore.isAuthenticated" to="/me">
+  <BNavItemDropdown
+    class="user-dropdown"
+    :text="dropdownText"
+    end
+  >
+    <BDropdownItem
+      v-if="authStore.isAuthenticated"
+      to="/me"
+    >
       {{ t('bt.navigation.me') }}
     </BDropdownItem>
-    <BDropdownItem v-if="authStore.isAuthenticated" @click="handleSignOut">
+    <BDropdownItem
+      v-if="authStore.isAuthenticated"
+      @click="handleSignOut"
+    >
       {{ t('bt.auth.sign_out') }}
     </BDropdownItem>
-    <BDropdownItem v-if="!authStore.isAuthenticated" to="/users/sign-in">
+    <BDropdownItem
+      v-if="!authStore.isAuthenticated"
+      to="/users/sign-in"
+    >
       {{ t('bt.auth.sign_in') }}
     </BDropdownItem>
-    <BDropdownItem v-if="!authStore.isAuthenticated" to="/users/sign-up">
+    <BDropdownItem
+      v-if="!authStore.isAuthenticated"
+      to="/users/sign-up"
+    >
       {{ t('bt.auth.sign_up') }}
     </BDropdownItem>
-    <BDropdownItem to="/">{{ t('bt.app.name') }}</BDropdownItem>
+    <BDropdownItem to="/">
+      {{ t('bt.app.name') }}
+    </BDropdownItem>
   </BNavItemDropdown>
 </template>
 

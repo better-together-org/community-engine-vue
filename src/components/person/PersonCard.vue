@@ -2,13 +2,18 @@
   <BCard class="bt-person-card">
     <BCardBody class="d-flex align-items-start gap-3">
       <slot name="avatar">
-        <PersonAvatar :person="person" :size="48" />
+        <PersonAvatar
+          :person="person"
+          :size="48"
+        />
       </slot>
       <div class="flex-grow-1">
         <slot name="title">
           <div class="d-flex align-items-center gap-2">
             <strong class="bt-person-card__name">{{ person.name }}</strong>
-            <slot name="sync-badge"><SyncBadge :item="person" /></slot>
+            <slot name="sync-badge">
+              <SyncBadge :item="person" />
+            </slot>
           </div>
         </slot>
         <slot name="meta">
@@ -20,7 +25,11 @@
     </BCardBody>
     <template #footer>
       <slot name="footer">
-        <ExtensionSlot target="PersonCard" slot="footer" :context="{ item: person }" />
+        <ExtensionSlot
+          slot="footer"
+          target="PersonCard"
+          :context="{ item: person }"
+        />
       </slot>
     </template>
   </BCard>

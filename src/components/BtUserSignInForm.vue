@@ -1,6 +1,9 @@
 <template>
   <BForm @submit.prevent="handleSubmit">
-    <BFormGroup :label="t('bt.auth.email')" label-for="sign-in-email">
+    <BFormGroup
+      :label="t('bt.auth.email')"
+      label-for="sign-in-email"
+    >
       <BFormInput
         id="sign-in-email"
         v-model="form.user.email"
@@ -9,7 +12,10 @@
         :placeholder="t('bt.auth.email')"
       />
     </BFormGroup>
-    <BFormGroup :label="t('bt.auth.password')" label-for="sign-in-password">
+    <BFormGroup
+      :label="t('bt.auth.password')"
+      label-for="sign-in-password"
+    >
       <BFormInput
         id="sign-in-password"
         v-model="form.user.password"
@@ -18,7 +24,12 @@
         :placeholder="t('bt.auth.password')"
       />
     </BFormGroup>
-    <BButton type="submit" variant="primary" class="w-100" :disabled="loading">
+    <BButton
+      type="submit"
+      variant="primary"
+      class="w-100"
+      :disabled="loading"
+    >
       {{ t('bt.auth.sign_in') }}
     </BButton>
   </BForm>

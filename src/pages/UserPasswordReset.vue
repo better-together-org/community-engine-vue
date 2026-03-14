@@ -3,8 +3,16 @@
     <section>
       <h2>{{ t('bt.auth.heading_password_reset') }}</h2>
       <BtUserResetPasswordForm />
-      <div><BLink to="/users/sign-in">{{ t('bt.auth.prompt_remembered_password') }}</BLink></div>
-      <div><BLink to="/users/sign-up">{{ t('bt.auth.prompt_sign_up') }}</BLink></div>
+      <div>
+        <BLink to="/users/sign-in">
+          {{ t('bt.auth.prompt_remembered_password') }}
+        </BLink>
+      </div>
+      <div>
+        <BLink to="/users/sign-up">
+          {{ t('bt.auth.prompt_sign_up') }}
+        </BLink>
+      </div>
     </section>
   </div>
 </template>

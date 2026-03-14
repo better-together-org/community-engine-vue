@@ -1,7 +1,13 @@
 <template>
   <div class="bt-page-community-pages">
-    <h2 class="mb-4">{{ t('bt.pages.heading') }}</h2>
-    <PageList :pages="items" :loading="loading" @view="viewPage" />
+    <h2 class="mb-4">
+      {{ t('bt.pages.heading') }}
+    </h2>
+    <PageList
+      :pages="items"
+      :loading="loading"
+      @view="viewPage"
+    />
   </div>
 </template>
 <script setup>

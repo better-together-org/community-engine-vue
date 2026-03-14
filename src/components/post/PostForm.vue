@@ -1,6 +1,9 @@
 <template>
   <BForm @submit.prevent="handleSubmit">
-    <BFormGroup :label="t('bt.posts.title_label')" label-for="post-title">
+    <BFormGroup
+      :label="t('bt.posts.title_label')"
+      label-for="post-title"
+    >
       <BFormInput
         id="post-title"
         v-model="form.title"
@@ -8,7 +11,10 @@
         :placeholder="t('bt.posts.title_label')"
       />
     </BFormGroup>
-    <BFormGroup :label="t('bt.posts.content_label')" label-for="post-content">
+    <BFormGroup
+      :label="t('bt.posts.content_label')"
+      label-for="post-content"
+    >
       <BFormTextarea
         id="post-content"
         v-model="form.content"
@@ -16,11 +22,25 @@
         :placeholder="t('bt.posts.content_label')"
       />
     </BFormGroup>
-    <BFormGroup :label="t('bt.posts.privacy_label')" label-for="post-privacy">
-      <BFormSelect id="post-privacy" v-model="form.privacy" :options="privacyOptions" />
+    <BFormGroup
+      :label="t('bt.posts.privacy_label')"
+      label-for="post-privacy"
+    >
+      <BFormSelect
+        id="post-privacy"
+        v-model="form.privacy"
+        :options="privacyOptions"
+      />
     </BFormGroup>
-    <BButton type="submit" variant="primary" :disabled="loading">
-      <BSpinner v-if="loading" small />
+    <BButton
+      type="submit"
+      variant="primary"
+      :disabled="loading"
+    >
+      <BSpinner
+        v-if="loading"
+        small
+      />
       {{ loading ? t('bt.posts.saving') : t('bt.posts.save') }}
     </BButton>
   </BForm>

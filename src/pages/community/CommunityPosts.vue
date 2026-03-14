@@ -2,14 +2,29 @@
   <div class="bt-community-posts">
     <div class="d-flex align-items-center justify-content-between mb-3">
       <h2>{{ t('bt.navigation.posts') }}</h2>
-      <BButton v-if="authStore.isAuthenticated" variant="primary" @click="showForm = true">
+      <BButton
+        v-if="authStore.isAuthenticated"
+        variant="primary"
+        @click="showForm = true"
+      >
         {{ t('bt.posts.create') }}
       </BButton>
     </div>
-    <BModal v-model="showForm" :title="t('bt.posts.create')" hide-footer>
-      <PostForm :community-id="communitySlug" @submit="createPost" />
+    <BModal
+      v-model="showForm"
+      :title="t('bt.posts.create')"
+      hide-footer
+    >
+      <PostForm
+        :community-id="communitySlug"
+        @submit="createPost"
+      />
     </BModal>
-    <PostList :posts="items" :loading="loading" @view="goToPost" />
+    <PostList
+      :posts="items"
+      :loading="loading"
+      @view="goToPost"
+    />
   </div>
 </template>
 

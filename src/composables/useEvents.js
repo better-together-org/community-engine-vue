@@ -9,14 +9,14 @@ export function useEvents(communityId = null) {
     const now = new Date().toISOString()
     if (communityId) {
       const { rows } = await db.query(
-        `SELECT * FROM events WHERE starts_at >= $1 AND community_id = $2 ORDER BY starts_at ASC`,
+        'SELECT * FROM events WHERE starts_at >= $1 AND community_id = $2 ORDER BY starts_at ASC',
         [now, communityId],
       )
       resource.items.value = rows
       return rows
     } else {
       const { rows } = await db.query(
-        `SELECT * FROM events WHERE starts_at >= $1 ORDER BY starts_at ASC`,
+        'SELECT * FROM events WHERE starts_at >= $1 ORDER BY starts_at ASC',
         [now],
       )
       resource.items.value = rows

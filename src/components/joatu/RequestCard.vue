@@ -6,16 +6,25 @@
           <h5 class="bt-request-card__title mb-0">
             <span class="text-muted me-1">{{ t('bt.joatu.requests.seeking') }}</span>{{ request.title }}
           </h5>
-          <slot name="sync-badge"><SyncBadge :item="request" /></slot>
+          <slot name="sync-badge">
+            <SyncBadge :item="request" />
+          </slot>
         </div>
       </slot>
       <slot name="meta">
         <div class="d-flex align-items-center gap-2 mb-2">
-          <BBadge :variant="statusVariant">{{ request.status }}</BBadge>
+          <BBadge :variant="statusVariant">
+            {{ request.status }}
+          </BBadge>
           <span class="bt-request-card__credits">
             {{ t('bt.joatu.offers.credits_display', request.time_credits) }}
           </span>
-          <BBadge v-if="request.category" variant="outline-secondary">{{ request.category }}</BBadge>
+          <BBadge
+            v-if="request.category"
+            variant="outline-secondary"
+          >
+            {{ request.category }}
+          </BBadge>
         </div>
       </slot>
       <slot name="body">
@@ -25,10 +34,18 @@
     <template #footer>
       <slot name="footer">
         <div class="d-flex align-items-center gap-2">
-          <BButton variant="outline-warning" size="sm" @click="$emit('view', request)">
+          <BButton
+            variant="outline-warning"
+            size="sm"
+            @click="$emit('view', request)"
+          >
             {{ t('bt.joatu.requests.fulfill') }}
           </BButton>
-          <ExtensionSlot target="RequestCard" slot="footer" :context="{ item: request }" />
+          <ExtensionSlot
+            slot="footer"
+            target="RequestCard"
+            :context="{ item: request }"
+          />
         </div>
       </slot>
     </template>

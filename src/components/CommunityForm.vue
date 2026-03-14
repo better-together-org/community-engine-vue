@@ -1,6 +1,9 @@
 <template>
   <BForm @submit.prevent="handleSubmit">
-    <BFormGroup :label="t('bt.communities.name_label')" label-for="community-name">
+    <BFormGroup
+      :label="t('bt.communities.name_label')"
+      label-for="community-name"
+    >
       <BFormInput
         id="community-name"
         v-model="form.name"
@@ -9,7 +12,10 @@
         :placeholder="t('bt.communities.name_label')"
       />
     </BFormGroup>
-    <BFormGroup :label="t('bt.communities.description_label')" label-for="community-description">
+    <BFormGroup
+      :label="t('bt.communities.description_label')"
+      label-for="community-description"
+    >
       <BFormTextarea
         id="community-description"
         v-model="form.description"
@@ -18,7 +24,12 @@
         :placeholder="t('bt.communities.description_label')"
       />
     </BFormGroup>
-    <BButton type="submit" variant="primary">{{ t('bt.communities.save') }}</BButton>
+    <BButton
+      type="submit"
+      variant="primary"
+    >
+      {{ t('bt.communities.save') }}
+    </BButton>
   </BForm>
 </template>
 

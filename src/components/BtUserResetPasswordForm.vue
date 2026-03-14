@@ -1,6 +1,9 @@
 <template>
   <BForm @submit.prevent="handleSubmit">
-    <BFormGroup :label="t('bt.auth.email')" label-for="reset-email">
+    <BFormGroup
+      :label="t('bt.auth.email')"
+      label-for="reset-email"
+    >
       <BFormInput
         id="reset-email"
         v-model="email"
@@ -9,7 +12,12 @@
         :placeholder="t('bt.auth.email')"
       />
     </BFormGroup>
-    <BButton type="submit" variant="primary" class="w-100" :disabled="loading">
+    <BButton
+      type="submit"
+      variant="primary"
+      class="w-100"
+      :disabled="loading"
+    >
       {{ t('bt.auth.send_reset_email') }}
     </BButton>
   </BForm>

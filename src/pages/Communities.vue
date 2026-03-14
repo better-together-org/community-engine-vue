@@ -3,7 +3,11 @@
     <div class="container py-4">
       <div class="d-flex align-items-center justify-content-between mb-4">
         <h1>{{ t('bt.navigation.communities') }}</h1>
-        <BButton v-if="authStore.isAuthenticated" variant="primary" @click="showCreateForm = true">
+        <BButton
+          v-if="authStore.isAuthenticated"
+          variant="primary"
+          @click="showCreateForm = true"
+        >
           {{ t('bt.communities.new') }}
         </BButton>
       </div>
@@ -14,7 +18,11 @@
         @view="goToCommunity"
       />
 
-      <BModal v-model="showCreateForm" :title="t('bt.communities.create')" @ok.prevent="createCommunity">
+      <BModal
+        v-model="showCreateForm"
+        :title="t('bt.communities.create')"
+        @ok.prevent="createCommunity"
+      >
         <CommunityForm @submit="createCommunity" />
       </BModal>
     </div>

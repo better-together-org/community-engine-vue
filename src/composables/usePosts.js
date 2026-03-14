@@ -8,14 +8,14 @@ export function usePosts(communityId = null) {
     const db = await getDb()
     if (communityId) {
       const { rows } = await db.query(
-        `SELECT * FROM posts WHERE published_at IS NOT NULL AND community_id = $1 ORDER BY published_at DESC`,
+        'SELECT * FROM posts WHERE published_at IS NOT NULL AND community_id = $1 ORDER BY published_at DESC',
         [communityId],
       )
       resource.items.value = rows
       return rows
     } else {
       const { rows } = await db.query(
-        `SELECT * FROM posts WHERE published_at IS NOT NULL ORDER BY published_at DESC`,
+        'SELECT * FROM posts WHERE published_at IS NOT NULL ORDER BY published_at DESC',
         [],
       )
       resource.items.value = rows

@@ -2,14 +2,29 @@
   <div class="bt-community-events">
     <div class="d-flex align-items-center justify-content-between mb-3">
       <h2>{{ t('bt.navigation.events') }}</h2>
-      <BButton v-if="authStore.isAuthenticated" variant="primary" @click="showForm = true">
+      <BButton
+        v-if="authStore.isAuthenticated"
+        variant="primary"
+        @click="showForm = true"
+      >
         {{ t('bt.events.create') }}
       </BButton>
     </div>
-    <BModal v-model="showForm" :title="t('bt.events.create')" hide-footer>
-      <EventForm :community-id="communitySlug" @submit="createEvent" />
+    <BModal
+      v-model="showForm"
+      :title="t('bt.events.create')"
+      hide-footer
+    >
+      <EventForm
+        :community-id="communitySlug"
+        @submit="createEvent"
+      />
     </BModal>
-    <EventList :events="items" :loading="loading" @view="goToEvent" />
+    <EventList
+      :events="items"
+      :loading="loading"
+      @view="goToEvent"
+    />
   </div>
 </template>
 

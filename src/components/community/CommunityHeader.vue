@@ -1,15 +1,30 @@
 <template>
-  <div class="bt-community-header" :style="coverStyle">
+  <div
+    class="bt-community-header"
+    :style="coverStyle"
+  >
     <div class="bt-community-header__overlay">
       <div class="bt-community-header__content">
         <slot name="logo">
-          <img v-if="community.logo_url" :src="community.logo_url" class="bt-community-header__logo" :alt="community.name" />
+          <img
+            v-if="community.logo_url"
+            :src="community.logo_url"
+            class="bt-community-header__logo"
+            :alt="community.name"
+          >
         </slot>
         <slot name="title">
-          <h1 class="bt-community-header__name">{{ community.name }}</h1>
+          <h1 class="bt-community-header__name">
+            {{ community.name }}
+          </h1>
         </slot>
         <slot name="description">
-          <p v-if="community.description" class="bt-community-header__description">{{ community.description }}</p>
+          <p
+            v-if="community.description"
+            class="bt-community-header__description"
+          >
+            {{ community.description }}
+          </p>
         </slot>
         <slot name="actions" />
       </div>

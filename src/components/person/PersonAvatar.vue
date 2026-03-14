@@ -1,7 +1,19 @@
 <template>
-  <div class="bt-person-avatar" :style="avatarStyle" :title="person.name">
-    <img v-if="person.profile_image_url" :src="person.profile_image_url" :alt="person.name" class="bt-person-avatar__img" />
-    <span v-else class="bt-person-avatar__initials">{{ initials }}</span>
+  <div
+    class="bt-person-avatar"
+    :style="avatarStyle"
+    :title="person.name"
+  >
+    <img
+      v-if="person.profile_image_url"
+      :src="person.profile_image_url"
+      :alt="person.name"
+      class="bt-person-avatar__img"
+    >
+    <span
+      v-else
+      class="bt-person-avatar__initials"
+    >{{ initials }}</span>
   </div>
 </template>
 

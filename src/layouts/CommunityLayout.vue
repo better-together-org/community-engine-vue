@@ -1,19 +1,37 @@
 <template>
   <div class="bt-community-layout">
-    <div v-if="loading" class="text-center py-5">
+    <div
+      v-if="loading"
+      class="text-center py-5"
+    >
       <BSpinner :label="t('bt.communities.loading')" />
     </div>
-    <div v-else-if="!community" class="container py-5">
-      <BAlert variant="warning" :model-value="true">{{ t('bt.communities.not_found') }}</BAlert>
+    <div
+      v-else-if="!community"
+      class="container py-5"
+    >
+      <BAlert
+        variant="warning"
+        :model-value="true"
+      >
+        {{ t('bt.communities.not_found') }}
+      </BAlert>
     </div>
     <template v-else>
       <CommunityHeader :community="community" />
       <nav class="bt-community-nav bg-light border-bottom">
         <div class="container">
           <ul class="nav nav-pills py-2">
-            <li class="nav-item" v-for="link in communityNav" :key="link.name">
-              <RouterLink :to="{ name: link.name, params: { communitySlug: communitySlug } }"
-                          class="nav-link" active-class="active">
+            <li
+              v-for="link in communityNav"
+              :key="link.name"
+              class="nav-item"
+            >
+              <RouterLink
+                :to="{ name: link.name, params: { communitySlug: communitySlug } }"
+                class="nav-link"
+                active-class="active"
+              >
                 {{ link.label }}
               </RouterLink>
             </li>

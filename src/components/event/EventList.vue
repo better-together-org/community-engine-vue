@@ -1,12 +1,33 @@
 <template>
   <div class="bt-event-list">
     <slot name="header" />
-    <div v-if="loading"><slot name="loading"><BSpinner :label="t('bt.events.loading')" /></slot></div>
-    <div v-else-if="!events.length"><slot name="empty"><p class="text-muted">{{ t('bt.events.list_empty') }}</p></slot></div>
+    <div v-if="loading">
+      <slot name="loading">
+        <BSpinner :label="t('bt.events.loading')" />
+      </slot>
+    </div>
+    <div v-else-if="!events.length">
+      <slot name="empty">
+        <p class="text-muted">
+          {{ t('bt.events.list_empty') }}
+        </p>
+      </slot>
+    </div>
     <div v-else>
-      <div v-for="(event, index) in events" :key="event.id" class="mb-3">
-        <slot name="item" :item="event" :index="index">
-          <EventCard :event="event" @view="$emit('view', event)" />
+      <div
+        v-for="(event, index) in events"
+        :key="event.id"
+        class="mb-3"
+      >
+        <slot
+          name="item"
+          :item="event"
+          :index="index"
+        >
+          <EventCard
+            :event="event"
+            @view="$emit('view', event)"
+          />
         </slot>
       </div>
     </div>

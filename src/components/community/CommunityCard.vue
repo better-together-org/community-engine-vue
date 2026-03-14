@@ -2,20 +2,32 @@
   <BCard class="bt-community-card">
     <template #header>
       <slot name="header">
-        <div class="bt-community-card__cover" :style="coverStyle">
-          <slot name="sync-badge"><SyncBadge :item="community" /></slot>
+        <div
+          class="bt-community-card__cover"
+          :style="coverStyle"
+        >
+          <slot name="sync-badge">
+            <SyncBadge :item="community" />
+          </slot>
         </div>
       </slot>
     </template>
 
     <BCardBody>
       <slot name="title">
-        <h5 class="bt-community-card__name">{{ community.name }}</h5>
+        <h5 class="bt-community-card__name">
+          {{ community.name }}
+        </h5>
       </slot>
 
       <slot name="meta">
         <div class="bt-community-card__meta">
-          <BBadge :variant="privacyVariant" class="me-1">{{ community.privacy }}</BBadge>
+          <BBadge
+            :variant="privacyVariant"
+            class="me-1"
+          >
+            {{ community.privacy }}
+          </BBadge>
         </div>
       </slot>
 
@@ -29,10 +41,18 @@
     <template #footer>
       <slot name="footer">
         <div class="bt-community-card__actions">
-          <BButton variant="outline-primary" size="sm" @click="$emit('view', community)">
+          <BButton
+            variant="outline-primary"
+            size="sm"
+            @click="$emit('view', community)"
+          >
             {{ t('bt.communities.view') }}
           </BButton>
-          <ExtensionSlot target="CommunityCard" slot="footer" :context="{ item: community }" />
+          <ExtensionSlot
+            slot="footer"
+            target="CommunityCard"
+            :context="{ item: community }"
+          />
         </div>
       </slot>
     </template>

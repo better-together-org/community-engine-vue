@@ -186,7 +186,9 @@
       "fill_profile": "Заповни свій профіль",
       "my_profile": "Мій профіль",
       "fill_profile_details": "Заповни деталі свого профілю",
-      "unsaved_changes": "змінено"
+      "unsaved_changes": "змінено",
+      "block": "Заблокувати",
+      "unblock": "Розблокувати"
     },
     "joatu": {
       "heading": "Банк часу",

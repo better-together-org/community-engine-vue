@@ -2,8 +2,14 @@
   <BCard class="bt-post-card">
     <template #header>
       <slot name="header">
-        <div v-if="post.cover_image_url" class="bt-post-card__cover">
-          <img :src="post.cover_image_url" :alt="post.title" />
+        <div
+          v-if="post.cover_image_url"
+          class="bt-post-card__cover"
+        >
+          <img
+            :src="post.cover_image_url"
+            :alt="post.title"
+          >
         </div>
       </slot>
     </template>
@@ -11,8 +17,12 @@
     <BCardBody>
       <slot name="title">
         <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
-          <h5 class="bt-post-card__title mb-0">{{ post.title }}</h5>
-          <slot name="sync-badge"><SyncBadge :item="post" /></slot>
+          <h5 class="bt-post-card__title mb-0">
+            {{ post.title }}
+          </h5>
+          <slot name="sync-badge">
+            <SyncBadge :item="post" />
+          </slot>
         </div>
       </slot>
 
@@ -20,23 +30,36 @@
         <div class="bt-post-card__meta mb-2">
           <small class="text-muted">
             <span v-if="post.published_at">{{ formattedDate }}</span>
-            <BBadge :variant="privacyVariant" class="ms-2">{{ post.privacy }}</BBadge>
+            <BBadge
+              :variant="privacyVariant"
+              class="ms-2"
+            >{{ post.privacy }}</BBadge>
           </small>
         </div>
       </slot>
 
       <slot name="body">
-        <BCardText class="bt-post-card__body">{{ truncatedContent }}</BCardText>
+        <BCardText class="bt-post-card__body">
+          {{ truncatedContent }}
+        </BCardText>
       </slot>
     </BCardBody>
 
     <template #footer>
       <slot name="footer">
         <div class="bt-post-card__actions d-flex align-items-center gap-2">
-          <BButton variant="outline-primary" size="sm" @click="$emit('view', post)">
+          <BButton
+            variant="outline-primary"
+            size="sm"
+            @click="$emit('view', post)"
+          >
             {{ t('bt.posts.read_more') }}
           </BButton>
-          <ExtensionSlot target="PostCard" slot="footer" :context="{ item: post }" />
+          <ExtensionSlot
+            slot="footer"
+            target="PostCard"
+            :context="{ item: post }"
+          />
         </div>
       </slot>
     </template>

@@ -135,7 +135,9 @@
       "members_empty": "Aucun membre trouvé.",
       "loading": "Chargement des membres…",
       "profile": "Profil",
-      "unknown": "Inconnu"
+      "unknown": "Inconnu",
+      "block": "Bloquer",
+      "unblock": "Débloquer"
     },
     "joatu": {
       "heading": "Banque de temps",

@@ -3,11 +3,19 @@
     <BRow>
       <BCol md="8">
         <h2>{{ t('bt.posts.recent') }}</h2>
-        <PostList :posts="recentPosts" :loading="postsLoading" @view="goToPost" />
+        <PostList
+          :posts="recentPosts"
+          :loading="postsLoading"
+          @view="goToPost"
+        />
       </BCol>
       <BCol md="4">
         <h2>{{ t('bt.events.upcoming') }}</h2>
-        <EventList :events="upcomingEvents" :loading="eventsLoading" @view="goToEvent" />
+        <EventList
+          :events="upcomingEvents"
+          :loading="eventsLoading"
+          @view="goToEvent"
+        />
       </BCol>
     </BRow>
   </div>
