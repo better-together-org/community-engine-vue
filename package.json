@@ -14,6 +14,14 @@
   "homepage": "https://bebettertogether.ca",
   "license": "LGPL-3.0-or-later",
   "main": "./src/index.js",
+  "module": "./src/index.js",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://git.btsdev.ca/api/packages/better-together-org/npm/"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
