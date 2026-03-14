@@ -85,13 +85,15 @@ export function installI18n(app, options = {}) {
   const existing = app.config.globalProperties.$i18n
 
   if (existing) {
-    // Merge CEV bt.* into the host app's existing i18n instance
+    // Merge CEV bt.* into the host app's existing i18n instance.
+    // $i18n is already the global composer (i18n.global), not the i18n instance itself.
+    const composer = existing.global ?? existing
     const merged = buildMessages(options.messages ?? {})
     for (const [locale, msgs] of Object.entries(merged)) {
-      existing.global.mergeLocaleMessage(locale, msgs)
+      composer.mergeLocaleMessage(locale, msgs)
     }
     if (options.locale) {
-      existing.global.locale.value = options.locale
+      composer.locale.value = options.locale
     }
   } else {
     const i18n = createCevI18n(options.messages ?? {}, options.locale ?? 'en')
