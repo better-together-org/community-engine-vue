@@ -1,0 +1,203 @@
+{
+  "bt": {
+    "actions": {
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete",
+      "remove": "Remove",
+      "save": "Save",
+      "cancel": "Cancel",
+      "send": "Send",
+      "create": "Create",
+      "close": "Close",
+      "open": "Open",
+      "back": "Back",
+      "submit": "Submit",
+      "confirm": "Confirm",
+      "learn_more": "Learn more",
+      "read_more": "Read more"
+    },
+    "sync": {
+      "status": {
+        "local": "Saved locally",
+        "local_title": "Saved locally — will sync when online",
+        "syncing": "Syncing…",
+        "synced": "Synced",
+        "needs_auth": "Sign in to sync",
+        "needs_auth_title": "Sign in to sync this item",
+        "conflict": "Conflict"
+      },
+      "offline_banner": "You're offline. Changes will sync when you reconnect.",
+      "pending_count": "0 pending | 1 pending | {count} pending",
+      "pending_label": "Pending sync",
+      "status_bar_online": "Online",
+      "status_bar_offline": "Offline"
+    },
+    "auth": {
+      "sign_in": "Sign In",
+      "sign_out": "Sign Out",
+      "sign_up": "Sign Up",
+      "email": "Email",
+      "password": "Password",
+      "password_confirmation": "Password confirmation",
+      "forgot_password": "Forgot password?",
+      "reset_password": "Reset password",
+      "new_password": "New password",
+      "resend_confirmation": "Resend confirmation",
+      "sign_in_failed": "Sign in failed. Please check your credentials.",
+      "sign_up_failed": "Sign up failed. Please try again.",
+      "errors": {
+        "invalid_credentials": "Invalid email or password.",
+        "confirmation_mismatch": "Password confirmation does not match.",
+        "network": "Could not connect to the server. Please try again."
+      }
+    },
+    "navigation": {
+      "home": "Home",
+      "communities": "Communities",
+      "profile": "Profile",
+      "settings": "Settings"
+    },
+    "errors": {
+      "not_found": "Not found.",
+      "load_failed": "Failed to load. Please try again.",
+      "save_failed": "Failed to save. Please try again.",
+      "network": "Network error. Please check your connection.",
+      "unexpected": "An unexpected error occurred."
+    },
+    "communities": {
+      "list_empty": "No communities found.",
+      "loading": "Loading communities…",
+      "view": "View Community",
+      "create": "Create Community",
+      "edit": "Edit Community",
+      "members_count": "0 members | 1 member | {count} members"
+    },
+    "posts": {
+      "list_empty": "No posts yet.",
+      "loading": "Loading posts…",
+      "read_more": "Read more",
+      "save": "Save Post",
+      "saving": "Saving…",
+      "title_label": "Title",
+      "content_label": "Content",
+      "privacy_label": "Privacy"
+    },
+    "events": {
+      "list_empty": "No upcoming events.",
+      "loading": "Loading events…",
+      "view": "View Event",
+      "save": "Save Event",
+      "name_label": "Event name",
+      "description_label": "Description",
+      "starts_at_label": "Starts at",
+      "ends_at_label": "Ends at"
+    },
+    "conversations": {
+      "list_empty": "No conversations yet.",
+      "loading": "Loading conversations…",
+      "open": "Open",
+      "no_subject": "No subject",
+      "participants": "0 participants | 1 participant | {count} participants"
+    },
+    "messages": {
+      "list_empty": "No messages yet. Start the conversation!",
+      "loading": "Loading messages…",
+      "placeholder": "Type a message…",
+      "send": "Send",
+      "author_unknown": "Unknown"
+    },
+    "invitations": {
+      "list_empty": "No invitations yet.",
+      "loading": "Loading invitations…",
+      "email_label": "Email address",
+      "name_label": "Name (optional)",
+      "message_label": "Personal message (optional)",
+      "email_placeholder": "person@example.com",
+      "name_placeholder": "Their name",
+      "message_placeholder": "Add a personal message…",
+      "send": "Send Invitation",
+      "cancel": "Cancel",
+      "status": {
+        "pending": "Pending",
+        "accepted": "Accepted",
+        "expired": "Expired"
+      },
+      "expires": "Expires {date}"
+    },
+    "pages": {
+      "list_empty": "No pages yet.",
+      "loading": "Loading…",
+      "not_found": "Page not found.",
+      "read": "Read"
+    },
+    "person": {
+      "members_empty": "No members found.",
+      "loading": "Loading members…",
+      "profile": "Profile",
+      "unknown": "Unknown"
+    },
+    "joatu": {
+      "heading": "Time Banking",
+      "tagline": "1 time credit = 1 hour. All labor equally valued.",
+      "tabs": {
+        "offers": "Offers",
+        "requests": "Requests",
+        "agreements": "Agreements"
+      },
+      "offers": {
+        "list_empty": "No offers yet.",
+        "loading": "Loading offers…",
+        "add": "+ Add Offer",
+        "view": "View Offer",
+        "title_label": "What are you offering?",
+        "title_placeholder": "e.g. Web design help, Gardening, Guitar lessons",
+        "description_label": "Description",
+        "description_placeholder": "Describe what you can offer in more detail…",
+        "category_label": "Category",
+        "category_placeholder": "e.g. Skills, Labour, Knowledge, Goods",
+        "credits_label": "Time credits",
+        "credits_hint": "1 time credit = 1 hour. All labor is equally valued.",
+        "submit": "Add Offer",
+        "status": {
+          "open": "Open",
+          "fulfilled": "Fulfilled",
+          "withdrawn": "Withdrawn"
+        },
+        "credits_display": "0 time credits | 1 time credit | {count} time credits"
+      },
+      "requests": {
+        "list_empty": "No requests yet.",
+        "loading": "Loading requests…",
+        "add": "+ Add Request",
+        "view": "View Request",
+        "fulfill": "Fulfill Request",
+        "title_label": "What do you need?",
+        "title_placeholder": "e.g. Help moving, Childcare, Computer repair",
+        "description_label": "Description",
+        "description_placeholder": "Describe what you need in more detail…",
+        "category_label": "Category",
+        "credits_label": "Time credits",
+        "credits_hint": "1 time credit = 1 hour. All labor is equally valued.",
+        "submit": "Add Request",
+        "status": {
+          "open": "Open",
+          "fulfilled": "Fulfilled",
+          "withdrawn": "Withdrawn"
+        }
+      },
+      "agreements": {
+        "list_empty": "No agreements yet.",
+        "loading": "Loading agreements…",
+        "agreed_on": "Agreed {date}",
+        "status": {
+          "pending": "Pending",
+          "active": "Active",
+          "completed": "Completed",
+          "disputed": "Disputed"
+        },
+        "credits_display": "0 time credits | 1 time credit | {count} time credits"
+      }
+    }
+  }
+}

@@ -20,6 +20,7 @@ import OfflineBanner from './components/sync/OfflineBanner.vue'
 import ExtensionSlot from './components/shared/ExtensionSlot.vue'
 
 import { setCevContext } from './context'
+import { installI18n } from './i18n'
 import { useCommunities } from './composables/useCommunities'
 import { communityRoutes } from './router/communityRoutes'
 import CommunityCard from './components/community/CommunityCard.vue'
@@ -84,6 +85,8 @@ export { useSyncStatus } from './composables/useSyncStatus'
 export { getCevContext } from './context'
 export { defineExtension } from './extension'
 export { registerSlotInjection, getSlotInjections } from './slot-registry'
+export { createCevI18n, installI18n, registerExtensionMessages } from './i18n'
+export { useI18n } from 'vue-i18n'
 
 export { useCommunities } from './composables/useCommunities'
 export { communityRoutes } from './router/communityRoutes'
@@ -119,6 +122,9 @@ const install = (app, options = {}) => {
   app.component('BtNavUser', BtNavUser)
   app.component('BtUserNewPasswordForm', BtUserNewPasswordForm)
   app.component('ExtensionSlot', ExtensionSlot)
+
+  // Install vue-i18n (merges into host app's i18n instance if one exists)
+  installI18n(app, options)
 
   // Apply theme CSS custom properties
   if (options.theme) {
