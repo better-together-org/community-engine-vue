@@ -1,5 +1,5 @@
 <template>
-  <BNavbarBrand href="/">
+  <BNavbarBrand to="/">
     <img
       class="logo"
       src="../assets/better-together-logo.png"
