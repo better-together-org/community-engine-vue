@@ -4,7 +4,7 @@ import { getDb } from '../db/client'
 export function useEvents(communityId = null) {
   const resource = useResource('events', communityId ? { community_id: communityId } : {})
 
-  async function listUpcoming(extraFilters = {}) {
+  async function listUpcoming(_extraFilters = {}) {
     const db = await getDb()
     const now = new Date().toISOString()
     if (communityId) {

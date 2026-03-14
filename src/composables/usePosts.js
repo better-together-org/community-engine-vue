@@ -4,7 +4,7 @@ import { getDb } from '../db/client'
 export function usePosts(communityId = null) {
   const resource = useResource('posts', communityId ? { community_id: communityId } : {})
 
-  async function listPublished(extraFilters = {}) {
+  async function listPublished(_extraFilters = {}) {
     const db = await getDb()
     if (communityId) {
       const { rows } = await db.query(

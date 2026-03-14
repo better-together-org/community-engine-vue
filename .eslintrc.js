@@ -23,7 +23,11 @@ module.exports = {
     quotes: ['error', 'single'],
     semi: ['error', 'never'],
     'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['currentState'] }],
+    // Allow _-prefixed intentionally-unused vars/args (standard convention)
+    'no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
     'vue/multi-word-component-names': 'off',
+    // Vue 2 slot syntax — migration backlog, warn instead of error
+    'vue/no-deprecated-slot-attribute': 'warn',
     // Stage 1: error — all strings extracted.
     '@intlify/vue-i18n/no-raw-text': 'error',
   },

@@ -120,6 +120,7 @@ function subscribeToShape(db, table, initialOffset, onUpToDate) {
     let currentOffset = offset
     const batch = []
 
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       const { done, value } = await reader.read()
       if (done) break
@@ -214,7 +215,7 @@ function _doStart(db, useSyncStore) {
   const offsets = loadOffsets()
   let upToDateCount = 0
 
-  function onUpToDate(table) {
+  function onUpToDate(_table) {
     upToDateCount++
     if (upToDateCount >= SYNC_TABLES.length) {
       // eslint-disable-next-line no-console

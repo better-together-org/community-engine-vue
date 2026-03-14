@@ -16,15 +16,9 @@
       class="sync-dot sync-dot--syncing sync-dot--spin"
     />
     <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
-    <span
-      v-else-if="resolvedStatus === 'conflict'"
-      class="sync-dot sync-dot--conflict"
-    >!</span>
+    <span v-else-if="resolvedStatus === 'conflict'" class="sync-dot sync-dot--conflict">!</span>
     <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
-    <span
-      v-else-if="resolvedStatus === 'needs-auth'"
-      class="sync-dot sync-dot--needs-auth"
-    >🔒</span>
+    <span v-else-if="resolvedStatus === 'needs-auth'" class="sync-dot sync-dot--needs-auth">🔒</span>
   </span>
 </template>
 

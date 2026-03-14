@@ -45,6 +45,7 @@ function buildMessages(optionMessages = {}) {
       merged[locale].bt = { ...(merged[locale].bt ?? {}), ...msgs.bt }
     }
     // Merge everything else at top level
+    // eslint-disable-next-line no-unused-vars
     const { bt: _, ...rest } = msgs
     Object.assign(merged[locale], rest)
   }
