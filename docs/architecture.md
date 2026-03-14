@@ -440,10 +440,11 @@ A small dot + tooltip on every card. Renders nothing when `synced` (avoids
 visual noise for the normal case — only surfaces when action is needed).
 
 ```
-●  local        (amber dot) "Saved locally, will sync when online"
-⟳  syncing      (blue spin) "Syncing..."
-✓  synced       (invisible) — clean state, no badge shown
-⚠  conflict     (red)       "Conflict — newer version on server"
+●  local        (amber dot)      "Saved locally, will sync when online"
+⟳  syncing      (blue spin)      "Syncing..."
+✓  synced       (invisible)      — clean state, no badge shown
+🔒 needs-auth   (amber lock)     "Sign in to sync this item"
+⚠  conflict     (red)            "Conflict — newer version on server"
 ```
 
 ### SyncStatusBar.vue — app-wide bar
@@ -557,12 +558,428 @@ composable.create(attrs)
 
 ## Phase Roadmap
 
-| Phase | Scope |
+| Phase | Scope | Status |
+|-------|-------|--------|
+| **1** | Vue 3 + Vite + Pinia + BVN migration. Axios-only. | ✅ done |
+| **2** | PGlite schema + migrations. `useResource`. SyncBadge + SyncStatusBar. | ✅ done |
+| **3** | Offline auth additions. `person_community_memberships` + `uploads` schema. ElectricSQL integration. Plugin install options + extensibility API. | 🔄 current |
+| **4** | Post + Event components/pages. Community route module complete. | pending |
+| **5** | Conversations, Messages, Invitations, Pages. JoaTU. | pending |
+| **6** | Roles, Geography composable. `better-together-vue` Vue 3 migration. | pending |
+| **7** | PWA manifest + service worker. Full offline bootstrap. | pending |
+
+---
+
+## Offline Authentication Model
+
+### Principle: local reads never require a token
+
+The local PGlite database is readable without authentication. A user who has
+previously signed in has a full local copy of their data. Reopening the app
+offline — or with an expired token — must not block read access.
+
+### Four-state auth model
+
+| State | Token | Local reads | Server sync |
+|-------|-------|-------------|-------------|
+| Signed in + online | Valid | ✅ | ✅ |
+| Signed in + offline | Valid (not checked) | ✅ | ⏸ queued |
+| Token expired + online | Expired | ✅ | 🔒 refreshing |
+| Not signed in | None | ✅ (read-only) | ❌ |
+
+### Auth store additions (`stores/auth.js`)
+
+```js
+// Persistent refs
+const token = ref(null)             // JWT access token
+const refreshToken = ref(null)      // JWT refresh token
+const tokenIssuedAt = ref(null)     // ISO timestamp
+
+// Computed
+const tokenIsExpired = computed(() =>
+  tokenIssuedAt.value &&
+  Date.now() - new Date(tokenIssuedAt.value).getTime() > TOKEN_TTL_MS
+)
+const canSync = computed(() => !!token.value && !tokenIsExpired.value)
+const hasLocalAccess = computed(() => true)  // always
+
+// Methods
+async function refreshTokenIfNeeded() {
+  // No-op until CE Rails adds POST /bt/api/auth/refresh (Deck #955)
+  if (!canSync.value && refreshToken.value) {
+    // POST /bt/api/auth/refresh → new token
+    // On success: set token, tokenIssuedAt
+    // On failure: dispatch needs-auth event
+  }
+}
+```
+
+### `needs-auth` sync status
+
+When a write is made with `_sync_status = 'local'` and the token subsequently
+expires before sync completes, the useSyncStore calls
+`markPendingAsNeedsAuth()` — changing `_sync_status = 'needs-auth'` on all
+local rows. The SyncBadge renders a 🔒 amber lock. The SyncStatusBar shows
+"Sign in to sync N items". Normal writes resume when the user re-authenticates.
+
+```
+_sync_status values:
+  'local'       — written locally, not yet sent
+  'syncing'     — currently in flight
+  'synced'      — confirmed on server
+  'needs-auth'  — token expired, write is blocked
+  'conflict'    — conflict (CRDT resolution failed — should be rare)
+```
+
+### Auth data never enters PGlite
+
+Tokens, session data, and credentials are stored in Pinia only (with
+`persist: true` to localStorage). Never in PGlite tables. This keeps the
+local database shareable between sessions without leaking auth material.
+
+---
+
+## Component Slot API
+
+### Three levels of customization
+
+Consumers of CEV components can customize at three levels of depth, in
+ascending order of invasiveness:
+
+**Level 1 — CSS custom properties (zero JS)**
+All colour, spacing, and typography decisions are exposed as CSS tokens:
+```css
+:root {
+  --bt-primary: #4f46e5;
+  --bt-accent: #10b981;
+  --bt-font-family: 'Inter', sans-serif;
+  --bt-radius: 0.5rem;
+  --bt-card-padding: 1.25rem;
+}
+```
+
+**Level 2 — Named + scoped slots (template customization)**
+Every content component exposes a standard slot vocabulary. The default
+slot content is always sensible; slots just let host apps override parts.
+
+**Level 3 — Page ejection (full ownership)**
+Any page component can be replaced entirely by pointing Vue Router at a
+host app's own component instead. No special plugin API needed — just
+provide a route with the same name and a different component.
+
+### Standard slot vocabulary
+
+All content components (PostCard, EventCard, CommunityCard, PersonCard, etc.)
+expose the same named slot set:
+
+```
+#header       — top of card (image, cover)
+#title        — title + subtitle area
+#meta         — date, author, community, category
+#body         — main content area (text, rich text)
+#footer       — action buttons, links
+#sync-badge   — sync status indicator (default: <SyncBadge>)
+```
+
+Scoped slot payloads:
+- Single-item slots expose `{ item }` or `{ item, loading, error }`
+- List-level `#item` slot exposes `{ item, index }`
+
+List components additionally expose:
+```
+#item         — scoped: { item, index }
+#empty        — rendered when list is empty
+#loading      — rendered while loading
+#header       — above the list
+#footer       — below the list (pagination, load-more)
+```
+
+### Plugin install options
+
+Full API for `app.use(CommunityEngineVue, options)`:
+
+```js
+app.use(CommunityEngineVue, {
+  // Which Tier 2+ modules to enable (default: 'all')
+  modules: ['posts', 'events', 'conversations'],  // or 'all'
+
+  // Install-time theme object (maps to CSS custom properties)
+  theme: {
+    primary:    '#4f46e5',
+    accent:     '#10b981',
+    background: '#ffffff',
+    text:       '#111827',
+    fontFamily: 'Inter, sans-serif',
+  },
+
+  // Whether communities can override theme values
+  communityTheme: {
+    allowAccentOverride:     true,   // communities can set their own accent colour
+    allowCoverImage:         true,   // community cover image shown in layout
+    allowBackgroundOverride: false,  // communities cannot override global background
+  },
+
+  // Router integration
+  routes: {
+    includeCommunityRoutes: true,   // add /communities/:slug/... routes
+    basePath: '/',                  // prefix for all CEV routes
+  },
+
+  // Sync configuration
+  sync: {
+    enabled:     true,
+    electricUrl: import.meta.env.VITE_ELECTRIC_URL,
+  },
+
+  // Companion package extensions (see Companion Package Extensibility below)
+  extensions: [],
+})
+```
+
+---
+
+## Data Model Tiers
+
+The data model is organized into tiers by scope and optionality. Tier 1 is
+always present; higher tiers are opt-in via the `modules:` install option.
+
+### Tier 1 — Foundation (always present)
+
+Core identity and navigation. Cannot be disabled. Always in PGlite schema.
+
+| Resource | Rails model | Key fields |
+|----------|-------------|------------|
+| Auth | User / Devise | token, refreshToken, currentPerson |
+| Person | `BetterTogether::Person` | slug, name, locale, time_zone, privacy |
+| Community | `BetterTogether::Community` | slug, name, description, privacy |
+| PersonCommunityMembership | `BetterTogether::PersonCommunityMembership` | person_id, community_id, role |
+| NavigationArea | `BetterTogether::NavigationArea` | identifier, position |
+| NavigationItem | `BetterTogether::NavigationItem` | label, url, icon, position |
+| Upload | `BetterTogether::Upload` | url, content_type, attachable |
+| Notification | `BetterTogether::Notification` | read_at, notifiable |
+
+### Tier 2 — Content (opt-in modules)
+
+Community-specific content. Each is a named module: `'posts'`, `'events'`,
+`'conversations'`, `'messages'`, `'pages'`, `'invitations'`.
+
+| Module | Resources | Key fields |
+|--------|-----------|------------|
+| `posts` | Post | title, content, privacy, published_at, community_id |
+| `events` | Event | title, starts_at, ends_at, location, community_id |
+| `conversations` | Conversation, Message | title, body, author_id, thread |
+| `pages` | Page | title, body, slug, community_id |
+| `invitations` | Invitation | email, community_id, role, expires_at |
+
+### Tier 3 — Participation
+
+Social mechanics. Opt-in modules: `'joatu'`, `'roles'`, `'blocks'`.
+
+| Module | Resources | Description |
+|--------|-----------|-------------|
+| `joatu` | Offer, Request, Agreement | Mutual-aid offers/requests, time-banking |
+| `roles` | Role, RolePermission | RBAC permission assignments |
+| `blocks` | PersonBlock | Block/mute between people |
+
+### Tier 4 — Geography (read-only)
+
+Loaded once per session from local PGlite. Never mutated on the client.
+Continent → Country → Region/State → Settlement hierarchy.
+
+Used for address selectors and filtering by location. No sync badge (these
+rows are effectively static reference data).
+
+Module: `'geography'`
+
+### Tier 5 — Platform infrastructure (composables only)
+
+Low-level resources with no default UI components. Exposed as composables
+for host apps that need them:
+
+| Resource | Composable | Use |
+|----------|-----------|-----|
+| WebhookEndpoint | `useWebhooks()` | Register/manage outbound webhooks |
+| Registration | `useRegistrations()` | Event / page registration records |
+| MetricsSummary | `useMetrics()` | Aggregate stats (no UI) |
+
+### Out of scope (not in CEV)
+
+The following Rails models are intentionally excluded — they are
+infrastructure or safety-critical concerns that should not be managed from
+the JS layer:
+
+- `AI/*` — all machine learning / recommendation models
+- `Safety/*` — moderation, reporting, toxicity filtering
+- `Infrastructure/*` — server config, feature flags
+- `JwtDenylist` — token revocation (server-side only)
+- `Wizard`, `WizardStep` — multi-step onboarding (too host-app specific)
+- `OauthApplication` — OAuth provider (admin-only)
+- `Sitemap`, `GuestAccess` — SEO/access infrastructure
+
+---
+
+## Companion Package Extensibility
+
+`community-engine-vue` is the foundation. Companion packages extend it
+without forking it. The extensibility model is modelled on Rails engines
+mounting into a host app — companions are structurally identical to host app
+local extensions.
+
+### The three mechanisms
+
+**1. Plugin context singleton** — CEV writes its live instances (`app`,
+`pinia`, `router`, `db`) to a module-level singleton that companions read.
+No Vue `inject()` needed — plain JS import.
+
+```js
+// src/context.js (exported from the package)
+let _context = null
+export function setCevContext(ctx) { _context = ctx }
+export function getCevContext() {
+  if (!_context) throw new Error(
+    '[@bettertogether/community-engine-vue] not installed — call app.use(CommunityEngineVue) first'
+  )
+  return _context
+}
+```
+
+**2. `defineExtension()` declaration API** — companions describe everything
+they need as a plain object; CEV orchestrates the lifecycle.
+
+```js
+// In @bettertogether/community-commerce-vue:
+import { defineExtension } from '@bettertogether/community-engine-vue'
+
+export const CommunityCommerceVue = defineExtension({
+  name: 'community-commerce',
+
+  // PGlite migrations — CEV reserves 1–9; companions use 10+
+  migrations: [
+    {
+      version: 10,
+      sql: `
+        CREATE TABLE IF NOT EXISTS products (
+          id TEXT PRIMARY KEY, name TEXT, price_cents INTEGER,
+          community_id TEXT, slug TEXT,
+          _sync_status TEXT NOT NULL DEFAULT 'local',
+          _local_updated TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+          _server_at TEXT
+        );
+        INSERT OR IGNORE INTO _schema_versions (version) VALUES (10);
+      `,
+    },
+  ],
+
+  // Routes to add to the platform-level router
+  routes: commerceRoutes,
+
+  // Injected as children of /communities/:slug
+  communityRoutes: [
+    { path: 'shop', name: 'CommunityShop', component: () => import('./pages/CommunityShop.vue') },
+  ],
+
+  // Globally registered components
+  components: { BtProductCard: ProductCard, BtCartWidget: CartWidget },
+
+  // Inject UI into CEV component slots without host app wiring
+  slotInjections: [
+    {
+      target: 'BtHeader',
+      slot: 'nav-append',
+      component: CartNavBadge,
+    },
+    {
+      target: 'CommunityHome',
+      slot: 'sidebar',
+      component: FeaturedProducts,
+      props: ({ community }) => ({ communityId: community.id }),
+    },
+  ],
+
+  // Called once after CEV is fully initialized
+  setup({ app, router, db, pinia }) { /* imperative setup */ },
+})
+```
+
+Host apps install companions as extensions:
+```js
+app.use(CommunityEngineVue, {
+  extensions: [CommunityCommerceVue],
+})
+// or independently (auto-detects CEV context):
+app.use(CommunityEngineVue, options)
+app.use(CommunityCommerceVue)
+```
+
+**3. Slot injection registry** — companions register UI into named slot
+positions; CEV's `ExtensionSlot` component renders them in the default slot
+fallback of each component. Host apps that provide their own slot content
+naturally suppress injections.
+
+```js
+// src/slot-registry.js
+const registry = {}
+export function registerSlotInjection({ target, slot, component, props }) {
+  const key = `${target}:${slot}`
+  if (!registry[key]) registry[key] = []
+  registry[key].push({ component, props: props ?? {} })
+}
+export function getSlotInjections(target, slot) {
+  return registry[`${target}:${slot}`] ?? []
+}
+```
+
+```vue
+<!-- src/components/shared/ExtensionSlot.vue -->
+<template>
+  <component
+    :is="inj.component"
+    v-for="(inj, i) in injections"
+    :key="i"
+    v-bind="typeof inj.props === 'function' ? inj.props(context) : inj.props"
+  />
+</template>
+<script setup>
+import { computed } from 'vue'
+import { getSlotInjections } from '../../slot-registry'
+const props = defineProps({
+  target: { type: String, required: true },
+  slot:   { type: String, required: true },
+  context: { type: Object, default: () => ({}) },
+})
+const injections = computed(() => getSlotInjections(props.target, props.slot))
+</script>
+```
+
+Content components use `ExtensionSlot` in their default slot fallbacks:
+```vue
+<!-- PostCard.vue -->
+<template>
+  <slot name="footer">
+    <div class="post-actions"><!-- default actions --></div>
+    <ExtensionSlot target="PostCard" slot="footer" :context="{ item: post }" />
+  </slot>
+</template>
+```
+
+### PGlite migration version ranges
+
+| Range | Owner |
 |-------|-------|
-| **1 (current)** | Vue 3 + Vite + Pinia + BVN migration. Axios-only, no PGlite yet. |
-| **2** | PGlite schema + migrations. Replace Pinia stores reads with PGlite queries. Add SyncBadge + SyncStatusBar components. |
-| **3** | ElectricSQL integration. Real-time sync for communities, people, posts. |
-| **4** | Named composables (usePosts, useEvents, etc). Community route module. |
-| **5** | Events, Conversations/Messages, Notifications, JoaTU. |
-| **6** | Full resource coverage (Roles, Uploads, Geography, Pages, Webhooks). |
-| **7** | PWA manifest + service worker. Full offline bootstrap. |
+| 1 – 9 | CEV core |
+| 10 – 19 | `community-commerce-vue` |
+| 20 – 29 | `community-events-vue` (if split) |
+| 30 – 39 | future companion packages |
+| 50+ | host app custom migrations |
+
+### Peer version contract
+
+Companions declare their CEV peer dependency and version requirement.
+`defineExtension()` validates at install time:
+
+```json
+{ "peerDependencies": { "@bettertogether/community-engine-vue": "^0.2.0" } }
+```
+
+If the installed CEV version doesn't satisfy the companion's declared range,
+`defineExtension()` throws a clear error at app startup — no silent failures.
