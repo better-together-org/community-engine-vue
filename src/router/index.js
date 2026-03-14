@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import Home from '../pages/Home.vue'
 import Me from '../pages/Me.vue'
+import { communityRoutes } from './communityRoutes'
 
 const setPageTitleAndMeta = (to) => {
   const nearestWithTitle = to.matched.slice().reverse().find((r) => r.meta && r.meta.title)
@@ -50,12 +51,13 @@ export const BtRoutes = [
     component: () => import('../pages/UserResendConfirmation.vue'),
     props: (route) => ({ confirmationToken: route.query.confirmation_token }),
   },
+  { path: '/communities', name: 'Communities', component: () => import('../pages/Communities.vue') },
   { path: '/:pathMatch(.*)*', name: 'Error404', component: () => import('../pages/Error404.vue') },
 ]
 
 const BtRouter = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: BtRoutes,
+  routes: [...BtRoutes, ...communityRoutes],
 })
 
 BtRouter.beforeEach((to) => {

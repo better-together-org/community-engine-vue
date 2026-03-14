@@ -20,6 +20,21 @@ import OfflineBanner from './components/sync/OfflineBanner.vue'
 import ExtensionSlot from './components/shared/ExtensionSlot.vue'
 
 import { setCevContext } from './context'
+import { useCommunities } from './composables/useCommunities'
+import { communityRoutes } from './router/communityRoutes'
+import CommunityCard from './components/community/CommunityCard.vue'
+import CommunityList from './components/community/CommunityList.vue'
+import CommunityHeader from './components/community/CommunityHeader.vue'
+import PersonCard from './components/person/PersonCard.vue'
+import PersonAvatar from './components/person/PersonAvatar.vue'
+import MemberList from './components/person/MemberList.vue'
+import PostCard from './components/post/PostCard.vue'
+import PostList from './components/post/PostList.vue'
+import PostForm from './components/post/PostForm.vue'
+import PostDetail from './components/post/PostDetail.vue'
+import EventCard from './components/event/EventCard.vue'
+import EventList from './components/event/EventList.vue'
+import EventForm from './components/event/EventForm.vue'
 
 export {
   useAuthStore,
@@ -44,6 +59,24 @@ export { useSyncStatus } from './composables/useSyncStatus'
 export { getCevContext } from './context'
 export { defineExtension } from './extension'
 export { registerSlotInjection, getSlotInjections } from './slot-registry'
+
+export { useCommunities } from './composables/useCommunities'
+export { communityRoutes } from './router/communityRoutes'
+export {
+  CommunityCard,
+  CommunityList,
+  CommunityHeader,
+  PersonCard,
+  PersonAvatar,
+  MemberList,
+  PostCard,
+  PostList,
+  PostForm,
+  PostDetail,
+  EventCard,
+  EventList,
+  EventForm,
+}
 
 library.add(faExternalLinkAlt)
 
@@ -79,6 +112,12 @@ const install = (app, options = {}) => {
       if (ext._install) ext._install()
     })
   }
+
+  app.component('BtCommunityCard', CommunityCard)
+  app.component('BtPostCard', PostCard)
+  app.component('BtEventCard', EventCard)
+  app.component('BtPersonCard', PersonCard)
+  app.component('BtPersonAvatar', PersonAvatar)
 }
 
 const CommunityEngineVue = { install, NAME }
