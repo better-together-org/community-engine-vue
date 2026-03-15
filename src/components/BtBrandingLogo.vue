@@ -1,15 +1,18 @@
 <template>
-  <BNavbarBrand to="/">
+  <RouterLink
+    to="/"
+    class="navbar-brand"
+  >
     <img
       class="logo"
       src="../assets/better-together-logo.png"
       alt="Better Together"
     >
-  </BNavbarBrand>
+  </RouterLink>
 </template>
 
 <script setup>
-import { BNavbarBrand } from 'bootstrap-vue-next'
+import { RouterLink } from 'vue-router'
 </script>
 
 <style scoped lang="scss">
