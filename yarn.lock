@@ -113,9 +113,9 @@
     lodash.once "^4.1.1"
 
 "@electric-sql/pglite@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@electric-sql/pglite/-/pglite-0.4.1.tgz#a113476c3c20539756a8d77eb86d248d84a8d097"
-  integrity sha512-mZ9NzzUSYPOCnxHH1oAHPRzoMFJHY472raDKwXl/+6oPbpdJ7g8LsCN4FSaIIfkiCKHhb3iF/Zqo3NYxaIhU7Q==
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@electric-sql/pglite/-/pglite-0.4.2.tgz#2bca314a6ceb21b1e7b24e4a5a7881bfaeea978f"
+  integrity sha512-1GUUl/MZpy5QWgWisD3Epho3GkJrZ1MzVgQpo2pifQWUs96F9rXKZxeVLPhkwFYck34CH/kQ8lis6wX9ifn3kg==
 
 "@esbuild/aix-ppc64@0.25.12":
   version "0.25.12"
