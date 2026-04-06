@@ -113,9 +113,9 @@
     lodash.once "^4.1.1"
 
 "@electric-sql/pglite@^0.4.1":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@electric-sql/pglite/-/pglite-0.4.2.tgz#2bca314a6ceb21b1e7b24e4a5a7881bfaeea978f"
-  integrity sha512-1GUUl/MZpy5QWgWisD3Epho3GkJrZ1MzVgQpo2pifQWUs96F9rXKZxeVLPhkwFYck34CH/kQ8lis6wX9ifn3kg==
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/@electric-sql/pglite/-/pglite-0.4.3.tgz#33ff5f8f4b983200f4e8f524e9063a476e2d2303"
+  integrity sha512-ichuWTgtd4mOM1G4SpyGJa5trT03lWbMypDV0fUXUCXg5hiHqVAz/bZyV68NqmkLB7WcYmj1RMJVSp8HV/v/ZQ==
 
 "@esbuild/aix-ppc64@0.25.12":
   version "0.25.12"
@@ -3112,7 +3112,7 @@ lodash.once@^4.1.1:
   resolved "https://registry.yarnpkg.com/lodash.once/-/lodash.once-4.1.1.tgz#0dd3971213c7c56df880977d504c88fb471a97ac"
   integrity sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg==
 
-lodash@^4.17.15, lodash@^4.17.21, lodash@^4.17.23:
+lodash@^4.17.15, lodash@^4.17.21, lodash@^4.17.23, lodash@^4.18.1:
   version "4.18.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.18.1.tgz#ff2b66c1f6326d59513de2407bf881439812771c"
   integrity sha512-dMInicTPVE8d1e5otfwmmjlxkZoUpiVLwyeTdUsi/Caj/gfzzblBcCE5sRHV/AsjuCmxWrte2TNGSYuCeCq+0Q==
