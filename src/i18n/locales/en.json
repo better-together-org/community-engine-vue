@@ -270,6 +270,23 @@
         },
         "credits_display": "0 time credits | 1 time credit | {count} time credits"
       }
+    },
+    "membership_requests": {
+      "heading": "Request Community Membership",
+      "tagline": "Tell us a bit about yourself and why you'd like to join.",
+      "name_label": "Your Name",
+      "name_placeholder": "e.g. Jane Smith",
+      "email_label": "Your Email",
+      "email_placeholder": "e.g. jane at example.com",
+      "referral_label": "How did you hear about us?",
+      "referral_placeholder": "e.g. a friend, social media, an event…",
+      "description_label": "Why would you like to join?",
+      "description_placeholder": "Tell us a bit about yourself and what you hope to contribute or gain…",
+      "submit": "Send Request",
+      "submitting": "Sending…",
+      "success_heading": "Request Received!",
+      "success_body": "Thank you for your interest. We'll be in touch shortly.",
+      "error_prefix": "Please fix the following:"
     }
   }
 }
