@@ -218,6 +218,23 @@
         },
         "credits_display": "0 crédit de temps | 1 crédit de temps | {count} crédits de temps"
       }
+    },
+    "membership_requests": {
+      "heading": "Demander l'adhésion à la communauté",
+      "tagline": "Dites-nous qui vous êtes et pourquoi vous souhaitez rejoindre.",
+      "name_label": "Votre nom",
+      "name_placeholder": "ex. Jean Dupont",
+      "email_label": "Votre courriel",
+      "email_placeholder": "ex. jean chez exemple.com",
+      "referral_label": "Comment avez-vous entendu parler de nous?",
+      "referral_placeholder": "ex. un ami, les réseaux sociaux, un événement…",
+      "description_label": "Pourquoi souhaitez-vous nous rejoindre?",
+      "description_placeholder": "Parlez-nous un peu de vous et de ce que vous espérez apporter ou recevoir…",
+      "submit": "Envoyer la demande",
+      "submitting": "Envoi en cours…",
+      "success_heading": "Demande reçue!",
+      "success_body": "Merci de votre intérêt. Nous vous contacterons bientôt.",
+      "error_prefix": "Veuillez corriger ce qui suit:"
     }
   }
 }
