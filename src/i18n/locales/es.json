@@ -270,6 +270,23 @@
         },
         "credits_display": "0 créditos de tiempo | 1 crédito de tiempo | {count} créditos de tiempo"
       }
+    },
+    "membership_requests": {
+      "heading": "Solicitar membresía en la comunidad",
+      "tagline": "Cuéntanos un poco sobre ti y por qué te gustaría unirte.",
+      "name_label": "Tu nombre",
+      "name_placeholder": "ej. Juan García",
+      "email_label": "Tu correo electrónico",
+      "email_placeholder": "ej. juan en ejemplo.com",
+      "referral_label": "¿Cómo nos conociste?",
+      "referral_placeholder": "ej. un amigo, redes sociales, un evento…",
+      "description_label": "¿Por qué te gustaría unirte?",
+      "description_placeholder": "Cuéntanos un poco sobre ti y lo que esperas contribuir o recibir…",
+      "submit": "Enviar solicitud",
+      "submitting": "Enviando…",
+      "success_heading": "¡Solicitud recibida!",
+      "success_body": "Gracias por tu interés. Nos pondremos en contacto pronto.",
+      "error_prefix": "Por favor corrige lo siguiente:"
     }
   }
 }
